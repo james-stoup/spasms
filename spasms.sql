@@ -25,11 +25,21 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET search_path = public, pg_catalog;
 
 --
+-- Name: gender; Type: DOMAIN; Schema: public; Owner: postgres
+--
+
+CREATE DOMAIN gender AS character(1)
+	CONSTRAINT gender_check CHECK ((VALUE = ANY (ARRAY['m'::bpchar, 'f'::bpchar])));
+
+
+ALTER DOMAIN public.gender OWNER TO postgres;
+
+--
 -- Name: nametypes; Type: DOMAIN; Schema: public; Owner: postgres
 --
 
 CREATE DOMAIN nametypes AS character varying(10)
-	CONSTRAINT nametypes_check CHECK (((VALUE)::text = ANY ((ARRAY['first'::character varying, 'last'::character varying])::text[])));
+	CONSTRAINT nametypes_check CHECK (((VALUE)::text = ANY (ARRAY[('first'::character varying)::text, ('last'::character varying)::text])));
 
 
 ALTER DOMAIN public.nametypes OWNER TO postgres;
@@ -39,7 +49,7 @@ ALTER DOMAIN public.nametypes OWNER TO postgres;
 --
 
 CREATE DOMAIN sentencetypes AS character varying(15)
-	CONSTRAINT sentencetypes_check CHECK (((VALUE)::text = ANY ((ARRAY['FluffNoun/AdveAdverb'::character varying, 'Adjective/Noun'::character varying, 'Adjective'::character varying])::text[])));
+	CONSTRAINT sentencetypes_check CHECK (((VALUE)::text = ANY (ARRAY[('FluffNoun/AdveAdverb'::character varying)::text, ('Adjective/Noun'::character varying)::text, ('Adjective'::character varying)::text])));
 
 
 ALTER DOMAIN public.sentencetypes OWNER TO postgres;
@@ -49,7 +59,7 @@ ALTER DOMAIN public.sentencetypes OWNER TO postgres;
 --
 
 CREATE DOMAIN wordtypes AS character varying(15)
-	CONSTRAINT wordtypes_check CHECK (((VALUE)::text = ANY ((ARRAY['noun'::character varying, 'adjective'::character varying, 'adverb'::character varying, 'verb'::character varying])::text[])));
+	CONSTRAINT wordtypes_check CHECK (((VALUE)::text = ANY (ARRAY[('noun'::character varying)::text, ('adjective'::character varying)::text, ('adverb'::character varying)::text, ('verb'::character varying)::text])));
 
 
 ALTER DOMAIN public.wordtypes OWNER TO postgres;
@@ -131,7 +141,7 @@ CREATE TABLE twitter_users (
     favourites numeric(9,0) NOT NULL,
     statuses numeric(9,0) NOT NULL,
     description character varying(160),
-    gender character(1) NOT NULL,
+    gender gender NOT NULL,
     group_name character varying(250)
 );
 
