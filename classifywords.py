@@ -1,7 +1,7 @@
 parts_of_speech = ["v","r","a"]
 
 file = open("SentiWords_edited.txt","r")
-outputfile = open("output.txt","w")
+outputfile = open("output2.sql","w")
 for sentence in file:
 
     list_of_words = sentence.split()
@@ -12,6 +12,7 @@ for sentence in file:
     idval = 1
     if lemma in parts_of_speech:
 
+        word = word.replace("'", "''");
         if lemma == parts_of_speech[0]:
             #outputFile.write("INSERT INTO locations VALUES ("+str(id)+",'"+city+"','"+state+"','"+country+"');\n");
             lemma = "verb"
