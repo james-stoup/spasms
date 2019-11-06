@@ -45,16 +45,6 @@ CREATE DOMAIN nametypes AS character varying(10)
 ALTER DOMAIN public.nametypes OWNER TO postgres;
 
 --
--- Name: sentencetypes; Type: DOMAIN; Schema: public; Owner: postgres
---
-
-CREATE DOMAIN sentencetypes AS character varying(15)
-	CONSTRAINT sentencetypes_check CHECK (((VALUE)::text = ANY (ARRAY[('FluffNoun/AdveAdverb'::character varying)::text, ('Adjective/Noun'::character varying)::text, ('Adjective'::character varying)::text])));
-
-
-ALTER DOMAIN public.sentencetypes OWNER TO postgres;
-
---
 -- Name: wordtypes; Type: DOMAIN; Schema: public; Owner: postgres
 --
 
@@ -96,17 +86,16 @@ CREATE TABLE names (
 ALTER TABLE public.names OWNER TO postgres;
 
 --
--- Name: sentence_frag; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: sentence_frags; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE sentence_frag (
-    fragment character varying(250),
+CREATE TABLE sentence_frags (
     id numeric(6,0),
-    type sentencetypes
+    fragment character varying(500)
 );
 
 
-ALTER TABLE public.sentence_frag OWNER TO postgres;
+ALTER TABLE public.sentence_frags OWNER TO postgres;
 
 --
 -- Name: twitter_posts; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
@@ -20703,10 +20692,13 @@ Devine	last	us
 
 
 --
--- Data for Name: sentence_frag; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: sentence_frags; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY sentence_frag (fragment, id, type) FROM stdin;
+COPY sentence_frags (id, fragment) FROM stdin;
+1	I think <noun> is very <adjective>
+2	<noune> is making me really <adjective>
+3	I am so <adjective> to see <noun> 
 \.
 
 
