@@ -3,79 +3,87 @@ import random
 from genDescription import generateDescription
 from genTimestamp import generate_time
 
-conn = psycopg2.connect(database="spasms", user="postgres", password="1514729", host="/var/run/postgresql", port="5432")
-print("Connected to database: spasms")
 
-cur = conn.cursor()
+def connect():
+	conn = psycopg2.connect(database="spasms", user="postgres", password="1514729", host="/var/run/postgresql", port="5432")
+	print("Connected to database: spasms")
+
+	cur = conn.cursor()
+	
+	return cur
 
 #following line for picking between male and female name
 #cur.execute("SELECT COUNT(*) FROM names")
 
-cur.execute("SELECT count(*) from names where name_type='first_m' or name_type='first_f'")
-firstNamesNum = cur.fetchone()[0]
-#print(firstNamesNum)
+def create_twitter_user(cur):
+	cur.execute("SELECT count(*) from names where name_type='first_m' or name_type='first_f'")
+	firstNamesNum = cur.fetchone()[0]
 
-randFirstName = random.randrange(0,firstNamesNum,1)
+	randFirstName = random.randrange(0,firstNamesNum,1)
 
-cur.execute("SELECT name from names where name_type='first_m' or name_type='first_f'")
-firstNames = cur.fetchall()
+	cur.execute("SELECT name from names where name_type='first_m' or name_type='first_f'")
+	firstNames = cur.fetchall()
 
-firstName = firstNames[randFirstName][0]
-firstLetter = firstName[0]
+	firstName = firstNames[randFirstName][0]
+	firstLetter = firstName[0]
 
-cur.execute("Select count(*) from names where Name_type='last'")
-lastNamesNum = cur.fetchone()[0]
+	cur.execute("Select count(*) from names where Name_type='last'")
+	lastNamesNum = cur.fetchone()[0]
 
-randLastName = random.randrange(0,lastNamesNum,1)
+	randLastName = random.randrange(0,lastNamesNum,1)
 
-cur.execute("SELECT name from names where Name_type='last'")
-lastNames = cur.fetchall()
+	cur.execute("SELECT name from names where Name_type='last'")
+	lastNames = cur.fetchall()
 
-lastName = lastNames[randLastName][0]
+	lastName = lastNames[randLastName][0]
 
-cur.execute("SELECT COUNT(*) from Locations where Country='United States'")
-locationsNum = cur.fetchone()[0]
+	cur.execute("SELECT COUNT(*) from Locations where Country='United States'")
+	locationsNum = cur.fetchone()[0]
 #print(locationsNum)
 
-randLocation = random.randrange(0,locationsNum,1)
+	randLocation = random.randrange(0,locationsNum,1)
 
 
-cur.execute("SELECT city from Locations where Country='United States'")
-locations = cur.fetchall()
-randomLocation = locations[randLocation][0]
-#print(randomLocation)
+	cur.execute("SELECT city from Locations where Country='United States'")
+	locations = cur.fetchall()
+	randomLocation = locations[randLocation][0]
 
 
 
-twitter_name = firstName +" "+ lastName
-lastName = lastName.lower()
-twitter_screen_name = firstLetter + lastName
+	twitter_name = firstName +" "+ lastName
+	lastName = lastName.lower()
+	twitter_screen_name = firstLetter + lastName
 #set language to english for right now, come back and add multiple options later
-lang = "eng"
+	lang = "eng"
 
 #would like to make this a choice between 3 numbers such as 10, 10000, 100000
-randomVal = 10000
-userCount = []
+	randomVal = 10000
+	userCount = []
 
-for i in range(4):
-	randNum = random.randrange(0,randomVal,1)
-	userCount.append(randNum)
-
-followerCount = userCount[0]
-friendsCount = userCount[1]
-favouritesCount = userCount[2]
-statusesCount =userCount[3]
+	for i in range(4):
+		randNum = random.randrange(0,randomVal,1)
+		userCount.append(randNum)
+	
+	followerCount = userCount[0]
+	#friendsCount = userCount[1]
+	favouritesCount = userCount[2]
+	statusesCount =userCount[3]
 #only goes up to 7 characters
-randomIdVal = 10000000
-randId= random.randrange(0,randomIdVal,1)
-randIdStr = str(randId)
+	randomIdVal = 10000000
+	randId= random.randrange(0,randomIdVal,1)
+	randIdStr = str(randId)
+
+	description = generateDescription(25)
+
+	tupleTwitterUser = (randId,randIdStr,twitter_name,twitter_screen_name,randomLocation,generate_time(),followerCount,favouritesCount,statusesCount,description,lang,'M','----') 
+	return tupleTwitterUser
 
 
-
-tupleTwitterUser = (twitter_screen_name,twitter_name,followerCount,friendsCount,favouritesCount,statusesCount,randId,randIdStr,lang,generate_time(),generateDescription(25),randomLocation) 
-
-print(tupleTwitterUser)
-
+cur = connect()
+val = create_twitter_user(cur)
+val2 = create_twitter_user(cur)
+print(val)
+print(val2)
 #cur.execute("SELECT COUNT(*) FROM sentence_frags")
 #sentFragNum = cur.fetchone()[0]
 #print(sentFragNum)
@@ -97,5 +105,4 @@ print(tupleTwitterUser)
 
 
 cur.close()
-conn.close()
 print("Database connection closed")
