@@ -5,14 +5,17 @@ start = '2000-01-01 12:00:00';
 end = '2019-11-07 12:00:00';
 format_str = '%Y-%m-%d %H:%M:%S';
 
-start_time = time.mktime(time.strptime(start, format_str));
-end_time = time.mktime(time.strptime(end,format_str));
 
-rand_num = random.random();
+def generate_time():
+	start_time = time.mktime(time.strptime(start, format_str));
+	end_time = time.mktime(time.strptime(end,format_str));
 
-randTime = start_time + rand_num*(end_time-start_time);
+	rand_num = random.random();
 
-randTime_formatted = time.strftime(format_str, time.localtime(randTime));
+	randTime = start_time + rand_num*(end_time-start_time);
 
-print(randTime_formatted);
+	randTime_formatted = time.strftime(format_str, time.localtime(randTime));
+
+	return randTime_formatted
+
 

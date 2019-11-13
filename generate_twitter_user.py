@@ -1,7 +1,9 @@
 import psycopg2
 import random
+from genDescription import generateDescription
+from genTimestamp import generate_time
 
-conn = psycopg2.connect(database="spasms", user="postgres", password="PASSWORD", host="/var/run/postgresql", port="5432")
+conn = psycopg2.connect(database="spasms", user="postgres", password="1514729", host="/var/run/postgresql", port="5432")
 print("Connected to database: spasms")
 
 cur = conn.cursor()
@@ -70,7 +72,7 @@ randIdStr = str(randId)
 
 
 
-tupleTwitterUser = (twitter_screen_name,twitter_name,followerCount,friendsCount,favouritesCount,statusesCount,randId,randIdStr,lang,randomLocation) 
+tupleTwitterUser = (twitter_screen_name,twitter_name,followerCount,friendsCount,favouritesCount,statusesCount,randId,randIdStr,lang,generate_time(),generateDescription(25),randomLocation) 
 
 print(tupleTwitterUser)
 
