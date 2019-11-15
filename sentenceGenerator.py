@@ -8,32 +8,26 @@ def generateSentence(cur, noun, sentim):
 	frag = cur.fetchall()
 	randSentFragNum = random.randrange(0, sentFragNum, 1)
 	frag = frag[randSentFragNum][0]
-
+	
+	minSentim = -1.01;
+	maxSentim = 1.01;
 	if sentim == "pos":
-		cur.execute("SELECT word FROM words WHERE (sentiment > 0) and (type = 'adjective')")
-		numOfAdjectives = cur.rowcount
-		adjectives = cur.fetchall()
-
-		cur.execute("SELECT word FROM words WHERE (sentiment > 0) and (type = 'adverb')")
-		numOfAdverbs = cur.rowcount
-		adverbs = cur.fetchall()
-
-		cur.execute("SELECT word FROM words WHERE (sentiment > 0) and (type = 'verb')")
-		numOfVerbs = cur.rowcount
-		verbs = cur.fetchall()
+		minSentim = 0;
 	elif sentim == "neg":
-		cur.execute("SELECT word FROM words WHERE (sentiment < 0) and (type = 'adjective')")
-		numOfAdjectives = cur.rowcount
-		adjectives = cur.fetchall()
+		maxSentim = 0;
 
-		cur.execute("SELECT word FROM words WHERE (sentiment < 0) and (type = 'adverb')")
-		numOfAdverbs = cur.rowcount
-		adverbs = cur.fetchall()
+	cur.execute("SELECT word FROM words WHERE (sentiment > %s and sentiment < %s) and (type = 'adjective')", (minSentim,maxSentim))
+	numOfAdjectives = cur.rowcount
+	adjectives = cur.fetchall()
 
-		cur.execute("SELECT word FROM words WHERE (sentiment < 0) and (type = 'Verb')")
-		numOfVerbs = cur.rowcount
-		verbs = cur.fetchall()
+	cur.execute("SELECT word FROM words WHERE (sentiment > %s and sentiment < %s) and (type = 'adverb')", (minSentim,maxSentim))
+	numOfAdverbs = cur.rowcount
+	adverbs = cur.fetchall()
 
+	cur.execute("SELECT word FROM words WHERE (sentiment > %s and sentiment < %s) and (type = 'verb')", (minSentim,maxSentim))
+	numOfVerbs = cur.rowcount
+	verbs = cur.fetchall()
+	
 	fragSplit = frag.split(" ")
 	for x in range(len(fragSplit)):
 		if fragSplit[x] == '<noun>':
