@@ -132,7 +132,9 @@ CREATE TABLE twitter_users (
     statuses numeric(9,0) NOT NULL,
     description character varying(160),
     gender gender NOT NULL,
-    group_name character varying(250)
+    group_name character varying(250),
+    language character varying(50),
+    name character varying(50)
 );
 
 
@@ -20688,6 +20690,7 @@ Brunson	last	us
 Prater	last	us
 Marcum	last	us
 Devine	last	us
+bob	first_m	cheese
 \.
 
 
@@ -20697,8 +20700,8 @@ Devine	last	us
 
 COPY sentence_frags (id, fragment) FROM stdin;
 1	I think <noun> is very <adjective>
-2	<noune> is making me really <adjective>
 3	I am so <adjective> to see <noun> 
+2	<noun> is really making me <adjective>
 \.
 
 
@@ -20714,8 +20717,13 @@ COPY twitter_posts (user_id, id, id_str, created_at, text, hashtags, urls, user_
 -- Data for Name: twitter_users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY twitter_users (id, id_str, screen_name, location, created_at, followers, favourites, statuses, description, gender, group_name) FROM stdin;
-1	000000001	user1	Fairfax	2018-10-25 12:00:00	50	100	25	I am a student	f	group1
+COPY twitter_users (id, id_str, screen_name, location, created_at, followers, favourites, statuses, description, gender, group_name, language, name) FROM stdin;
+1	000000001	user1	Fairfax	2018-10-25 12:00:00	50	100	25	I am a student	f	group1	\N	\N
+7484156	7484156  	apage	batavia	2010-07-07 12:49:48	874	1997	6161	stuff	m	---	eng	aubrey page
+12929102	12929102 	Mchung	Lynn	2012-11-29 05:57:30	1519	3279	7043	Stella Vanderley broke off in the club, and I saw what he was a Napoleon. "Eighty-seven, Jeeves. At how much my nephew Francis?" "Absolutely." "It be	m	----	eng	Mason Chung
+4575037	4575037  	Ehiggins	Burlington	2011-08-28 23:13:14	790	2980	5014	rot, but I won't stand for being expected to see him? Whom shall I say?" "He would not know my own case, after a little It	m	----	eng	Elizabeth Higgins
+94668699	94668699 	Ograves	Bostonia	2000-07-06 07:38:37	5069	8789	8931	of his own hands. All right so far, what? But mark the sequel. Temperamental Clarence, being a silly ass, he was her only nephew, his was	m	----	eng	Owen Graves
+82415971	82415971 	Jrainey	Glenview	2019-03-27 09:37:07	3553	6587	6068	he said, "I've got it up for the fact that she pulled herself together and made out to answer it. "Yes, sir. I had a deal."	m	----	eng	Jacob Rainey
 \.
 
 
