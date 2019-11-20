@@ -20702,6 +20702,32 @@ COPY sentence_frags (id, fragment) FROM stdin;
 1	I think <noun> is very <adjective>
 3	I am so <adjective> to see <noun> 
 2	<noun> is really making me <adjective>
+4	<noun> is <adverb> making a mistake
+5	I <verb> <noun>
+6	<noun> just <verb> my day
+7	<noun> is such a <adverb> place
+8	<noun> is such a <adverb> person
+9	I think <adverb> disregarding <noun> is bad
+10	<noun> is <adjective>
+11	<noun> is doing <adverb>
+12	How can <noun> be so <adjective>
+13	How can <noun> <verb> that
+14	What a <adjective> decision from <noun>
+15	We should really <verb> <noun> more
+16	We need to <verb> <noun>
+17	<noun> <adverb> a decision there
+18	<noun> just said the <adjective> thing
+19	I think <noun> is being so <adjective> right now
+20	What <adjective> stuff is going on in <noun> right now
+21	I feel <adjective> for <noun>
+22	Who thinks <noun> is doing a <adjective> job
+23	<noun> is <adverb> <adjective>
+24	I think <noun> is <adverb> <verb> us
+25	<verb> <noun>
+26	<noun> is acting <adverb>
+27	One day <noun> will <verb>
+28	I really <verb> <noun>! It really makes <adjective> to think about it
+29	Somebody better <verb> <noun> or things could get ugly
 \.
 
 
