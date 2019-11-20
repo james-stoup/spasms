@@ -8,14 +8,15 @@ def connect():
 	conn = psycopg2.connect(database="spasms", user="postgres", password="1514729", host="/var/run/postgresql", port="5432")
 	print("Connected to database: spasms")
 
-	cur = conn.cursor()
 	
-	return cur
+	return conn
 
 #following line for picking between male and female name
 #cur.execute("SELECT COUNT(*) FROM names")
 
 def create_twitter_user(cur):
+
+
 	cur.execute("SELECT count(*) from names where name_type='first_m' or name_type='first_f'")
 	firstNamesNum = cur.fetchone()[0]
 
@@ -69,21 +70,49 @@ def create_twitter_user(cur):
 	favouritesCount = userCount[2]
 	statusesCount =userCount[3]
 #only goes up to 7 characters
-	randomIdVal = 10000000
+	randomIdVal = 100000000
 	randId= random.randrange(0,randomIdVal,1)
 	randIdStr = str(randId)
 
 	description = generateDescription(25)
 
-	tupleTwitterUser = (randId,randIdStr,twitter_name,twitter_screen_name,randomLocation,generate_time(),followerCount,favouritesCount,statusesCount,description,lang,'M','----') 
+	tupleTwitterUser = (randId,randIdStr,twitter_name,twitter_screen_name,randomLocation,generate_time(),followerCount,favouritesCount,statusesCount,description,lang,'m','----') 
 	return tupleTwitterUser
 
 
-cur = connect()
-val = create_twitter_user(cur)
-val2 = create_twitter_user(cur)
-print(val)
-print(val2)
+
+def insert_twitter_users():
+	#add exception handling here	
+#	howManyUsers = int(raw_input('Enter how many users you want: '))
+#	outputFileName = raw_input('Enter output file name: ')
+	
+#	outputFile = open(outputFileName,'w')	
+
+	conn = connect()
+	cur = conn.cursor()
+
+
+	for i in range(2):
+	
+		twitterUser = create_twitter_user(cur)
+								
+		cur.execute("INSERT INTO twitter_users (id,id_str,name,screen_name,location,created_at,followers,favourites,statuses,description,language,gender,group_name) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",twitterUser)
+	
+	conn.commit()				
+		
+
+conn = connect()
+cur = conn.cursor()
+#val = create_twitter_user(conn)
+#val2 = create_twitter_user(conn)
+
+insert_twitter_users()
+#print(val)
+#print(val[0])
+#print(val2)
+
+#insert_twitter_users()
+
 #cur.execute("SELECT COUNT(*) FROM sentence_frags")
 #sentFragNum = cur.fetchone()[0]
 #print(sentFragNum)
@@ -104,5 +133,5 @@ print(val2)
 #adjectives = cur.fetchall()
 
 
-cur.close()
+conn.close()
 print("Database connection closed")
