@@ -1,6 +1,6 @@
 import psycopg2;
 import random;
-from genTimestamp import generate_time;
+from genTimestamp import generateTime;
 from sentenceGenerator import generateSentence;
 
 def genTweet(cursor, group, noun, sentiment, topic):
@@ -10,7 +10,7 @@ def genTweet(cursor, group, noun, sentiment, topic):
 	i = random.randint(1,numUsers);
 	userId = users[i-1][0];
 	createdAt = users[i-1][4];
-	randTime = generate_time(str(createdAt),'2019-11-15 03:00:00');
+	randTime = generateTime(str(createdAt),'2019-11-15 03:00:00');
 	text = generateSentence(cursor,noun,sentiment);
 	randId = random.randint(0,999999999);
 	randIdStr = str(randId);
