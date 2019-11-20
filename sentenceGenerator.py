@@ -35,7 +35,7 @@ def generateSentence(cur, noun, sentim):
 		elif fragSplit[x] == '<adjective>':
 			randAdjNum = random.randrange(0, numOfAdjectives, 1)
 			fragSplit[x] = adjectives[randAdjNum][0]
-		elif fragSplit[x] == '<adverb':
+		elif fragSplit[x] == '<adverb>':
 			randAdvNum = random.randrange(0, numOfAdverbs, 1)
 			fragSplit[x] = adverbs[randAdvNum][0]
 		elif fragSplit[x] == '<verb>':
