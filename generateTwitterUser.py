@@ -14,17 +14,19 @@ def connect():
 #following line for picking between male and female name
 #cur.execute("SELECT COUNT(*) FROM names")
 
-def createTwitterUser(cur):
+#cur is a connection to the database
+#groupName is the group of the individuals created
+#gender_type takes in a argument of 'first_m' or 'first_f' and is the gender of the individuals crated
+def createTwitterUser(cur,groupName,gender_type):
 
 
-	cur.execute("SELECT count(*) from names where name_type='first_m' or name_type='first_f'")
+	cur.execute("SELECT count(*) from names where name_type='"+gender_type+"'")
 	firstNamesNum = cur.fetchone()[0]
 
 	randFirstName = random.randrange(0,firstNamesNum,1)
 
-	cur.execute("SELECT name from names where name_type='first_m' or name_type='first_f'")
+	cur.execute("SELECT name,name_type from names where name_type='"+gender_type+"'")
 	firstNames = cur.fetchall()
-
 	firstName = firstNames[randFirstName][0]
 	firstLetter = firstName[0]
 
@@ -74,16 +76,24 @@ def createTwitterUser(cur):
 	randId= random.randrange(0,randomIdVal,1)
 	randIdStr = str(randId)
 
-	description = generateDescription(25)
+	description = generateDescription(10)
 	
 	start = '2000-01-01 12:00:00';
 	end = '2019-11-07 12:00:00';
-	tupleTwitterUser = (randId,randIdStr,twitter_name,twitter_screen_name,randomLocation,generateTime(start,end),followerCount,favouritesCount,statusesCount,description,lang,'m','----') 
+
+	gender=''
+
+	if gender_type == 'first_m':
+		gender = 'm'
+	else:
+		gender = 'f'
+
+	tupleTwitterUser = (randId,randIdStr,twitter_name,twitter_screen_name,randomLocation,generateTime(start,end),followerCount,favouritesCount,statusesCount,description,lang,gender,groupName) 
 	return tupleTwitterUser
 
 
 
-def insertTwitterUsers():
+def insertTwitterUsers(groupName,numUsers,gender_type):
 	#add exception handling here	
 #	howManyUsers = int(raw_input('Enter how many users you want: '))
 #	outputFileName = raw_input('Enter output file name: ')
@@ -94,9 +104,9 @@ def insertTwitterUsers():
 	cur = conn.cursor()
 
 
-	for i in range(2):
+	for i in range(numUsers):
 	
-		twitterUser = createTwitterUser(cur)
+		twitterUser = createTwitterUser(cur,groupName,gender_type)
 								
 		cur.execute("INSERT INTO twitter_users (id,id_str,name,screen_name,location,created_at,followers,favourites,statuses,description,language,gender,group_name) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",twitterUser)
 	
@@ -105,6 +115,7 @@ def insertTwitterUsers():
 
 conn = connect()
 cur = conn.cursor()
-insertTwitterUsers()
+#createTwitterUser(cur,"red","first_f")
+insertTwitterUsers("American",3,"first_f")
 conn.close()
 print("Database connection closed")
