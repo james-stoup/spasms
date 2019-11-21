@@ -15,8 +15,8 @@ def genTweet(cursor, group, noun, sentiment, topic, numOfTweets):
 		text = generateSentence(cursor,noun,sentiment);
 		randId = random.randint(0,999999999);
 		randIdStr = str(randId);
-		#add leading 0's to make the id a string of 9 characters
-		randIdStr = "0"*(9-len(randIdStr)) + randIdStr;
+		#add leading 0's to make the id a string of 19 characters
+		randIdStr = "0"*(19-len(randIdStr)) + randIdStr;
 		cursor.execute("INSERT INTO Twitter_posts (user_id,id,id_str,created_at,text,topic) VALUES (%s,%s,%s,%s,%s,%s)",(userId,randId,randIdStr,randTime,text,topic));
 	return (userId, randId, randIdStr, randTime, text);
 
