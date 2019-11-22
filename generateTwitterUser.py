@@ -4,12 +4,12 @@ from genDescription import generateDescription
 from genTimestamp import generateTime
 
 
-def connect():
-	conn = psycopg2.connect(database="spasms", user="postgres", password="1514729", host="/var/run/postgresql", port="5432")
-	print("Connected to database: spasms")
+# def connect():
+# 	conn = psycopg2.connect(database="spasms", user="postgres", password="1514729", host="/var/run/postgresql", port="5432")
+# 	print("Connected to database: spasms")
 
 	
-	return conn
+# 	return conn
 
 #following line for picking between male and female name
 #cur.execute("SELECT COUNT(*) FROM names")
@@ -19,13 +19,17 @@ def connect():
 #gender_type takes in a argument of 'first_m' or 'first_f' and is the gender of the individuals crated
 def createTwitterUser(cur,groupName,gender_type):
 
+	if gender_type == 'm':
+		gender = 'first_m'
+	else:
+		gender = 'first_f'
 
-	cur.execute("SELECT count(*) from names where name_type='"+gender_type+"'")
+	cur.execute("SELECT count(*) from names where name_type='"+gender+"'")
 	firstNamesNum = cur.fetchone()[0]
 
 	randFirstName = random.randrange(0,firstNamesNum,1)
 
-	cur.execute("SELECT name,name_type from names where name_type='"+gender_type+"'")
+	cur.execute("SELECT name,name_type from names where name_type='"+gender+"'")
 	firstNames = cur.fetchall()
 	firstName = firstNames[randFirstName][0]
 	firstLetter = firstName[0]
@@ -83,25 +87,25 @@ def createTwitterUser(cur,groupName,gender_type):
 
 	gender=''
 
-	if gender_type == 'first_m':
-		gender = 'm'
-	else:
-		gender = 'f'
+	# if gender_type == 'first_m':
+	# 	gender = 'm'
+	# else:
+	# 	gender = 'f'
 
-	tupleTwitterUser = (randId,randIdStr,twitter_name,twitter_screen_name,randomLocation,generateTime(start,end),followerCount,favouritesCount,statusesCount,description,lang,gender,groupName) 
+	tupleTwitterUser = (randId,randIdStr,twitter_name,twitter_screen_name,randomLocation,generateTime(start,end),followerCount,favouritesCount,statusesCount,description,lang,gender_type,groupName) 
 	return tupleTwitterUser
 
 
 
-def insertTwitterUsers(groupName,numUsers,gender_type):
+def insertTwitterUsers(cur,groupName,numUsers,gender_type):
 	#add exception handling here	
 #	howManyUsers = int(raw_input('Enter how many users you want: '))
 #	outputFileName = raw_input('Enter output file name: ')
 	
 #	outputFile = open(outputFileName,'w')	
 
-	conn = connect()
-	cur = conn.cursor()
+	#conn = connect()
+	#cur = conn.cursor()
 
 
 	for i in range(numUsers):
@@ -110,12 +114,12 @@ def insertTwitterUsers(groupName,numUsers,gender_type):
 								
 		cur.execute("INSERT INTO twitter_users (id,id_str,name,screen_name,location,created_at,followers,favourites,statuses,description,language,gender,group_name) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",twitterUser)
 	
-	conn.commit()				
+	#conn.commit()				
 		
 
-conn = connect()
-cur = conn.cursor()
+# conn = connect()
+# cur = conn.cursor()
 #createTwitterUser(cur,"red","first_f")
-insertTwitterUsers("American",3,"first_f")
-conn.close()
-print("Database connection closed")
+# insertTwitterUsers("American",3,"first_f")
+# conn.close()
+# print("Database connection closed")

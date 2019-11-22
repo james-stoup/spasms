@@ -1,6 +1,6 @@
 import psycopg2
-#import genTweet
-#import generateTwitterUser
+import genTweet
+import generateTwitterUser
 
 
 def main():
@@ -16,11 +16,20 @@ def main():
 	sentimentOfPosts = raw_input("Positive (pos) or Negative (neg) posts: ")
 	nounOfPosts = raw_input("Please input noun relating to topic for tweets: ")
 
+	genderPercentage = int(genderPercentage)/100
+	numberOfFemales = int(numberOfUsers)*genderPercentage
+	numberOfMales = int(numberOfUsers) - numberOfFemales
+
 	if typeOfPosts.lower() == "twitter":
-		generateTwitterUser.createTwitterUser(cur, groupName, numberOfUsers, genderPercentage)
-		genTweet.genTweet(cur, groupName, nounOfPosts, sentimentOfPosts, topicName, numberOfPosts)
+		if numberOfFemales > 0:
+			generateTwitterUser.insertTwitterUsers(cur, groupName, numberOfFemales, "f")
+		if numberOfMales > 0:
+			generateTwitterUser.insertTwitterUsers(cur, groupName, numberOfMales, "m")
+		genTweet.genTweet(cur, groupName, nounOfPosts, sentimentOfPosts, topicName, int(numberOfPosts))
 	elif typeOfPosts.lower() == "facebook":
 		print("Feature under development")
+
+	conn.commit()
 
 if __name__ == '__main__':
 	main()
