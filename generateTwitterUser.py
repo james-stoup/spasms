@@ -60,9 +60,6 @@ def createTwitterUser(cur,groupName,gender_type):
 	twitter_name = firstName +" "+ lastName
 	lastName = lastName.lower()
 	twitter_screen_name = firstLetter + lastName
-#set language to english for right now, come back and add multiple options later
-	lang = "eng"
-
 #would like to make this a choice between 3 numbers such as 10, 10000, 100000
 	randomVal = 10000
 	userCount = []
@@ -85,14 +82,12 @@ def createTwitterUser(cur,groupName,gender_type):
 	start = '2000-01-01 12:00:00';
 	end = '2019-11-07 12:00:00';
 
-	gender=''
-
 	# if gender_type == 'first_m':
 	# 	gender = 'm'
 	# else:
 	# 	gender = 'f'
 
-	tupleTwitterUser = (randId,randIdStr,twitter_name,twitter_screen_name,randomLocation,generateTime(start,end),followerCount,favouritesCount,statusesCount,description,lang,gender_type,groupName) 
+	tupleTwitterUser = (randId,randIdStr,twitter_name,twitter_screen_name,randomLocation,generateTime(start,end),followerCount,favouritesCount,statusesCount,description,gender_type,groupName) 
 	return tupleTwitterUser
 
 
@@ -112,7 +107,7 @@ def insertTwitterUsers(cur,groupName,numUsers,gender_type):
 	
 		twitterUser = createTwitterUser(cur,groupName,gender_type)
 								
-		cur.execute("INSERT INTO twitter_users (id,id_str,name,screen_name,location,created_at,followers,favourites,statuses,description,language,gender,group_name) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",twitterUser)
+		cur.execute("INSERT INTO twitter_users (id,id_str,name,screen_name,location,created_at,followers,favourites,statuses,description,gender,group_name) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",twitterUser)
 	
 	#conn.commit()				
 		

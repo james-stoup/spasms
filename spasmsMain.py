@@ -1,6 +1,8 @@
 import psycopg2
 import genTweet
 import generateTwitterUser
+import exportJson
+import math
 
 
 def main():
@@ -15,9 +17,10 @@ def main():
 	numberOfPosts = raw_input("Number of posts: ")
 	sentimentOfPosts = raw_input("Positive (pos) or Negative (neg) posts: ")
 	nounOfPosts = raw_input("Please input noun relating to topic for tweets: ")
+	nameOfJsonFile = raw_input("Name for json file output: ")
 
 	genderPercentage = int(genderPercentage)/100
-	numberOfFemales = int(numberOfUsers)*genderPercentage
+	numberOfFemales = int(int(numberOfUsers)*genderPercentage)
 	numberOfMales = int(numberOfUsers) - numberOfFemales
 
 	if typeOfPosts.lower() == "twitter":
@@ -30,6 +33,7 @@ def main():
 		print("Feature under development")
 
 	conn.commit()
+	exportJson.exportTweets(cur, topicName, nameOfJsonFile)
 
 if __name__ == '__main__':
 	main()
