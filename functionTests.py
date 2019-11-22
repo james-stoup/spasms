@@ -8,11 +8,11 @@ print("Connected to database: spasms")
 
 cur = conn.cursor()
 
-sentence = sentenceGenerator.generateSentence(cur, "Trump", "pos")
-print(sentence)
+#sentence = sentenceGenerator.generateSentence(cur, "Trump", "pos")
+#print(sentence)
 
-tweet = genTweet(cur, '----','Trump','neg','topic1',2);
-print(tweet);
+#tweet = genTweet(cur, '----','Trump','neg','topic1',2);
+#print(tweet);
 
 exportTweets(cur,"topic1","tweets.json");
 print("tweets exported");
