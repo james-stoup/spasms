@@ -19,11 +19,11 @@ def exportTweets(cursor, topic, fileName):
 				"user_mentions": [],
 				"symbols": []
 			},
-			"lang":"en",
+			"lang":tweet[10],
 			"user": {
 				"id": userId,
 				"id_str": user[1],
-				"name": user[12],
+				"name": user[11],
 				"screen_name": user[2],
 				"location": user[3],
 				"created_at": str(user[4]),

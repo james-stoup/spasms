@@ -107,7 +107,7 @@ def insertTwitterUsers(cur,groupName,numUsers,gender_type):
 	
 		twitterUser = createTwitterUser(cur,groupName,gender_type)
 								
-		cur.execute("INSERT INTO twitter_users (id,id_str,name,screen_name,location,created_at,followers,favourites,statuses,description,gender,group_name) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",twitterUser)
+		cur.execute("INSERT INTO twitter_users (id,id_str,name,screen_name,location,created_at,followers,favourites,statuses,description,gender,group_name) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",twitterUser)
 	
 	#conn.commit()				
 		

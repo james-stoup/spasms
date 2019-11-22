@@ -29,11 +29,13 @@ def main():
 		if numberOfMales > 0:
 			generateTwitterUser.insertTwitterUsers(cur, groupName, numberOfMales, "m")
 		genTweet.genTweet(cur, groupName, nounOfPosts, sentimentOfPosts, topicName, int(numberOfPosts))
+		conn.commit()
+	        exportJson.exportTweets(cur, topicName, nameOfJsonFile)
+		print("Twitter posts have been generated and file successfully exported")
 	elif typeOfPosts.lower() == "facebook":
 		print("Feature under development")
 
-	conn.commit()
-	exportJson.exportTweets(cur, topicName, nameOfJsonFile)
+	conn.close()
 
 if __name__ == '__main__':
 	main()
