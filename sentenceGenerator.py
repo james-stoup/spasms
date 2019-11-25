@@ -30,17 +30,17 @@ def generateSentence(cur, noun, sentim):
 	
 	fragSplit = frag.split(" ")
 	for x in range(len(fragSplit)):
-		if fragSplit[x] == '<noun>':
-			fragSplit[x] = noun
-		elif fragSplit[x] == '<adjective>':
+		if "<noun>" in fragSplit[x]:
+			fragSplit[x] = fragSplit[x].replace("<noun>", noun)
+		elif "<adjective>" in fragSplit[x]:
 			randAdjNum = random.randrange(0, numOfAdjectives, 1)
-			fragSplit[x] = adjectives[randAdjNum][0]
-		elif fragSplit[x] == '<adverb':
+			fragSplit[x] = fragSplit[x].replace("<adjective>", adjectives[randAdjNum][0])
+		elif "<adverb>" in fragSplit[x]:
 			randAdvNum = random.randrange(0, numOfAdverbs, 1)
-			fragSplit[x] = adverbs[randAdvNum][0]
-		elif fragSplit[x] == '<verb>':
+			fragSplit[x] = fragSplit[x].replace("<adverb>", adverbs[randAdvNum][0])
+		elif "<verb>" in fragSplit[x]:
 			randVerbNum = random.randrange(0, numOfVerbs, 1)
-			fragSplit[x] = verbs[randVerbNum][0]
+			fragSplit[x] = fragSplit[x].replace("<verb>", verbs[randVerbNum][0])
 
 
 	fragJoin = " ".join(fragSplit)
