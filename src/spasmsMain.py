@@ -79,7 +79,7 @@ def main():
 			
 		conn.commit()
 		exportJson.exportTweets(cur, topicName, outputFileLoc)
-		print("Twitter posts have been generated and file successfully exported")
+		print("Twitter posts have been generated and file successfully exported to : %s" % os.path.abspath(outputFileLoc))
 			
 	elif typeOfPosts.lower() == "facebook":
 		print("Feature under development")

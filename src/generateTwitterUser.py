@@ -150,8 +150,11 @@ def insertTwitterUsers(cur, groupName, numUsers, gender_type):
 
 	for i in range(numUsers):
 		twitterUser = createTwitterUser(cur, groupName, gender_type)
-								
-		cur.execute("INSERT INTO twitter_users (id, id_str, name, screen_name, location, created_at, followers, favourites, statuses, description, gender, group_name) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", twitterUser)
+
+		try:
+			cur.execute("INSERT INTO twitter_users (id, id_str, name, screen_name, location, created_at, followers, favourites, statuses, description, gender, group_name) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", twitterUser)
+		except Exception as e:
+			print("Unable to insert into twitter_users : %s" % e)
 	
 	#conn.commit()				
 		

@@ -1,0 +1,10 @@
+# Usage Guide
+
+## Viewing the Output
+After running the spasms tool it is often helpful to view the output in the terminal. The easiest way to view json data is with python's build in json tool. Use it like so:
+
+```
+python -m json.tool < ../output/my_output.json
+```
+
+
