@@ -7,6 +7,7 @@ def genTweet(cursor, group, noun, sentiment, topic, numOfTweets):
 	cursor.execute("SELECT * FROM Twitter_users WHERE group_name=%s", (group,));
 	numUsers = cursor.rowcount;
 	users = cursor.fetchall();
+
 	for x in range(numOfTweets):
 		i = random.randint(1,numUsers);
 		userId = users[i-1][0];
@@ -19,6 +20,7 @@ def genTweet(cursor, group, noun, sentiment, topic, numOfTweets):
 		randIdStr = "0"*(19-len(randIdStr)) + randIdStr;
 		lang = "en";
 		cursor.execute("INSERT INTO Twitter_posts (user_id,id,id_str,created_at,text,topic,language) VALUES (%s,%s,%s,%s,%s,%s,%s)",(userId,randId,randIdStr,randTime,text,topic,lang));
+		
 	return (userId, randId, randIdStr, randTime, text);
 
 

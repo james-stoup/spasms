@@ -7,18 +7,23 @@ import generateTwitterUser
 import exportJson
 import math
 import sys
-
+import os
 
 def connect_to_db(db_name):
 	"""Try to connect to the DB, return connection if successful"""
-	conn = psycopg2.connect(
-		database=db_name,
-		user="postgres",
-		password="wowarcraft12",
-		host="/var/run/postgresql",
-		port="5432",
-	)
 
+	try:
+		conn = psycopg2.connect(
+			database=db_name,
+			user="postgres",
+			password="wowarcraft12",
+			host="/var/run/postgresql",
+			port="5432",
+		)
+	except:
+		print("Unable to connect to database, ensure that postgres is running")
+		sys.exit(1)
+	
 	return conn
 
 
@@ -47,6 +52,11 @@ def main():
 	nounOfPosts = get_input("Enter noun relating to topic")
 	nameOfJsonFile = get_input("Name for json file output")
 
+	# make sure the file is outputed as a .json file
+	if not nameOfJsonFile.endswith(".json"):
+		nameOfJsonFile = "%s.json" % nameOfJsonFile
+	outputFileLoc = os.path.join("../output", nameOfJsonFile)
+		
 	genderPercentage = int(genderPercentage) / 100
 	numberOfFemales = int(int(numberOfUsers) * genderPercentage)
 	numberOfMales = int(numberOfUsers) - numberOfFemales
@@ -68,7 +78,7 @@ def main():
 		)
 			
 		conn.commit()
-		exportJson.exportTweets(cur, topicName, nameOfJsonFile)
+		exportJson.exportTweets(cur, topicName, outputFileLoc)
 		print("Twitter posts have been generated and file successfully exported")
 			
 	elif typeOfPosts.lower() == "facebook":
