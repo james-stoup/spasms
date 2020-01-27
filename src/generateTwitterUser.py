@@ -19,6 +19,7 @@ from genTimestamp import generateTime
 
 def grab_data(cur, statement_1, statement_2):
 	
+
 	cur.execute(statement_1)
 	firstRow = cur.fetchone()[0]
 	randVal = random.randrange(0, firstRow, 1)

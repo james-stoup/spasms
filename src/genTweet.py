@@ -2,7 +2,7 @@ import psycopg2;
 import random;
 from genTimestamp import generateTime;
 from sentenceGenerator import generateSentence;
-
+import pdb
 def genTweet(cursor, group, noun, sentiment, topic, numOfTweets):
 	cursor.execute("SELECT * FROM Twitter_users WHERE group_name=%s", (group,));
 	numUsers = cursor.rowcount;
