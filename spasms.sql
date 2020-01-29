@@ -111,7 +111,8 @@ CREATE TABLE twitter_posts (
     urls character varying(100),
     user_mention character varying(15),
     symbols character varying(500),
-    topic character varying(300) NOT NULL
+    topic character varying(300) NOT NULL,
+    language character varying(100) NOT NULL
 );
 
 
@@ -133,7 +134,6 @@ CREATE TABLE twitter_users (
     description character varying(160),
     gender gender NOT NULL,
     group_name character varying(250),
-    language character varying(50),
     name character varying(50)
 );
 
@@ -20735,7 +20735,7 @@ COPY sentence_frags (id, fragment) FROM stdin;
 -- Data for Name: twitter_posts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY twitter_posts (user_id, id, id_str, created_at, text, hashtags, urls, user_mention, symbols, topic) FROM stdin;
+COPY twitter_posts (user_id, id, id_str, created_at, text, hashtags, urls, user_mention, symbols, topic, language) FROM stdin;
 \.
 
 
@@ -20743,13 +20743,7 @@ COPY twitter_posts (user_id, id, id_str, created_at, text, hashtags, urls, user_
 -- Data for Name: twitter_users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY twitter_users (id, id_str, screen_name, location, created_at, followers, favourites, statuses, description, gender, group_name, language, name) FROM stdin;
-1	000000001	user1	Fairfax	2018-10-25 12:00:00	50	100	25	I am a student	f	group1	\N	\N
-7484156	7484156  	apage	batavia	2010-07-07 12:49:48	874	1997	6161	stuff	m	---	eng	aubrey page
-12929102	12929102 	Mchung	Lynn	2012-11-29 05:57:30	1519	3279	7043	Stella Vanderley broke off in the club, and I saw what he was a Napoleon. "Eighty-seven, Jeeves. At how much my nephew Francis?" "Absolutely." "It be	m	----	eng	Mason Chung
-4575037	4575037  	Ehiggins	Burlington	2011-08-28 23:13:14	790	2980	5014	rot, but I won't stand for being expected to see him? Whom shall I say?" "He would not know my own case, after a little It	m	----	eng	Elizabeth Higgins
-94668699	94668699 	Ograves	Bostonia	2000-07-06 07:38:37	5069	8789	8931	of his own hands. All right so far, what? But mark the sequel. Temperamental Clarence, being a silly ass, he was her only nephew, his was	m	----	eng	Owen Graves
-82415971	82415971 	Jrainey	Glenview	2019-03-27 09:37:07	3553	6587	6068	he said, "I've got it up for the fact that she pulled herself together and made out to answer it. "Yes, sir. I had a deal."	m	----	eng	Jacob Rainey
+COPY twitter_users (id, id_str, screen_name, location, created_at, followers, favourites, statuses, description, gender, group_name, name) FROM stdin;
 \.
 
 
@@ -58020,14 +58014,6 @@ ALTER TABLE ONLY twitter_posts
 
 ALTER TABLE ONLY twitter_posts
     ADD CONSTRAINT twitter_posts_pkey PRIMARY KEY (id);
-
-
---
--- Name: twitter_posts_user_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY twitter_posts
-    ADD CONSTRAINT twitter_posts_user_id_key UNIQUE (user_id);
 
 
 --
