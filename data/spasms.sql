@@ -137,7 +137,7 @@ ALTER TABLE public.twitter_posts OWNER TO postgres;
 CREATE TABLE twitter_users (
     id numeric(9,0) NOT NULL,
     id_str character(9) NOT NULL,
-    screen_name character varying(15) NOT NULL,
+    screen_name character varying(100) NOT NULL,
     location character varying(50),
     created_at timestamp without time zone NOT NULL,
     followers numeric(9,0) NOT NULL,
