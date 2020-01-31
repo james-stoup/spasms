@@ -124,7 +124,8 @@ CREATE TABLE twitter_posts (
     urls character varying(100),
     user_mention character varying(15),
     symbols character varying(500),
-    topic character varying(300) NOT NULL
+    topic character varying(300) NOT NULL,
+    language character varying(100)
 );
 
 
@@ -21883,7 +21884,7 @@ COPY sentence_frags (id, fragment) FROM stdin;
 -- Data for Name: twitter_posts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY twitter_posts (user_id, id, id_str, created_at, text, hashtags, urls, user_mention, symbols, topic) FROM stdin;
+COPY twitter_posts (user_id, id, id_str, created_at, text, hashtags, urls, user_mention, symbols, topic, language) FROM stdin;
 \.
 
 
