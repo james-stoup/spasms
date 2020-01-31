@@ -16,15 +16,27 @@ def generateSentence(cur, noun, sentim):
 	elif sentim == "neg":
 		maxSentim = 0;
 
-	cur.execute("SELECT word FROM words WHERE (sentiment > %s and sentiment < %s) and (type = 'adjective')", (minSentim,maxSentim))
+	# cur.execute("SELECT word FROM words WHERE (sentiment > %s and sentiment < %s) and (type = 'adjective')", (minSentim,maxSentim))
+	# numOfAdjectives = cur.rowcount
+	# adjectives = cur.fetchall()
+
+	# cur.execute("SELECT word FROM words WHERE (sentiment > %s and sentiment < %s) and (type = 'adverb')", (minSentim,maxSentim))
+	# numOfAdverbs = cur.rowcount
+	# adverbs = cur.fetchall()
+
+	# cur.execute("SELECT word FROM words WHERE (sentiment > %s and sentiment < %s) and (type = 'verb')", (minSentim,maxSentim))
+	# numOfVerbs = cur.rowcount
+	# verbs = cur.fetchall()
+
+	cur.execute("SELECT word FROM common_words WHERE (sentiment > %s and sentiment < %s) and (type = 'adjective')", (minSentim,maxSentim))
 	numOfAdjectives = cur.rowcount
 	adjectives = cur.fetchall()
 
-	cur.execute("SELECT word FROM words WHERE (sentiment > %s and sentiment < %s) and (type = 'adverb')", (minSentim,maxSentim))
+	cur.execute("SELECT word FROM common_words WHERE (sentiment > %s and sentiment < %s) and (type = 'adverb')", (minSentim,maxSentim))
 	numOfAdverbs = cur.rowcount
 	adverbs = cur.fetchall()
 
-	cur.execute("SELECT word FROM words WHERE (sentiment > %s and sentiment < %s) and (type = 'verb')", (minSentim,maxSentim))
+	cur.execute("SELECT word FROM common_words WHERE (sentiment > %s and sentiment < %s) and (type = 'verb')", (minSentim,maxSentim))
 	numOfVerbs = cur.rowcount
 	verbs = cur.fetchall()
 	
