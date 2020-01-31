@@ -47,7 +47,6 @@ def main():
 	numberOfUsers = get_input("Number of users")
 	genderPercentage = get_input("Percent of users to be female")
 	typeOfPosts = get_input("Select Post Type (Twitter/Facebook)")
-	pdb.set_trace()
 	numberOfPosts = get_input("Number of posts")
 	sentimentOfPosts = get_input("Select Attitude (pos/neg")
 	nounOfPosts = get_input("Enter noun relating to topic")
@@ -68,7 +67,6 @@ def main():
 
 		if numberOfMales > 0:
 			generateTwitterUser.insertTwitterUsers(cur, groupName, numberOfMales, "m")
-		pdb.set_trace()
 		numPosts = int(numberOfPosts)		
 		genTweet.genTweet(
 			cur,

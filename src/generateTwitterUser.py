@@ -4,41 +4,27 @@ from random import seed
 from random import randint
 from genDescription import generateDescription
 from genTimestamp import generateTime
-
-# def connect():
-# 	conn = psycopg2.connect(database="spasms", user="postgres", password="1514729", host="/var/run/postgresql", port="5432")
-# 	print("Connected to database: spasms")
-
-	
-# 	return conn
-
-#following line for picking between male and female name
-#cur.execute("SELECT COUNT(*) FROM names")
-
-
+import sys
 
 def grab_data(cur, statement_1, statement_2):
-	
+	try:
+		cur.execute(statement_1)
+		firstRow = cur.fetchone()[0]
+		randVal = random.randrange(0, firstRow, 1)
 
-	cur.execute(statement_1)
-	firstRow = cur.fetchone()[0]
-	randVal = random.randrange(0, firstRow, 1)
+		cur.execute(statement_2)
+		rows = cur.fetchall()
+		result = rows[randVal][0]
 
-	cur.execute(statement_2)
-	rows = cur.fetchall()
-	result = rows[randVal][0]
-
-	return result
-
-
-
-
+		return result
+	except:
+		print("Error while trying to execute SQL query!")
+		sys.exit(0)
 
 #cur is a connection to the database
 #groupName is the group of the individuals created
-#gender_type takes in a argument of 'first_m' or 'first_f' and is the gender of the individuals crated
+#gender_type takes in a argument of 'm' or 'f' and is the gender of the individuals crated
 def createTwitterUser(cur, groupName, gender_type):
-
 	gender = 'first_f'
 	if gender_type == 'm':
 		gender = 'first_m'
@@ -115,11 +101,6 @@ def createTwitterUser(cur, groupName, gender_type):
 	start = '2000-01-01 12:00:00';
 	end = '2019-11-07 12:00:00';
 
-	# if gender_type == 'first_m':
-	# 	gender = 'm'
-	# else:
-	# 	gender = 'f'
-
 	tupleTwitterUser = (
 		randId, 
 		randIdStr, 
@@ -135,8 +116,6 @@ def createTwitterUser(cur, groupName, gender_type):
 		groupName)
 	
 	return tupleTwitterUser
-
-
 
 def insertTwitterUsers(cur, groupName, numUsers, gender_type):
 	#add exception handling here	
