@@ -36,21 +36,21 @@ def get_input(prompt):
 		else:
 			return user_input
 
-def main():
+def spasms_main(groupName,topicName,numberOfUsers,genderPercentage,typeOfPosts,numberOfPosts,sentimentOfPosts,nounOfPosts,nameOfJsonFile):
 
 	conn = connect_to_db("spasms")
 	cur = conn.cursor()
 
 	# get input
-	groupName = get_input("Group name")
-	topicName = get_input("Topic name")
-	numberOfUsers = get_input("Number of users")
-	genderPercentage = get_input("Percent of users to be female")
-	typeOfPosts = get_input("Select Post Type (Twitter/Facebook)")
-	numberOfPosts = get_input("Number of posts")
-	sentimentOfPosts = get_input("Select Attitude (pos/neg")
-	nounOfPosts = get_input("Enter noun relating to topic")
-	nameOfJsonFile = get_input("Name for json file output")
+	#groupName = get_input("Group name")
+	#topicName = get_input("Topic name")
+	#numberOfUsers = get_input("Number of users")
+	#genderPercentage = get_input("Percent of users to be female")
+	#typeOfPosts = get_input("Select Post Type (Twitter/Facebook)")
+	#numberOfPosts = get_input("Number of posts")
+	#sentimentOfPosts = get_input("Select Attitude (pos/neg")
+	#nounOfPosts = get_input("Enter noun relating to topic")
+	#nameOfJsonFile = get_input("Name for json file output")
 
 	# make sure the file is outputed as a .json file
 	if not nameOfJsonFile.endswith(".json"):
@@ -90,4 +90,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    #main()
+    spasms_main('yankee','hong kong',10,50,'Twitter',15,'pos','obama','hurricane.txt')
