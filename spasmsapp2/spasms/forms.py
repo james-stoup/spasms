@@ -10,4 +10,5 @@ class NameForm(forms.Form):
 	num_posts = forms.IntegerField(initial=1, min_value=1)
 	sentiments = [('pos','positive'),('neg','negative')]
 	sentiment = forms.ChoiceField(choices=sentiments,label='Sentiment')
-	#topic_noun = forms.CharField(lebel='Noun relating to topic', max_length=100)
+	topic_noun = forms.CharField(label='Noun relating to topic', max_length=100)
+	json_output = forms.CharField(label='Name for json file output', max_length=100)
