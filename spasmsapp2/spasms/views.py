@@ -1,8 +1,11 @@
-from django.shortcuts import render
+import sys,os
+sys.path.append(os.path.abspath(os.path.join('..','src')))
 
-# Create your views here.
+from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from .forms import NameForm
+
+from spasmsMain import spasms_main
 
 def index(request):
 	return HttpResponse("Hello, world. You're at the polls index.")
@@ -18,9 +21,9 @@ def get_name(request):
 		# check whether it's valid:
 		if form.is_valid():
 			# process the data in form.cleaned_data as required
-			# ..
-			# redirect to a new URL:
-			print(form.cleaned_data)
+			data = form.cleaned_data
+			spasms_main(data['group_name'],data['topic_name'],data['num_users'],data['percent_female'],data['twitter_or_facebook'],data['num_posts'],data['sentiment'],data['topic_noun'],data['json_output'])	
+			#redirect to new url
 			return HttpResponseRedirect('/thanks/')
 	# if a GET (or any other method) we'll create a blank form
 	else:
