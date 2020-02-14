@@ -50,6 +50,8 @@ def spasms_main(groupName,topicName,numberOfUsers,genderPercentage,typeOfPosts,n
 	#numberOfPosts = get_input("Number of posts")
 	#sentimentOfPosts = get_input("Select Attitude (pos/neg")
 	#nounOfPosts = get_input("Enter noun relating to topic")
+	#startingDate = get_input("Enter starting date")
+	#endingDate = get_input("Enter ending date")
 	#nameOfJsonFile = get_input("Name for json file output")
 
 	# make sure the file is outputed as a .json file
@@ -63,7 +65,7 @@ def spasms_main(groupName,topicName,numberOfUsers,genderPercentage,typeOfPosts,n
 
 	if typeOfPosts.lower() == "twitter":
 		if numberOfFemales > 0:
-			generateTwitterUser.insertTwitterUsers(cur, groupName, numberOfFemales, "f")
+			generateTwitterUser.insertTwitterUsers(cur, groupName, numberOfFemales, "f",)
 
 		if numberOfMales > 0:
 			generateTwitterUser.insertTwitterUsers(cur, groupName, numberOfMales, "m")
@@ -91,4 +93,4 @@ def spasms_main(groupName,topicName,numberOfUsers,genderPercentage,typeOfPosts,n
 
 if __name__ == "__main__":
     #main()
-    spasms_main('yankee','hong kong',10,50,'Twitter',15,'pos','obama','hurricane.txt')
+   #spasms_main('yankee','hong kong',10,50,'Twitter',15,'pos','obama','hurricane.txt')
