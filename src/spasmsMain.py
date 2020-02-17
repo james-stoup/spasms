@@ -21,7 +21,10 @@ def connect_to_db(db_name):
             host="/var/run/postgresql",
             port="5432",
         )
+    except OSError as err:
+        print("OS error: {0}".format(err))
     except:
+        print("Unexpected error:", sys.exc_info()[0])
         print("Unable to connect to database, ensure that postgres is running")
         sys.exit(1)
 
@@ -39,6 +42,10 @@ def get_input(prompt):
 
 
 def main():
+
+    # First let's try to hit the database
+    conn = connect_to_db("spasms")
+
     # get input
     groupName = get_input("Group name")
     topicName = get_input("Topic name")
@@ -51,7 +58,10 @@ def main():
     endDate = get_input("Enter ending date")
     nounOfPosts = get_input("Enter noun relating to topic")
     nameOfJsonFile = get_input("Name for json file output")
+
+    # pass in the params to kick it off
     spasms_main(
+        conn,
         groupName,
         topicName,
         numberOfUsers,
@@ -67,6 +77,7 @@ def main():
 
 
 def spasms_main(
+    conn,
     groupName,
     topicName,
     numberOfUsers,
@@ -80,7 +91,6 @@ def spasms_main(
     nameOfJsonFile,
 ):
 
-    conn = connect_to_db("spasms")
     cur = conn.cursor()
 
     # make sure the file is outputed as a .json file
