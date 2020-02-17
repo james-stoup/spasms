@@ -16,7 +16,7 @@ def connect_to_db(db_name):
 		conn = psycopg2.connect(
 			database=db_name,
 			user="postgres",
-			password="",
+			password="1514729",
 			host="/var/run/postgresql",
 			port="5432",
 		)
@@ -45,12 +45,13 @@ def main():
 	typeOfPosts = get_input("Select Post Type (Twitter/Facebook)")
 	numberOfPosts = get_input("Number of posts")
 	sentimentOfPosts = get_input("Select Attitude (pos/neg)")
+	startDate = get_input("Enter starting date")
+	endDate = get_input("Enter ending date")
 	nounOfPosts = get_input("Enter noun relating to topic")
 	nameOfJsonFile = get_input("Name for json file output")
+	spasms_main(groupName, topicName, numberOfUsers, genderPercentage, typeOfPosts, numberOfPosts, sentimentOfPosts, nounOfPosts,startDate,endDate, nameOfJsonFile)
 
-	spasms_main(groupName, topicName, numberOfUsers, genderPercentage, typeOfPosts, numberOfPosts, sentimentOfPosts, nounOfPosts, nameOfJsonFile)
-
-def spasms_main(groupName,topicName,numberOfUsers,genderPercentage,typeOfPosts,numberOfPosts,sentimentOfPosts,nounOfPosts,nameOfJsonFile):
+def spasms_main(groupName,topicName,numberOfUsers,genderPercentage,typeOfPosts,numberOfPosts,sentimentOfPosts,nounOfPosts,startDate,endDate,nameOfJsonFile):
 
 	conn = connect_to_db("spasms")
 	cur = conn.cursor()
@@ -66,10 +67,10 @@ def spasms_main(groupName,topicName,numberOfUsers,genderPercentage,typeOfPosts,n
 
 	if typeOfPosts.lower() == "twitter":
 		if numberOfFemales > 0:
-			generateTwitterUser.insertTwitterUsers(cur, groupName, numberOfFemales, "f",)
+			generateTwitterUser.insertTwitterUsers(cur, groupName, numberOfFemales, "f",startDate,endDate)
 
 		if numberOfMales > 0:
-			generateTwitterUser.insertTwitterUsers(cur, groupName, numberOfMales, "m")
+			generateTwitterUser.insertTwitterUsers(cur, groupName, numberOfMales, "m",startDate,endDate)
 		numPosts = int(numberOfPosts)		
 		genTweet.genTweet(
 			cur,
@@ -93,9 +94,4 @@ def spasms_main(groupName,topicName,numberOfUsers,genderPercentage,typeOfPosts,n
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    #main()
-   #spasms_main('yankee','hong kong',10,50,'Twitter',15,'pos','obama','hurricane.txt')
-=======
     main()
->>>>>>> c6bd9b0bcf8d9cf8836ff061a662599b8062f065

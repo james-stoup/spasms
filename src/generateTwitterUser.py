@@ -24,7 +24,7 @@ def grab_data(cur, statement_1, statement_2):
 #cur is a connection to the database
 #groupName is the group of the individuals created
 #gender_type takes in a argument of 'm' or 'f' and is the gender of the individuals crated
-def createTwitterUser(cur, groupName, gender_type):
+def createTwitterUser(cur, groupName, gender_type,startDate,endDate):
 	gender = 'first_f'
 	if gender_type == 'm':
 		gender = 'first_m'
@@ -98,8 +98,10 @@ def createTwitterUser(cur, groupName, gender_type):
 
 	description = generateDescription(10)
 	
-	start = '2000-01-01 12:00:00';
-	end = '2019-11-07 12:00:00';
+	start = startDate + " 12:00:00"
+	end = endDate + " 12:00:00"
+	#start = '2000-01-01 12:00:00';
+	#end = '2019-11-07 12:00:00';
 
 	tupleTwitterUser = (
 		randId, 
@@ -117,7 +119,7 @@ def createTwitterUser(cur, groupName, gender_type):
 	
 	return tupleTwitterUser
 
-def insertTwitterUsers(cur, groupName, numUsers, gender_type):
+def insertTwitterUsers(cur, groupName, numUsers, gender_type,startDate,endDate):
 	#add exception handling here	
 #	howManyUsers = int(raw_input('Enter how many users you want: '))
 #	outputFileName = raw_input('Enter output file name: ')
@@ -129,7 +131,7 @@ def insertTwitterUsers(cur, groupName, numUsers, gender_type):
 
 
 	for i in range(numUsers):
-		twitterUser = createTwitterUser(cur, groupName, gender_type)
+		twitterUser = createTwitterUser(cur, groupName, gender_type,startDate,endDate)
 
 		try:
 			cur.execute("INSERT INTO twitter_users (id, id_str, name, screen_name, location, created_at, followers, favourites, statuses, description, gender, group_name) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", twitterUser)
@@ -137,7 +139,7 @@ def insertTwitterUsers(cur, groupName, numUsers, gender_type):
 			print("Unable to insert into twitter_users : %s" % e)
 	
 	#conn.commit()				
-		
+	
 
 # conn = connect()
 # cur = conn.cursor()
