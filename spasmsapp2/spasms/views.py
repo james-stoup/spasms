@@ -22,10 +22,11 @@ def get_name(request):
 		if form.is_valid():
 			# process the data in form.cleaned_data as required
 			data = form.cleaned_data
-			spasms_main(data['group_name'],data['topic_name'],data['num_users'],data['percent_female'],data['twitter_or_facebook'],data['num_posts'],data['sentiment'],data['topic_noun'],data['json_output'])	
+			print(data)
+			#spasms_main(data['group_name'],data['topic_name'],data['num_users'],data['percent_female'],data['twitter_or_facebook'],data['num_posts'],data['sentiment'],data['topic_noun'],data['json_output'])	
 			#redirect to new url
 			return HttpResponseRedirect('/thanks/')
 	# if a GET (or any other method) we'll create a blank form
 	else:
 		form = NameForm()
-	return render(request, 'name.html', {'form': form})
+	return render(request, 'form_template.html', {'form': form})

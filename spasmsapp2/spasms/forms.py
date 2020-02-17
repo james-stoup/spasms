@@ -1,4 +1,5 @@
 from django import forms
+from django.db import models
 
 class NameForm(forms.Form):
 	group_name = forms.CharField(label='Group name', max_length=100)
@@ -11,4 +12,6 @@ class NameForm(forms.Form):
 	sentiments = [('pos','positive'),('neg','negative')]
 	sentiment = forms.ChoiceField(choices=sentiments,label='Sentiment')
 	topic_noun = forms.CharField(label='Noun relating to topic', max_length=100)
+	start_date = forms.DateTimeField(input_formats=['%m/%d/%Y %H:%M'])
+	end_date = forms.DateTimeField(input_formats=['%m/%d/%Y %H:%M'])
 	json_output = forms.CharField(label='Name for json file output', max_length=100)
