@@ -3,8 +3,8 @@ sys.path.append(os.path.abspath(os.path.join('..','src')))
 
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
+from datetime import datetime
 from .forms import InputModelForm
-
 from spasmsMain import spasms_main
 
 def index(request):
@@ -22,8 +22,10 @@ def get_name(request):
 		if form.is_valid():
 			# process the data in form.cleaned_data as required
 			data = form.cleaned_data
+			start_date = str(data['start_date'])
+			end_date = str(data['end_date'])
 			print(data)
-			#spasms_main(data['group_name'],data['topic_name'],data['num_users'],data['percent_female'],data['twitter_or_facebook'],data['num_posts'],data['sentiment'],data['topic_noun'],data['json_output'])	
+			spasms_main(data['group_name'],data['topic_name'],data['num_users'],data['percent_female'],data['twitter_or_facebook'],data['num_posts'],data['sentiment'],data['topic_noun'],start_date,end_date,data['json_output'])	
 			#redirect to new url
 			return HttpResponseRedirect('/thanks/')
 	# if a GET (or any other method) we'll create a blank form
