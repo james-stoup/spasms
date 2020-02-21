@@ -11,6 +11,8 @@ class InputModel(models.Model):
 	sentiments = [('pos','positive'),('neg','negative')]
 	sentiment = models.CharField(max_length=100, choices=sentiments, verbose_name='Sentiment')
 	topic_noun = models.CharField(max_length=100, verbose_name='Noun relating to topic')
+	start_date = models.DateField()
+	end_date = models.DateField()
 	json_output = models.CharField(max_length=100, verbose_name='Name for json file output')
 
 	def __str__(self):
