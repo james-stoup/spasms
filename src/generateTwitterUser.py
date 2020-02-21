@@ -155,6 +155,11 @@ def createTwitterUser(cur, groupName, gender_type, startDate, endDate):
 
 
 def insertTwitterUsers(cur, groupName, numUsers, gender_type, startDate, endDate):
+
+    # if there are no users, just bail
+    if numUsers < 1:
+        return
+
     # add exception handling here
     # 	howManyUsers = int(raw_input('Enter how many users you want: '))
     # 	outputFileName = raw_input('Enter output file name: ')
