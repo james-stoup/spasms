@@ -9,7 +9,7 @@ class InputModel(models.Model):
 	percent_female = models.PositiveIntegerField(default=50, validators=[MaxValueValidator(100)])
 	post_options = [('twitter','Twitter'),('facebook','Facebook')]
 	twitter_or_facebook = models.CharField(max_length=100, choices=post_options, default='twitter', verbose_name='Type of posts')
-	num_posts = models.IntegerField(default=0)
+	num_posts = models.PositiveIntegerField(default=0)
 	sentiments = [('pos','positive'),('neg','negative')]
 	sentiment = models.CharField(max_length=100, choices=sentiments, verbose_name='Sentiment')
 	topic_noun = models.CharField(max_length=100, verbose_name='Noun relating to topic')
