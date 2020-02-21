@@ -29,4 +29,4 @@ def get_name(request):
 	# if a GET (or any other method) we'll create a blank form
 	else:
 		form = InputModelForm()
-	return render(request, 'name.html', {'form': form})
+	return render(request, 'form_template.html', {'form': form})
