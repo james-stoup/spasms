@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'spasms.apps.SpasmsConfig'
 ]
 
 MIDDLEWARE = [
@@ -78,7 +79,7 @@ DATABASES = {
 	'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'spasms',
         'USER': 'postgres',
-        'PASSWORD': 'password',
+        'PASSWORD': '',
         'HOST': '/var/run/postgresql',
         'PORT': '5432',
     }
