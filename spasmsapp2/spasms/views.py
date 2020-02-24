@@ -6,12 +6,14 @@ from django.http import HttpResponse,HttpResponseRedirect
 from datetime import datetime
 from .forms import InputModelForm
 from spasmsMain import spasms_main
+from django.contrib import messages
 
 def index(request):
-	return HttpResponse("Hello, world. You're at the polls index.")
+	return HttpResponse("Hello, world. You're at the polls index")
 
 def thanks(request):
-	return HttpResponse("Thank you for your submission!")
+	return render(request,'thanks.html')
+
 
 def get_name(request):
 	# if this is a POST request we need to process the form data
@@ -24,7 +26,11 @@ def get_name(request):
 			data = form.cleaned_data
 			start_date = str(data['start_date'])
 			end_date = str(data['end_date'])
-			print(data)
+			nameOfJsonFile = data['json_output']
+			outputFileLoc = os.path.join("../../output",nameOfJsonFile)
+			absOutputFileLoc = os.path.abspath(outputFileLoc)
+			messages.success(request,absOutputFileLoc)			
+			#print(data)
 			spasms_main(data['group_name'],data['topic_name'],data['num_users'],data['percent_female'],data['twitter_or_facebook'],data['num_posts'],data['sentiment'],data['topic_noun'],start_date,end_date,data['json_output'])	
 			#redirect to new url
 			return HttpResponseRedirect('/thanks/')
