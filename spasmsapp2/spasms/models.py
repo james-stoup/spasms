@@ -43,11 +43,11 @@ class Exercise(models.Model):
 class TweetRun(models.Model):
     label = models.CharField(max_length=250)
     created_on = models.DateTimeField(auto_now_add=True)
-    exercise = models.OneToOneField("Exercise")
+    exercise = models.OneToOneField("Exercise", on_delete=models.CASCADE)
 
 
 # each exercise is made up of users
-class TwitterUser(models.model):
+class TwitterUser(models.Model):
     # name data
     screen_name = models.CharField(max_length=250)
     first_name = models.CharField(max_length=250)
@@ -67,7 +67,7 @@ class TwitterUser(models.model):
 
 
 # each tweet can, but isn't require to, have a hashtag
-class HashTag(models.model):
+class HashTag(models.Model):
     author = models.OneToOneField(TwitterUser, on_delete=models.CASCADE)
     creation_time = models.DateTimeField()
     tag = models.CharField(max_length=100)
@@ -75,8 +75,8 @@ class HashTag(models.model):
 
 
 # basic tweet structure (add fields as needed)
-class Tweet(models.model):
+class Tweet(models.Model):
     author = models.OneToOneField(TwitterUser, on_delete=models.CASCADE)
     text = models.CharField(max_length=280)
     creation_time = models.DateTimeField()
-    hashtags = models.ForeignKey("HashTag")
+    hashtags = models.ForeignKey("HashTag", on_delete=models.CASCADE)
