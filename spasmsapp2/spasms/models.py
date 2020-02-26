@@ -76,7 +76,7 @@ class HashTag(models.Model):
 
 # basic tweet structure (add fields as needed)
 class Tweet(models.Model):
-    author = models.OneToOneField(TwitterUser, on_delete=models.CASCADE)
+    author = models.ForeignKey(TwitterUser, on_delete=models.CASCADE)
     text = models.CharField(max_length=280)
     creation_time = models.DateTimeField()
     hashtags = models.ForeignKey("HashTag", on_delete=models.CASCADE)
