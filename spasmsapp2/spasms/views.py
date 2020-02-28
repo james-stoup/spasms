@@ -6,7 +6,7 @@ sys.path.append(os.path.abspath(os.path.join("..", "src")))
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
-from .forms import InputModelForm
+from .forms import InputModelForm,ExerciseForm,TweetRunForm
 from spasmsMain import spasms_main
 from django.contrib import messages
 
@@ -20,8 +20,20 @@ def index(request):
 
 
 def thanks(request):
-    return render(request, "thanks.html")
+    return render(request, "thanks.html", {"messages":["Thank you for your submission!"]})
 
+def get_exercise_form(request):
+    if request.method == "POST":
+        form = ExerciseForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            print(data)
+            # redirect to new url
+            return HttpResponseRedirect("/thanks/")
+            # if a GET (or any other method) we'll create a blank form
+    else:
+        form = ExerciseForm()
+    return render(request, "exercise_form.html", {"form": form})
 
 def get_name(request):
     # if this is a POST request we need to process the form data

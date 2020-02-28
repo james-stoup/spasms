@@ -35,16 +35,22 @@ class InputModel(models.Model):
 
 # The largest unit that our data can be divided into
 class Exercise(models.Model):
-    name = models.CharField(max_length=250)
-    description = models.TextField()
-    logo = models.FilePathField(path="/img")
+	name = models.CharField(max_length=250)
+	description = models.TextField()
+	num_users = models.PositiveIntegerField(default=0)
+	percent_female = models.PositiveIntegerField(default=50, validators=[MaxValueValidator(100)])
+	logo = models.FilePathField(path="/img")
 
-
-class TweetRun(models.Model):
-    label = models.CharField(max_length=250)
-    created_on = models.DateTimeField(auto_now_add=True)
-    exercise = models.OneToOneField("Exercise", on_delete=models.CASCADE)
-
+class TweetRun(models.Model):	
+	label = models.CharField(max_length=250)
+	created_on = models.DateTimeField(auto_now_add=True)
+	num_posts = models.PositiveIntegerField(default=0)
+	sentiments = [("pos", "positive"), ("neg", "negative")]
+	sentiment = models.CharField(max_length=100, choices=sentiments, verbose_name="Sentiment")
+	topic_noun = models.CharField(max_length=100, verbose_name="Noun relating to topic")
+	start_date = models.DateField()
+	end_date = models.DateField()
+	exercise = models.OneToOneField("Exercise", on_delete=models.CASCADE)
 
 # each exercise is made up of users
 class TwitterUser(models.Model):
