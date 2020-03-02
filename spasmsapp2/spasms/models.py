@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-
+from datetime import datetime
 
 # Create your models here.
 class InputModel(models.Model):
@@ -46,10 +46,10 @@ class TweetRun(models.Model):
 	created_on = models.DateTimeField(auto_now_add=True)
 	num_posts = models.PositiveIntegerField(default=0)
 	sentiments = [("pos", "positive"), ("neg", "negative")]
-	sentiment = models.CharField(max_length=100, choices=sentiments, verbose_name="Sentiment")
-	topic_noun = models.CharField(max_length=100, verbose_name="Noun relating to topic")
-	start_date = models.DateField()
-	end_date = models.DateField()
+	sentiment = models.CharField(max_length=100, choices=sentiments, verbose_name="Sentiment", default='pos')
+	topic_noun = models.CharField(max_length=100, verbose_name="Noun relating to topic",default='none')
+	start_date = models.DateField(default=datetime.now())
+	end_date = models.DateField(default=datetime.now())
 	exercise = models.OneToOneField("Exercise", on_delete=models.CASCADE)
 
 # each exercise is made up of users
