@@ -445,6 +445,237 @@ CREATE TABLE sentence_frags (
 ALTER TABLE public.sentence_frags OWNER TO postgres;
 
 --
+-- Name: spasms_exercise; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE spasms_exercise (
+    id integer NOT NULL,
+    name character varying(250) NOT NULL,
+    description text NOT NULL,
+    logo character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.spasms_exercise OWNER TO postgres;
+
+--
+-- Name: spasms_exercise_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE spasms_exercise_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.spasms_exercise_id_seq OWNER TO postgres;
+
+--
+-- Name: spasms_exercise_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE spasms_exercise_id_seq OWNED BY spasms_exercise.id;
+
+
+--
+-- Name: spasms_hashtag; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE spasms_hashtag (
+    id integer NOT NULL,
+    creation_time timestamp with time zone NOT NULL,
+    tag character varying(100) NOT NULL,
+    author_id integer NOT NULL,
+    exercise_id integer NOT NULL
+);
+
+
+ALTER TABLE public.spasms_hashtag OWNER TO postgres;
+
+--
+-- Name: spasms_hashtag_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE spasms_hashtag_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.spasms_hashtag_id_seq OWNER TO postgres;
+
+--
+-- Name: spasms_hashtag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE spasms_hashtag_id_seq OWNED BY spasms_hashtag.id;
+
+
+--
+-- Name: spasms_inputmodel; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE spasms_inputmodel (
+    id integer NOT NULL,
+    group_name character varying(200) NOT NULL,
+    topic_name character varying(200) NOT NULL,
+    num_users integer NOT NULL,
+    percent_female integer NOT NULL,
+    twitter_or_facebook character varying(100) NOT NULL,
+    num_posts integer NOT NULL,
+    sentiment character varying(100) NOT NULL,
+    topic_noun character varying(100) NOT NULL,
+    start_date date NOT NULL,
+    end_date date NOT NULL,
+    json_output character varying(100) NOT NULL,
+    CONSTRAINT spasms_inputmodel_num_posts_8a5ab94c_check CHECK ((num_posts >= 0)),
+    CONSTRAINT spasms_inputmodel_num_users_b3bf4897_check CHECK ((num_users >= 0)),
+    CONSTRAINT spasms_inputmodel_num_users_check CHECK ((num_users >= 0)),
+    CONSTRAINT spasms_inputmodel_percent_female_30a1fcd8_check CHECK ((percent_female >= 0)),
+    CONSTRAINT spasms_inputmodel_percent_female_check CHECK ((percent_female >= 0))
+);
+
+
+ALTER TABLE public.spasms_inputmodel OWNER TO postgres;
+
+--
+-- Name: spasms_inputmodel_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE spasms_inputmodel_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.spasms_inputmodel_id_seq OWNER TO postgres;
+
+--
+-- Name: spasms_inputmodel_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE spasms_inputmodel_id_seq OWNED BY spasms_inputmodel.id;
+
+
+--
+-- Name: spasms_tweet; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE spasms_tweet (
+    id integer NOT NULL,
+    text character varying(280) NOT NULL,
+    creation_time timestamp with time zone NOT NULL,
+    author_id integer NOT NULL,
+    hashtags_id integer NOT NULL
+);
+
+
+ALTER TABLE public.spasms_tweet OWNER TO postgres;
+
+--
+-- Name: spasms_tweet_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE spasms_tweet_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.spasms_tweet_id_seq OWNER TO postgres;
+
+--
+-- Name: spasms_tweet_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE spasms_tweet_id_seq OWNED BY spasms_tweet.id;
+
+
+--
+-- Name: spasms_tweetrun; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE spasms_tweetrun (
+    id integer NOT NULL,
+    label character varying(250) NOT NULL,
+    created_on timestamp with time zone NOT NULL,
+    exercise_id integer NOT NULL
+);
+
+
+ALTER TABLE public.spasms_tweetrun OWNER TO postgres;
+
+--
+-- Name: spasms_tweetrun_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE spasms_tweetrun_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.spasms_tweetrun_id_seq OWNER TO postgres;
+
+--
+-- Name: spasms_tweetrun_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE spasms_tweetrun_id_seq OWNED BY spasms_tweetrun.id;
+
+
+--
+-- Name: spasms_twitteruser; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE spasms_twitteruser (
+    id integer NOT NULL,
+    screen_name character varying(250) NOT NULL,
+    first_name character varying(250) NOT NULL,
+    last_name character varying(250) NOT NULL,
+    gender character varying(250) NOT NULL,
+    age integer NOT NULL,
+    country character varying(250) NOT NULL,
+    province character varying(250) NOT NULL,
+    language character varying(250) NOT NULL,
+    exercise_id integer NOT NULL
+);
+
+
+ALTER TABLE public.spasms_twitteruser OWNER TO postgres;
+
+--
+-- Name: spasms_twitteruser_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE spasms_twitteruser_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.spasms_twitteruser_id_seq OWNER TO postgres;
+
+--
+-- Name: spasms_twitteruser_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE spasms_twitteruser_id_seq OWNED BY spasms_twitteruser.id;
+
+
+--
 -- Name: twitter_posts; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -565,6 +796,48 @@ ALTER TABLE ONLY django_migrations ALTER COLUMN id SET DEFAULT nextval('django_m
 
 
 --
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY spasms_exercise ALTER COLUMN id SET DEFAULT nextval('spasms_exercise_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY spasms_hashtag ALTER COLUMN id SET DEFAULT nextval('spasms_hashtag_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY spasms_inputmodel ALTER COLUMN id SET DEFAULT nextval('spasms_inputmodel_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY spasms_tweet ALTER COLUMN id SET DEFAULT nextval('spasms_tweet_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY spasms_tweetrun ALTER COLUMN id SET DEFAULT nextval('spasms_tweetrun_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY spasms_twitteruser ALTER COLUMN id SET DEFAULT nextval('spasms_twitteruser_id_seq'::regclass);
+
+
+--
 -- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -627,6 +900,38 @@ COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
 26	Can change user_ input	7	change_user_input
 27	Can delete user_ input	7	delete_user_input
 28	Can view user_ input	7	view_user_input
+29	Can add group name	8	add_groupname
+30	Can change group name	8	change_groupname
+31	Can delete group name	8	delete_groupname
+32	Can view group name	8	view_groupname
+33	Can add topic name	9	add_topicname
+34	Can change topic name	9	change_topicname
+35	Can delete topic name	9	delete_topicname
+36	Can view topic name	9	view_topicname
+37	Can add input model	10	add_inputmodel
+38	Can change input model	10	change_inputmodel
+39	Can delete input model	10	delete_inputmodel
+40	Can view input model	10	view_inputmodel
+41	Can add exercise	11	add_exercise
+42	Can change exercise	11	change_exercise
+43	Can delete exercise	11	delete_exercise
+44	Can view exercise	11	view_exercise
+45	Can add hash tag	12	add_hashtag
+46	Can change hash tag	12	change_hashtag
+47	Can delete hash tag	12	delete_hashtag
+48	Can view hash tag	12	view_hashtag
+49	Can add twitter user	13	add_twitteruser
+50	Can change twitter user	13	change_twitteruser
+51	Can delete twitter user	13	delete_twitteruser
+52	Can view twitter user	13	view_twitteruser
+53	Can add tweet run	14	add_tweetrun
+54	Can change tweet run	14	change_tweetrun
+55	Can delete tweet run	14	delete_tweetrun
+56	Can view tweet run	14	view_tweetrun
+57	Can add tweet	15	add_tweet
+58	Can change tweet	15	change_tweet
+59	Can delete tweet	15	delete_tweet
+60	Can view tweet	15	view_tweet
 \.
 
 
@@ -634,7 +939,7 @@ COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_permission_id_seq', 28, true);
+SELECT pg_catalog.setval('auth_permission_id_seq', 60, true);
 
 
 --
@@ -1844,6 +2149,14 @@ COPY django_content_type (id, app_label, model) FROM stdin;
 5	contenttypes	contenttype
 6	sessions	session
 7	spasms	user_input
+8	spasms	groupname
+9	spasms	topicname
+10	spasms	inputmodel
+11	spasms	exercise
+12	spasms	hashtag
+13	spasms	twitteruser
+14	spasms	tweetrun
+15	spasms	tweet
 \.
 
 
@@ -1851,7 +2164,7 @@ COPY django_content_type (id, app_label, model) FROM stdin;
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_content_type_id_seq', 7, true);
+SELECT pg_catalog.setval('django_content_type_id_seq', 15, true);
 
 
 --
@@ -1876,7 +2189,11 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 15	auth	0010_alter_group_name_max_length	2020-02-07 11:39:57.363699-05
 16	auth	0011_update_proxy_permissions	2020-02-07 11:39:57.391196-05
 17	sessions	0001_initial	2020-02-07 11:39:57.399403-05
-18	spasms	0001_initial	2020-02-07 13:42:27.909503-05
+19	spasms	0001_initial_manual	2020-02-19 11:18:42.014799-05
+20	spasms	0002_auto_20200221_1644	2020-02-21 11:44:41.514068-05
+21	spasms	0001_initial	2020-02-21 13:27:18.222109-05
+22	spasms	0002_auto_20200221_1813	2020-02-21 13:33:02.460095-05
+23	spasms	0003_auto_20200225_0203	2020-02-26 10:43:05.343517-05
 \.
 
 
@@ -1884,7 +2201,7 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_migrations_id_seq', 18, true);
+SELECT pg_catalog.setval('django_migrations_id_seq', 23, true);
 
 
 --
@@ -22474,64 +22791,119 @@ COPY sentence_frags (id, fragment) FROM stdin;
 
 
 --
+-- Data for Name: spasms_exercise; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY spasms_exercise (id, name, description, logo) FROM stdin;
+\.
+
+
+--
+-- Name: spasms_exercise_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('spasms_exercise_id_seq', 1, false);
+
+
+--
+-- Data for Name: spasms_hashtag; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY spasms_hashtag (id, creation_time, tag, author_id, exercise_id) FROM stdin;
+\.
+
+
+--
+-- Name: spasms_hashtag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('spasms_hashtag_id_seq', 1, false);
+
+
+--
+-- Data for Name: spasms_inputmodel; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY spasms_inputmodel (id, group_name, topic_name, num_users, percent_female, twitter_or_facebook, num_posts, sentiment, topic_noun, start_date, end_date, json_output) FROM stdin;
+3	grouptest	topictest	10	50	twitter	20	pos	Obama	2020-02-24	2020-02-28	testOutput
+4	group1	testt1	10	50	twitter	20	pos	Obama	2020-02-24	2020-02-26	testOutput
+5	grouptest	topictest	10	50	twitter	20	pos	Obama	2020-02-24	2020-02-27	testOutput
+1	grouptest	topictest	20	50	twitter	20	pos	ojsofgj	2020-02-19	2020-03-06	kljglk
+\.
+
+
+--
+-- Name: spasms_inputmodel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('spasms_inputmodel_id_seq', 5, true);
+
+
+--
+-- Data for Name: spasms_tweet; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY spasms_tweet (id, text, creation_time, author_id, hashtags_id) FROM stdin;
+\.
+
+
+--
+-- Name: spasms_tweet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('spasms_tweet_id_seq', 1, false);
+
+
+--
+-- Data for Name: spasms_tweetrun; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY spasms_tweetrun (id, label, created_on, exercise_id) FROM stdin;
+\.
+
+
+--
+-- Name: spasms_tweetrun_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('spasms_tweetrun_id_seq', 1, false);
+
+
+--
+-- Data for Name: spasms_twitteruser; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY spasms_twitteruser (id, screen_name, first_name, last_name, gender, age, country, province, language, exercise_id) FROM stdin;
+\.
+
+
+--
+-- Name: spasms_twitteruser_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('spasms_twitteruser_id_seq', 1, false);
+
+
+--
 -- Data for Name: twitter_posts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY twitter_posts (user_id, id, id_str, created_at, text, hashtags, urls, user_mention, symbols, topic, language) FROM stdin;
-76452239	949048869	0000000000949048869	2018-11-21 02:20:17	bamboozle Trump	\N	\N	\N	\N	topic 1	en
-76452239	481129942	0000000000481129942	2010-11-03 17:56:32	Trump is profanely attributable	\N	\N	\N	\N	topic 1	en
-24034032	12878169	0000000000012878169	2013-09-02 07:11:28	I think Trump is quaintly blarney us	\N	\N	\N	\N	topic 1	en
-71188182	444224746	0000000000444224746	2006-06-20 15:58:49	Trump is doing sumptuously	\N	\N	\N	\N	topic 1	en
-24034032	885950719	0000000000885950719	2008-04-22 05:56:15	I think Trump is very loverly	\N	\N	\N	\N	topic 1	en
-71188182	583539371	0000000000583539371	2015-06-26 03:23:27	I really effeminize Trump! It really makes would-be to think about it	\N	\N	\N	\N	topic 1	en
-34970862	534257710	0000000000534257710	2016-06-28 15:35:57	What egocentric stuff is going on in Trump right now	\N	\N	\N	\N	topic 1	en
-24034032	293509843	0000000000293509843	2016-12-31 14:59:42	I think Trump is being so trustworthy right now	\N	\N	\N	\N	topic 1	en
-31082721	299848379	0000000000299848379	2015-02-05 07:18:16	I really bank Trump! It really makes amniotic to think about it	\N	\N	\N	\N	topic 1	en
-1736262	959687089	0000000000959687089	2014-05-29 16:31:46	We need to close Trump	\N	\N	\N	\N	topic 1	en
-31082721	831565656	0000000000831565656	2017-01-23 12:16:23	I think Trump is being so wittgensteinian right now	\N	\N	\N	\N	topic 1	en
-31082721	720105096	0000000000720105096	2016-12-22 09:02:15	Trump is such a punishingly place	\N	\N	\N	\N	topic 1	en
-1736262	485685075	0000000000485685075	2014-08-27 00:09:02	We need to victual Trump	\N	\N	\N	\N	topic 1	en
-71188182	337693210	0000000000337693210	2017-09-27 15:37:05	Somebody better bear_on Trump or things could get ugly	\N	\N	\N	\N	topic 1	en
-31082721	777359951	0000000000777359951	2013-02-13 14:49:32	Who thinks Trump is doing a covetous job	\N	\N	\N	\N	topic 1	en
-35186957	137235578	0000000000137235578	2002-10-21 15:47:00	Somebody better weep cats or things could get ugly	\N	\N	\N	\N	topic 2	en
-10353096	879801247	0000000000879801247	2019-08-26 17:09:22	cats is such a roughly place	\N	\N	\N	\N	topic 2	en
-35186957	310130666	0000000000310130666	2004-02-26 17:03:24	cats just said the separate thing	\N	\N	\N	\N	topic 2	en
-9757330	995522169	0000000000995522169	2018-12-21 08:29:29	I think generally disregarding cats is bad	\N	\N	\N	\N	topic 2	en
-9757330	125319158	0000000000125319158	2019-02-19 01:04:35	What a heavy decision from cats	\N	\N	\N	\N	topic 2	en
-43194919	483049046	0000000000483049046	2019-08-19 20:00:06	cats carefully a decision there	\N	\N	\N	\N	topic 2	en
-9757330	407315025	0000000000407315025	2017-01-21 19:13:01	slip cats	\N	\N	\N	\N	topic 2	en
-43194919	318819452	0000000000318819452	2019-10-10 04:43:21	We should really fail cats more	\N	\N	\N	\N	topic 2	en
-82581247	424213856	0000000000424213856	2017-08-22 09:02:05	cats is doing virtually	\N	\N	\N	\N	topic 2	en
-35186957	977678877	0000000000977678877	2016-01-23 19:32:13	I think cats is very angry	\N	\N	\N	\N	topic 2	en
-3225610	404517956	0000000000404517956	2018-08-24 12:53:27	Somebody better prefer Obama or things could get ugly	\N	\N	\N	\N	topic 3	en
-3732178	413272153	0000000000413272153	2017-08-31 02:41:39	I feel stock for Obama	\N	\N	\N	\N	topic 3	en
-61662072	218542437	0000000000218542437	2009-06-09 06:11:41	Obama just replace my day	\N	\N	\N	\N	topic 3	en
-26105103	952356392	0000000000952356392	2016-06-26 22:01:00	overcome Obama	\N	\N	\N	\N	topic 3	en
-61662072	2906208	0000000000002906208	2009-07-18 20:13:43	How can Obama be so safe	\N	\N	\N	\N	topic 3	en
-3225610	243157277	0000000000243157277	2016-08-30 13:57:52	Obama is really making me potential	\N	\N	\N	\N	topic 3	en
-2628458	541184898	0000000000541184898	2019-02-28 05:41:19	Obama is doing always	\N	\N	\N	\N	topic 3	en
-3225610	208413851	0000000000208413851	2019-01-25 14:11:42	I think Obama is being so upper right now	\N	\N	\N	\N	topic 3	en
-3732178	855945131	0000000000855945131	2015-06-01 04:57:37	Obama is doing greatly	\N	\N	\N	\N	topic 3	en
-32954887	959014938	0000000000959014938	2018-07-03 23:34:55	Obama is such a however person	\N	\N	\N	\N	topic 3	en
-67777134	414505073	0000000000414505073	2019-05-29 14:34:32	How can Obama be so visible	\N	\N	\N	\N	topic 3	en
-3225610	704494000	0000000000704494000	2007-09-20 21:45:05	I think greatly disregarding Obama is bad	\N	\N	\N	\N	topic 3	en
-95122374	943366178	0000000000943366178	2018-01-31 19:54:57	Obama just celebrate my day	\N	\N	\N	\N	topic 3	en
-95122374	568311275	0000000000568311275	2015-09-29 09:53:56	I catch Obama	\N	\N	\N	\N	topic 3	en
-3225610	763606686	0000000000763606686	2012-09-29 07:05:56	Somebody better extend Obama or things could get ugly	\N	\N	\N	\N	topic 3	en
-52945039	242973927	0000000000242973927	2018-03-27 11:30:31	Obama is acting real	\N	\N	\N	\N	topic 3	en
-81909392	835117839	0000000000835117839	2019-05-22 00:01:16	Obama is easy making a mistake	\N	\N	\N	\N	topic 3	en
-96215749	946161703	0000000000946161703	2017-07-21 09:07:49	Obama is about secure	\N	\N	\N	\N	topic 3	en
-32954887	197343917	0000000000197343917	2016-05-18 03:24:25	I think pretty disregarding Obama is bad	\N	\N	\N	\N	topic 3	en
-32954887	210923238	0000000000210923238	2019-09-16 02:11:02	Obama just said the natural thing	\N	\N	\N	\N	topic 3	en
-95122374	5236193	0000000000005236193	2014-09-11 13:16:03	We need to learn Obama	\N	\N	\N	\N	topic 3	en
-69709739	509894110	0000000000509894110	2018-04-12 22:28:10	We should really deserve Obama more	\N	\N	\N	\N	topic 3	en
-69709739	250427365	0000000000250427365	2016-06-01 01:05:06	Obama just examine my day	\N	\N	\N	\N	topic 3	en
-61662072	677540939	0000000000677540939	2001-04-09 16:22:11	Obama on a decision there	\N	\N	\N	\N	topic 3	en
-69709739	397278318	0000000000397278318	2016-03-15 01:28:00	Obama is fast	\N	\N	\N	\N	topic 3	en
-69709739	560354682	0000000000560354682	2016-01-01 15:23:58	How can Obama add that	\N	\N	\N	\N	topic 3	en
-3732178	333473270	0000000000333473270	2017-12-16 07:48:25	I feel impressive for Obama	\N	\N	\N	\N	topic 3	en
-26105103	954679943	0000000000954679943	2016-12-17 03:11:16	I feel personal for Obama	\N	\N	\N	\N	topic 3	en
-32954887	259062785	0000000000259062785	2019-10-26 02:38:41	Obama is bright making a mistake	\N	\N	\N	\N	topic 3	en
+32314377	65324151	0000000000065324151	2016-02-08 11:21:40	Obama is natural	\N	\N	\N	\N	testt1	en
+84377359	975007363	0000000000975007363	2019-10-06 06:49:51	I think apart disregarding Obama is bad	\N	\N	\N	\N	testt1	en
+32314377	788161061	0000000000788161061	2011-11-08 16:02:48	Obama very a decision there	\N	\N	\N	\N	testt1	en
+32314377	887829243	0000000000887829243	2012-04-29 16:20:42	One day Obama will stand	\N	\N	\N	\N	testt1	en
+92308098	401216227	0000000000401216227	2011-05-20 05:08:38	I think Obama is being so double right now	\N	\N	\N	\N	testt1	en
+64797701	66980608	0000000000066980608	2015-02-15 09:33:04	Trump just said the physical thing	\N	\N	\N	\N	t6	en
+45593141	394670498	0000000000394670498	2008-05-24 05:13:01	I catch Trump	\N	\N	\N	\N	t6	en
+26477190	921354126	0000000000921354126	2015-07-02 04:40:07	Trump just understand my day	\N	\N	\N	\N	t6	en
+5426872	640976846	0000000000640976846	2013-03-17 08:52:00	We should really retain Trump more	\N	\N	\N	\N	t6	en
+26477190	996712701	0000000000996712701	2017-04-03 23:50:10	Trump is doing weekly	\N	\N	\N	\N	t6	en
+83350579	367509394	0000000000367509394	2004-05-15 12:27:44	Trump is comfortable	\N	\N	\N	\N	t6	en
+5426872	757752402	0000000000757752402	2008-08-26 20:49:38	Trump is acting often	\N	\N	\N	\N	t6	en
+47621014	112442065	0000000000112442065	2012-06-06 04:33:30	Trump just smell my day	\N	\N	\N	\N	t6	en
+64797701	18537839	0000000000018537839	2012-12-30 20:05:18	I think Trump is very professional	\N	\N	\N	\N	t6	en
+47621014	516771978	0000000000516771978	2012-11-01 23:50:06	I am so worth to see Trump 	\N	\N	\N	\N	t6	en
 \.
 
 
@@ -22540,40 +22912,21 @@ COPY twitter_posts (user_id, id, id_str, created_at, text, hashtags, urls, user_
 --
 
 COPY twitter_users (id, id_str, screen_name, location, created_at, followers, favourites, statuses, description, gender, group_name, language, name) FROM stdin;
-1	000000001	user1	Fairfax	2018-10-25 12:00:00	50	100	25	I am a student	f	group1	\N	\N
-7484156	7484156  	apage	batavia	2010-07-07 12:49:48	874	1997	6161	stuff	m	---	eng	aubrey page
-12929102	12929102 	Mchung	Lynn	2012-11-29 05:57:30	1519	3279	7043	Stella Vanderley broke off in the club, and I saw what he was a Napoleon. "Eighty-seven, Jeeves. At how much my nephew Francis?" "Absolutely." "It be	m	----	eng	Mason Chung
-4575037	4575037  	Ehiggins	Burlington	2011-08-28 23:13:14	790	2980	5014	rot, but I won't stand for being expected to see him? Whom shall I say?" "He would not know my own case, after a little It	m	----	eng	Elizabeth Higgins
-94668699	94668699 	Ograves	Bostonia	2000-07-06 07:38:37	5069	8789	8931	of his own hands. All right so far, what? But mark the sequel. Temperamental Clarence, being a silly ass, he was her only nephew, his was	m	----	eng	Owen Graves
-82415971	82415971 	Jrainey	Glenview	2019-03-27 09:37:07	3553	6587	6068	he said, "I've got it up for the fact that she pulled herself together and made out to answer it. "Yes, sir. I had a deal."	m	----	eng	Jacob Rainey
-31082721	31082721 	weaving_knight29	Maplewood	2000-11-08 21:25:07	4954	502	4298	you to summon me, sir." "Is she alone?" "Her ladyship accompanied	f	group 1	\N	Quinn Ash
-1736262	1736262  	Kquinones	Quincy	2009-10-03 20:09:03	2643	8158	6834	that he would ever come out here. What on earth you	f	group 1	\N	Kennedy Quinones
-96945411	96945411 	Smckinney	Murrieta	2014-04-12 13:18:00	4791	3243	1804	names every month. A little buttered toast with the grey but	f	group 1	\N	Scarlett Mckinney
-24034032	24034032 	Icastro	Palm Springs	2007-12-10 07:23:37	8809	7642	3878	compelled me to have chucked all the marvels of the Gutenberg-tm	f	group 1	\N	Isabella Castro
-8089993	8089993  	Borr	Sanford	2008-03-19 08:27:55	4714	1161	6966	to us all to pieces again. And he apparently was to	f	group 1	\N	Brielle Orr
-76452239	76452239 	orange_dog33	Alamogordo	2010-09-24 20:06:51	2694	6246	6541	of those dark, shrewd faces. His eye gleams with the tie	m	group 1	\N	Greyson Sizemore
-15025681	15025681 	Scapps	Belton	2017-05-31 20:23:43	3846	9256	841	Champion Chump, stood there, saying nothing. Well I sidled towards steps.	m	group 1	\N	Sawyer Capps
-34970862	34970862 	somnombulating_salesman10	Hammond	2015-04-04 03:59:44	9104	6763	7276	there's undoubtedly a sort of way, as if I go first,	m	group 1	\N	Nathan Franks
-62671802	62671802 	bhopper	Palm Bay	2007-08-15 05:47:01	5508	7747	2310	her--my being there. At this moment there was a hospital When	m	group 1	\N	bob Hopper
-71188182	71188182 	sexy_pony31	Herriman	2002-03-25 16:48:48	9869	6143	495	gaze, and I started in straightway. He seemed to suit old	m	group 1	\N	Jason Taylor
-35186957	35186957 	Edudley	Ashland	2001-07-24 17:51:38	8223	9775	1861	time I met Bicky for the bell. Jeeves came in the	f	group 2	\N	Eliana Dudley
-82581247	82581247 	avenging_dog69	Chandler	2013-08-18 12:13:56	7725	8214	1757	be possible for him, with all the while Freddie, the Champion	m	group 2	\N	Jayden Workman
-43194919	43194919 	green_snake83	Grapevine	2015-06-14 19:06:40	4810	9788	3169	bucked just then there was a long stay in the of	m	group 2	\N	John Dickens
-10353096	10353096 	Aobrien	Wadsworth	2019-02-27 04:28:45	9819	3218	7347	rotter again of a stranger, but you can't get to "I	m	group 2	\N	Adrian Obrien
-9757330	9757330  	weaving_cat37	Cleveland	2016-09-12 07:11:13	2640	7615	2644	altogether, sir." "What's his trouble now?" "The scheme which I found	m	group 2	\N	Xavier Melendez
-3225610	3225610  	Mmclean	Bridgeview	2007-05-29 23:32:26	8775	8633	3349	evening in New York. I suppose he is, though I've worked	f	group 3	\N	Madeline Mclean
-52945039	52945039 	sexy_snake13	Prospect Heights	2015-05-11 18:14:15	9873	726	5629	and without a hitch. I had set in. I explained situation.	m	group 3	\N	Hunter Reid
-96215749	96215749 	Ihooper	Eagle River	2010-07-30 11:47:27	9938	6608	9348	that now it will be all sorts of stunts and the	m	group 3	\N	Issac Hooper
-95122374	95122374 	lucky_sword42	Wilson	2009-08-26 21:33:57	7475	806	4398	came round. It was what American chappies would call again sir."	m	group 3	\N	Mateo Marks
-69709739	69709739 	orange_cat18	Pinole	2015-10-19 05:22:13	902	6454	2221	Well, I hadn't. "Mr. Pepper." "Yes?" "Was he--has he been--was very	m	group 3	\N	Adrian Flowers
-67777134	67777134 	avenging_salesman8	Pittsfield	2015-11-02 14:37:32	8046	3168	7858	do? I can't even write good letters." "Muriel's talents," said with	m	group 3	\N	Nicholas Castle
-93990327	93990327 	Ikline	Overland	2000-11-17 18:42:21	3547	3896	3198	I have brought home to him when she isn't looking, sneak	m	group 3	\N	Issac Kline
-32954887	32954887 	Bgillespie	Rancho Cordova	2015-11-29 05:28:53	893	9389	3159	lordship had gone to bed, and it wasn't till fairly that	m	group 3	\N	Benjamin Gillespie
-3732178	3732178  	Bsneed	Hazel Park	2014-08-22 10:53:15	5970	586	3122	obliged to you. Where's the kid? We must work! My that	m	group 3	\N	Benjamin Sneed
-61662072	61662072 	dancing_salesman3	Brunswick	2000-12-24 02:14:17	3595	237	104	distributing this work in its original "Plain Vanilla ASCII" or over	m	group 3	\N	Aaron Dyer
-26105103	26105103 	Jnielsen	Wellesley	2015-09-22 18:57:14	4723	3190	8999	chickens. After a bit thick, isn't it?" "The situation is one	m	group 3	\N	Jackson Nielsen
-2628458	2628458  	strident_snake21	Utica	2018-07-29 04:47:47	7626	3505	6194	we left England. He informed me that there is no to	m	group 3	\N	Connor Wang
-81909392	81909392 	Bfinch	Columbus	2013-09-15 08:58:18	6257	7824	5673	you a kind-hearted man." "But, I say, when I sat suddenly.	m	group 3	\N	Benjamin Finch
+92308098	92308098 	Epope	Ashwaubenon	2009-01-12 13:18:40	6505	1885	4662	seems since I opened the door quick, and after taking, made	m	testg1	\N	Everett Pope
+41361351	41361351 	red_salesman84	Saginaw	2015-08-27 20:01:29	7247	5576	9596	about going to let Jeeves treat me like this, wouldn't be	m	testg1	\N	Oliver Bentley
+32314377	32314377 	lilac_pony89	Mount Pleasant	2010-12-20 13:15:57	180	7678	9055	from him to the same reason. We were all full life.	m	testg1	\N	Jonathan Sewell
+72090301	72090301 	lucky_shield11	Round Lake	2008-12-08 18:08:55	4257	6317	4412	as I came away a changed woman. Surely you must the	m	testg1	\N	Carter Mann
+84377359	84377359 	lucky_pony70	Stoughton	2018-08-11 15:19:15	9364	1319	115	we should meet again, as she said she wanted to him.	m	testg1	\N	Ezekiel Higgins
+83350579	83350579 	Eclifton	Pleasantville	2003-08-17 03:31:00	4378	9383	589	way. And when a ruffian in a frenzy of inspiration I	f	g6	\N	Evelyn Clifton
+5426872	5426872  	lilac_snake22	Wayne	2000-08-25 03:33:51	9367	7492	8564	programme every week there." "Ah!" I said. "A Romney belonging Sir	f	g6	\N	Isabella Villegas
+1290274	1290274  	Nmerritt	Durango	2011-09-22 00:13:53	2199	2977	7041	old bulldog pluck and defy the blighter. "He said that would	f	g6	\N	Naomi Merritt
+99519011	99519011 	Lcisneros	Apache Junction	2012-08-09 18:27:59	8799	3034	7573	How on earth are you going to stop young Gussie a	f	g6	\N	Lily Cisneros
+47621014	47621014 	sexy_cat87	Wasco	2005-07-06 05:48:13	4478	6001	7794	June 24, 2003] Last updated: August 30, 2016 Language: English START	f	g6	\N	Avery Meeks
+45593141	45593141 	Hday	Jeffersontown	2003-09-10 04:02:06	1540	8195	9427	be anything further? Good night, sir." And I think it be	m	g6	\N	Henry Day
+64797701	64797701 	Mvazquez	Hot Springs	2012-03-26 19:57:10	4694	1194	3118	poor old scout was too much for me. I loved Shoolbred.	m	g6	\N	Miles Vazquez
+34350462	34350462 	Dtyson	Potomac	2015-12-14 22:34:26	9510	9417	9061	it was nothing. Then I said that there was a row	m	g6	\N	Dylan Tyson
+5578692	5578692  	Lburkett	Edgewater	2006-12-31 15:40:56	8229	6433	4861	party. I had seen his aunt for the last time. a	m	g6	\N	Levi Burkett
+26477190	26477190 	Sduarte	Houma	2013-04-03 10:09:21	6552	2140	7909	we can do." "It was just your Artistic Temperament, and that	m	g6	\N	Samuel Duarte
 \.
 
 
@@ -59975,6 +60328,78 @@ ALTER TABLE ONLY names
 
 
 --
+-- Name: spasms_exercise_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY spasms_exercise
+    ADD CONSTRAINT spasms_exercise_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: spasms_hashtag_author_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY spasms_hashtag
+    ADD CONSTRAINT spasms_hashtag_author_id_key UNIQUE (author_id);
+
+
+--
+-- Name: spasms_hashtag_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY spasms_hashtag
+    ADD CONSTRAINT spasms_hashtag_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: spasms_inputmodel_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY spasms_inputmodel
+    ADD CONSTRAINT spasms_inputmodel_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: spasms_tweet_author_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY spasms_tweet
+    ADD CONSTRAINT spasms_tweet_author_id_key UNIQUE (author_id);
+
+
+--
+-- Name: spasms_tweet_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY spasms_tweet
+    ADD CONSTRAINT spasms_tweet_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: spasms_tweetrun_exercise_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY spasms_tweetrun
+    ADD CONSTRAINT spasms_tweetrun_exercise_id_key UNIQUE (exercise_id);
+
+
+--
+-- Name: spasms_tweetrun_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY spasms_tweetrun
+    ADD CONSTRAINT spasms_tweetrun_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: spasms_twitteruser_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY spasms_twitteruser
+    ADD CONSTRAINT spasms_twitteruser_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: twitter_posts_id_str_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -60114,6 +60539,27 @@ CREATE INDEX django_session_session_key_c0390e0f_like ON django_session USING bt
 
 
 --
+-- Name: spasms_hashtag_exercise_id_a579b59e; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX spasms_hashtag_exercise_id_a579b59e ON spasms_hashtag USING btree (exercise_id);
+
+
+--
+-- Name: spasms_tweet_hashtags_id_9d47ed8d; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX spasms_tweet_hashtags_id_9d47ed8d ON spasms_tweet USING btree (hashtags_id);
+
+
+--
+-- Name: spasms_twitteruser_exercise_id_1b834154; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX spasms_twitteruser_exercise_id_1b834154 ON spasms_twitteruser USING btree (exercise_id);
+
+
+--
 -- Name: auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -60183,6 +60629,54 @@ ALTER TABLE ONLY django_admin_log
 
 ALTER TABLE ONLY django_admin_log
     ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_hashtag_author_id_60bf8e4b_fk_spasms_twitteruser_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY spasms_hashtag
+    ADD CONSTRAINT spasms_hashtag_author_id_60bf8e4b_fk_spasms_twitteruser_id FOREIGN KEY (author_id) REFERENCES spasms_twitteruser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_hashtag_exercise_id_a579b59e_fk_spasms_exercise_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY spasms_hashtag
+    ADD CONSTRAINT spasms_hashtag_exercise_id_a579b59e_fk_spasms_exercise_id FOREIGN KEY (exercise_id) REFERENCES spasms_exercise(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_tweet_author_id_a9e7a345_fk_spasms_twitteruser_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY spasms_tweet
+    ADD CONSTRAINT spasms_tweet_author_id_a9e7a345_fk_spasms_twitteruser_id FOREIGN KEY (author_id) REFERENCES spasms_twitteruser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_tweet_hashtags_id_9d47ed8d_fk_spasms_hashtag_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY spasms_tweet
+    ADD CONSTRAINT spasms_tweet_hashtags_id_9d47ed8d_fk_spasms_hashtag_id FOREIGN KEY (hashtags_id) REFERENCES spasms_hashtag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_tweetrun_exercise_id_8413d470_fk_spasms_exercise_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY spasms_tweetrun
+    ADD CONSTRAINT spasms_tweetrun_exercise_id_8413d470_fk_spasms_exercise_id FOREIGN KEY (exercise_id) REFERENCES spasms_exercise(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_twitteruser_exercise_id_1b834154_fk_spasms_exercise_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY spasms_twitteruser
+    ADD CONSTRAINT spasms_twitteruser_exercise_id_1b834154_fk_spasms_exercise_id FOREIGN KEY (exercise_id) REFERENCES spasms_exercise(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --

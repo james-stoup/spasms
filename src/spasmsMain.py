@@ -132,5 +132,31 @@ def spasms_main(
     conn.close()
 
 
+def create_twitter_users(
+    groupName,
+    numUsers,
+    percentFemale,
+    startDate,
+    endDate
+):    
+    conn = connect_to_db("spasms")
+    cur = conn.cursor()
+
+    #comput # of males and females
+    percentFemale = int(percentFemale) / 100
+    numFemales = int(int(numUsers) * percentFemale)
+    numMales = int(numUsers) - numFemales
+    if numFemales > 0:
+        generateTwitterUser.insertTwitterUsers(
+            cur, groupName, numFemales, "f", startDate, endDate
+        )
+    if numMales > 0:
+        generateTwitterUser.insertTwitterUsers(
+            cur, groupName, numMales, "m", startDate, endDate
+        )
+    conn.commit()
+    conn.close()
+    print("Twitter users created!")
+
 if __name__ == "__main__":
     main()

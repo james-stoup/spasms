@@ -1,5 +1,5 @@
 from django import forms
-from .models import InputModel
+from .models import InputModel,Exercise,TweetRun
 from django.forms import ModelForm
 
 class DateInput(forms.DateInput):
@@ -9,6 +9,20 @@ class InputModelForm(ModelForm):
 	class Meta:
 		model = InputModel
 		fields = ['group_name', 'topic_name', 'num_users', 'percent_female', 'twitter_or_facebook', 'num_posts', 'sentiment','start_date','end_date', 'topic_noun', 'json_output']
+		widgets = {
+			'start_date': DateInput(),
+			'end_date': DateInput()
+		}
+
+class ExerciseForm(ModelForm):
+	class Meta:
+		model = Exercise
+		fields = ['name','description','num_users','percent_female']
+
+class TweetRunForm(ModelForm):
+	class Meta:
+		model = TweetRun
+		fields = ['label','num_posts','sentiment','topic_noun','start_date','end_date','exercise']
 		widgets = {
 			'start_date': DateInput(),
 			'end_date': DateInput()
