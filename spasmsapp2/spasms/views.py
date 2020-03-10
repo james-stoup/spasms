@@ -6,7 +6,7 @@ sys.path.append(os.path.abspath(os.path.join("..", "src")))
 from django.shortcuts import render,redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
-from .forms import InputModelForm,ExerciseForm,TweetRunForm, TweetRunSerializer
+from .forms import InputModelForm,ExerciseForm,TweetRunForm
 from spasmsMain import spasms_main, create_twitter_users
 from django.contrib import messages
 
