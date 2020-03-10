@@ -32,10 +32,9 @@ class InputModel(models.Model):
     def __str__(self):
         return self.group_name
 
-
 # The largest unit that our data can be divided into
 class Exercise(models.Model):
-	name = models.CharField(max_length=250)
+	name = models.CharField(max_length=250,unique=True)
 	description = models.TextField()
 	num_users = models.PositiveIntegerField(default=0)
 	percent_female = models.PositiveIntegerField(default=50, validators=[MaxValueValidator(100)])
@@ -50,7 +49,7 @@ class TweetRun(models.Model):
 	topic_noun = models.CharField(max_length=100, verbose_name="Noun relating to topic",default='none')
 	start_date = models.DateField(default=datetime.now())
 	end_date = models.DateField(default=datetime.now())
-	exercise = models.OneToOneField("Exercise", on_delete=models.CASCADE)
+	exercise = models.ForeignKey("Exercise", on_delete=models.CASCADE,to_field='name')
 
 # each exercise is made up of users
 class TwitterUser(models.Model):
