@@ -40,6 +40,9 @@ class Exercise(models.Model):
 	percent_female = models.PositiveIntegerField(default=50, validators=[MaxValueValidator(100)])
 	logo = models.FilePathField(path="/img")
 
+	def __str__(self):
+		return self.name
+
 class TweetRun(models.Model):	
 	label = models.CharField(max_length=250)
 	created_on = models.DateTimeField(auto_now_add=True)
