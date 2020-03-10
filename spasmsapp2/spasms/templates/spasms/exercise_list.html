@@ -1,0 +1,10 @@
+{% extends "base.html"  %}
+{%block page_content %}
+
+<ul>
+{% for element in myExerciseList %}
+ <li>{{ element.name }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

@@ -8,5 +8,6 @@ urlpatterns = [
     path("getname", views.get_name, name="get_name"),
     path("thanks", views.thanks, name="thanks"),
     path("exercise",views.get_exercise_form,name="get_exercise_form"),
-    path("run", views.get_run_form, name="get_run_form")
+    path("run", views.get_run_form, name="get_run_form"),
+    path("forms",views.ExerciseListView.as_view(),name='forms')
 ]

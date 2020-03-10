@@ -9,8 +9,8 @@ from datetime import datetime
 from .forms import InputModelForm,ExerciseForm,TweetRunForm
 from spasmsMain import spasms_main, create_twitter_users
 from django.contrib import messages
-
-
+from .models import Exercise
+from django.views import generic
 def spasms_index(request):
     return render(request, "spasms_index.html")
 
@@ -22,10 +22,14 @@ def index(request):
 def thanks(request):
     return render(request, "thanks.html", {"messages": request.session['messages']})
 
+class ExerciseListView(generic.ListView):
+	model = Exercise
+	context_object_name = 'myExerciseList'
+
+
 def get_run_form(request):
     if request.method == "POST":
-        #form = TweetRunForm(request.POST)
-        form = TweetRunForm()
+        form = TweetRunForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             print(data)
@@ -36,6 +40,12 @@ def get_run_form(request):
         form = TweetRunForm()
     return render(request, "run_form.html", {"form": form})
 
+def exercise_list(request):
+	Exercise_list = Exercise.objects.all()
+	print("yes")
+	#pdb.set_trace()
+	return render(request,'exercise_list.html',{'objectlist': Exercise_list})
+	
 def get_exercise_form(request):
     if request.method == "POST":
         form = ExerciseForm(request.POST)
@@ -53,11 +63,10 @@ def get_exercise_form(request):
             form.save()
             #redirect to new URL
             request.session['messages'] = ['Exercise succesfully created!']
-            return HttpResponseRedirect("/thanks")
+
     # if a GET (or any other method) we'll create a blank form
     else:
         form = ExerciseForm()
-    return render(request, "exercise_form.html", {"form": form})
 
 def get_name(request):
     # if this is a POST request we need to process the form data
