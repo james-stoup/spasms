@@ -46,7 +46,7 @@ class TweetRun(models.Model):
 	num_posts = models.PositiveIntegerField(default=0)
 	sentiments = [("pos", "positive"), ("neg", "negative")]
 	sentiment = models.CharField(max_length=100, choices=sentiments, verbose_name="Sentiment", default='pos')
-	topic_noun = models.CharField(max_length=100, verbose_name="Noun relating to topic",default='none')
+	topic_noun = models.CharField(max_length=100, verbose_name="Noun relating to topic", default='none')
 	start_date = models.DateField(default=datetime.now())
 	end_date = models.DateField(default=datetime.now())
 	exercise = models.ForeignKey("Exercise", on_delete=models.CASCADE,to_field='name')

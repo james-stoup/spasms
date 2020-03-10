@@ -22,6 +22,19 @@ def index(request):
 def thanks(request):
     return render(request, "thanks.html", {"messages": request.session['messages']})
 
+def get_run_form(request):
+    if request.method == "POST":
+        form = TweetRunForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            print(data)
+            # redirect to new url
+            return HttpResponseRedirect("/thanks")
+            # if a GET (or any other method) we'll create a blank form
+    else:
+        form = TweetRunForm()
+    return render(request, "run_form.html", {"form": form})
+
 def get_exercise_form(request):
     if request.method == "POST":
         form = ExerciseForm(request.POST)
