@@ -3,7 +3,7 @@ import sys
 
 sys.path.append(os.path.abspath(os.path.join("..", "src")))
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
 from .forms import InputModelForm,ExerciseForm,TweetRunForm
@@ -20,7 +20,7 @@ def index(request):
 
 
 def thanks(request):
-    return render(request, "thanks.html", {"messages":["Thank you for your submission!"]})
+    return render(request, "thanks.html", {"messages": request.session['messages']})
 
 def get_exercise_form(request):
     if request.method == "POST":
@@ -38,8 +38,9 @@ def get_exercise_form(request):
             )
             form.save()
             #redirect to new URL
+            request.session['messages'] = ['Exercise succesfully created!']
             return HttpResponseRedirect("/thanks")
-            # if a GET (or any other method) we'll create a blank form
+    # if a GET (or any other method) we'll create a blank form
     else:
         form = ExerciseForm()
     return render(request, "exercise_form.html", {"form": form})
