@@ -63,10 +63,10 @@ def get_exercise_form(request):
             form.save()
             #redirect to new URL
             request.session['messages'] = ['Exercise succesfully created!']
-
     # if a GET (or any other method) we'll create a blank form
     else:
         form = ExerciseForm()
+    return render(request, "exercise_form.html", {"form": form})
 
 def get_name(request):
     # if this is a POST request we need to process the form data
