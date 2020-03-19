@@ -9,7 +9,7 @@ from datetime import datetime
 from .forms import InputModelForm,ExerciseForm,TweetRunForm
 from spasmsMain import spasms_main, create_twitter_users
 from django.contrib import messages
-from .models import Exercise
+from .models import Exercise, Tweet
 from django.views import generic
 def spasms_index(request):
     return render(request, "spasms_index.html")
@@ -26,6 +26,9 @@ class ExerciseListView(generic.ListView):
 	model = Exercise
 	context_object_name = 'myExerciseList'
 
+class TweetsListView(generic.ListView):
+    model = Tweet
+    context_object_name = 'myTweetList'
 
 def get_run_form(request):
     if request.method == "POST":
@@ -53,6 +56,8 @@ def get_exercise_form(request):
             data = form.cleaned_data
             print(data)
             today = str(datetime.now()).split()[0]
+            form.save()
+            print("form saved!")
             create_twitter_users(
                 data['name'],
                 data['num_users'],
@@ -60,9 +65,9 @@ def get_exercise_form(request):
                 today,
                 today
             )
-            form.save()
             #redirect to new URL
             request.session['messages'] = ['Exercise succesfully created!']
+            return HttpResponseRedirect("/thanks")
     # if a GET (or any other method) we'll create a blank form
     else:
         form = ExerciseForm()
