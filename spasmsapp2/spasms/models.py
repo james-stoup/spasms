@@ -44,7 +44,7 @@ class Exercise(models.Model):
 		return self.name
 
 class TweetRun(models.Model):	
-	label = models.CharField(max_length=250)
+	label = models.CharField(max_length=250, unique=True)
 	created_on = models.DateTimeField(auto_now_add=True)
 	num_posts = models.PositiveIntegerField(default=0)
 	sentiments = [("pos", "positive"), ("neg", "negative")]
@@ -95,4 +95,4 @@ class Tweet(models.Model):
     run = models.ForeignKey(TweetRun, on_delete=models.CASCADE)
     text = models.CharField(max_length=280)
     creation_time = models.DateTimeField()
-    hashtags = models.ForeignKey("HashTag", on_delete=models.CASCADE)
+    hashtags = models.ForeignKey("HashTag", on_delete=models.CASCADE, null=True)

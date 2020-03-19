@@ -7,7 +7,7 @@ from django.shortcuts import render,redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
 from .forms import InputModelForm,ExerciseForm,TweetRunForm
-from spasmsMain import spasms_main, create_twitter_users
+from spasmsMain import spasms_main, create_twitter_users, create_tweets
 from django.contrib import messages
 from .models import Exercise, Tweet
 from django.views import generic
@@ -36,6 +36,17 @@ def get_run_form(request):
         if form.is_valid():
             data = form.cleaned_data
             print(data)
+            print(data["exercise"])
+            form.save()
+            create_tweets(
+                data["label"],
+                data["num_posts"],
+                data["sentiment"],
+                data["topic_noun"],
+                str(data["start_date"]),
+                str(data["end_date"]),
+                data["exercise"]
+            )
             # redirect to new url
             return HttpResponseRedirect("/thanks")
             # if a GET (or any other method) we'll create a blank form
