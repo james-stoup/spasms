@@ -1,0 +1,15 @@
+{% extends "base.html"  %}
+{%block page_content %}
+
+<ul class='list-group'>
+{% for element in myExerciseList %}
+ <li class='list-group-item'>
+ 	Name: {{ element.name }} <br/>
+ 	Number of Users: {{element.num_users}} <br/>
+ 	Percent female: {{element.percent_female}} <br/>
+ 	Description: {{element.description}} 
+ </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

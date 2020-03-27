@@ -19,8 +19,8 @@ def grab_data(cur, statement_1, statement_2):
         result = rows[randVal][0]
 
         return result
-    except:
-        print("Error while trying to execute SQL query!")
+    except Exception as e:
+        print("Error while trying to execute SQL query: %s"%e)
         sys.exit(0)
 
 
@@ -129,6 +129,8 @@ def createTwitterUser(cur, groupName, gender_type, startDate, endDate):
     randId = random.randrange(0, randomIdVal, 1)
     randIdStr = str(randId)
 
+    randAge = randint(18,80)
+
     description = generateDescription(10)
 
     start = startDate + " 12:00:00"
@@ -136,6 +138,7 @@ def createTwitterUser(cur, groupName, gender_type, startDate, endDate):
     # start = '2000-01-01 12:00:00';
     # end = '2019-11-07 12:00:00';
 
+    '''
     tupleTwitterUser = (
         randId,
         randIdStr,
@@ -149,6 +152,34 @@ def createTwitterUser(cur, groupName, gender_type, startDate, endDate):
         description,
         gender_type,
         groupName,
+    )
+    '''
+
+    query = "SELECT id FROM spasms_exercise WHERE name='"+groupName+"'"
+    print("group name = "+groupName)
+    try:
+        cur.execute(query)
+        exercise_id = cur.fetchone()[0]
+    except Exception as e:
+        print("Error while trying to execute SQL query: %s"%e)
+        sys.exit(0)
+
+    tupleTwitterUser = (
+        randId,
+        twitter_screen_name,
+        firstName,
+        lastName,
+        gender_type,
+        randAge,
+        'United States',
+        randomLocation,
+        'eng',
+        exercise_id,
+        generateTime(start, end),
+        description,
+        favouritesCount,
+        followerCount,
+        statusesCount
     )
 
     return tupleTwitterUser
@@ -174,9 +205,15 @@ def insertTwitterUsers(cur, groupName, numUsers, gender_type, startDate, endDate
 
         try:
             cur.execute(
+                "INSERT INTO spasms_twitteruser (id,screen_name,first_name,last_name,gender,age,country,province,language,exercise_id,created_at,description,favourites,followers,statuses) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                twitterUser,
+            )
+            '''
+            cur.execute(
                 "INSERT INTO twitter_users (id, id_str, name, screen_name, location, created_at, followers, favourites, statuses, description, gender, group_name) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                 twitterUser,
             )
+            '''
         except Exception as e:
             print("Unable to insert into twitter_users : %s" % e)
 

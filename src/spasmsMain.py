@@ -158,5 +158,23 @@ def create_twitter_users(
     conn.close()
     print("Twitter users created!")
 
+def create_tweets(
+    runName,
+    numPosts,
+    sentiment,
+    topicNoun,
+    startDate,
+    endDate,
+    exercise,
+):
+    conn = connect_to_db("spasms")
+    curr = conn.cursor()
+
+    genTweet.genTweet(curr, runName, exercise, topicNoun, sentiment, numPosts, startDate, endDate)
+
+    conn.commit()
+    conn.close()
+    print("Tweets created!")
+
 if __name__ == "__main__":
     main()

@@ -32,25 +32,27 @@ class InputModel(models.Model):
     def __str__(self):
         return self.group_name
 
-
 # The largest unit that our data can be divided into
 class Exercise(models.Model):
-	name = models.CharField(max_length=250)
+	name = models.CharField(max_length=250,unique=True)
 	description = models.TextField()
 	num_users = models.PositiveIntegerField(default=0)
 	percent_female = models.PositiveIntegerField(default=50, validators=[MaxValueValidator(100)])
 	logo = models.FilePathField(path="/img")
 
+	def __str__(self):
+		return self.name
+
 class TweetRun(models.Model):	
-	label = models.CharField(max_length=250)
+	label = models.CharField(max_length=250, unique=True)
 	created_on = models.DateTimeField(auto_now_add=True)
 	num_posts = models.PositiveIntegerField(default=0)
 	sentiments = [("pos", "positive"), ("neg", "negative")]
 	sentiment = models.CharField(max_length=100, choices=sentiments, verbose_name="Sentiment", default='pos')
-	topic_noun = models.CharField(max_length=100, verbose_name="Noun relating to topic",default='none')
+	topic_noun = models.CharField(max_length=100, verbose_name="Noun relating to topic", default='none')
 	start_date = models.DateField(default=datetime.now())
 	end_date = models.DateField(default=datetime.now())
-	exercise = models.OneToOneField("Exercise", on_delete=models.CASCADE)
+	exercise = models.ForeignKey("Exercise", on_delete=models.CASCADE,to_field='name')
 
 # each exercise is made up of users
 class TwitterUser(models.Model):
@@ -62,6 +64,13 @@ class TwitterUser(models.Model):
     # user traits
     gender = models.CharField(max_length=250)
     age = models.IntegerField()
+
+    # account traits
+    followers = models.IntegerField()
+    favourites = models.IntegerField()
+    statuses = models.IntegerField()
+    description = models.CharField(max_length=250)
+    created_at = models.DateTimeField(default=datetime.now())
 
     # locations
     country = models.CharField(max_length=250)
@@ -83,6 +92,7 @@ class HashTag(models.Model):
 # basic tweet structure (add fields as needed)
 class Tweet(models.Model):
     author = models.ForeignKey(TwitterUser, on_delete=models.CASCADE)
+    run = models.ForeignKey(TweetRun, on_delete=models.CASCADE)
     text = models.CharField(max_length=280)
     creation_time = models.DateTimeField()
-    hashtags = models.ForeignKey("HashTag", on_delete=models.CASCADE)
+    hashtags = models.ForeignKey("HashTag", on_delete=models.CASCADE, null=True)

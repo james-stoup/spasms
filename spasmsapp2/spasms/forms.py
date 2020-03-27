@@ -22,7 +22,7 @@ class ExerciseForm(ModelForm):
 class TweetRunForm(ModelForm):
 	class Meta:
 		model = TweetRun
-		fields = ['label','num_posts','sentiment','topic_noun','start_date','end_date','exercise']
+		fields = ['label','num_posts','sentiment','topic_noun','start_date','end_date', 'exercise']
 		widgets = {
 			'start_date': DateInput(),
 			'end_date': DateInput()
