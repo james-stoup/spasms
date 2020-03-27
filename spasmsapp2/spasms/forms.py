@@ -1,9 +1,14 @@
 from django import forms
-from .models import InputModel,Exercise,TweetRun
+from .models import InputModel,Exercise,TweetRun, Tweet
 from django.forms import ModelForm
 
 class DateInput(forms.DateInput):
     input_type = 'date'
+
+class ExportJsonForm(ModelForm):
+	class Meta:
+		model = Tweet
+		fields = ['run']
 
 class InputModelForm(ModelForm):
 	class Meta:
