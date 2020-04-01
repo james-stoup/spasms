@@ -47,7 +47,7 @@ psql spasms < spasms.sql
 
 Once you've imported the file you can exit back to your user.
 
-##Usage
+## Usage
 
 To use the tool in it's current state you will run the django test server. This can be done quite easily. The steps below will assume you're already in the spasms folder.
 
