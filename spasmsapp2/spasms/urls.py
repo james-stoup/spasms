@@ -9,5 +9,6 @@ urlpatterns = [
     path("thanks", views.thanks, name="thanks"),
     path("exercise",views.get_exercise_form,name="get_exercise_form"),
     path("run", views.get_run_form, name="get_run_form"),
-    path("view_exercise",views.ExerciseListView.as_view(),name='get_exercise_list')
+    path("view_exercise",views.ExerciseListView.as_view(),name='get_exercise_list'),
+    path("export_json",views.export_json, name="export_json")
 ]

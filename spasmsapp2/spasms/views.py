@@ -6,18 +6,18 @@ sys.path.append(os.path.abspath(os.path.join("..", "src")))
 from django.shortcuts import render,redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
-from .forms import InputModelForm,ExerciseForm,TweetRunForm
+from .forms import InputModelForm,ExerciseForm,TweetRunForm, ExportJsonForm
 from spasmsMain import spasms_main, create_twitter_users, create_tweets
+from exportJson import exportTweetsDjango
 from django.contrib import messages
 from .models import Exercise, Tweet
 from django.views import generic
+
 def spasms_index(request):
     return render(request, "spasms_index.html")
 
-
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index")
-
 
 def thanks(request):
     return render(request, "thanks.html", {"messages": request.session['messages']})
@@ -26,10 +26,18 @@ class ExerciseListView(generic.ListView):
 	model = Exercise
 	context_object_name = 'myExerciseList'
 
-class TweetsListView(generic.ListView):
-    model = Tweet
-    context_object_name = 'myTweetList'
-
+def export_json(request):
+    if request.method == "POST":
+        form = ExportJsonForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            file_name = str(data['run']).replace(' ','_') + ".json"
+            exportTweetsDjango(str(data['run']),file_name)
+            request.session['messages'] = ['Tweets succesfully exported to %s!'%file_name]
+            return HttpResponseRedirect("/thanks")
+    else:
+        form = ExportJsonForm()
+    return render(request, "json_form.html", {"form": form})
 def get_run_form(request):
     if request.method == "POST":
         form = TweetRunForm(request.POST)
@@ -48,6 +56,7 @@ def get_run_form(request):
                 data["exercise"]
             )
             # redirect to new url
+            request.session['messages'] = ['Run succesfully created!']
             return HttpResponseRedirect("/thanks")
             # if a GET (or any other method) we'll create a blank form
     else:
