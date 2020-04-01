@@ -10,6 +10,7 @@ We recommend having the following on your system.
 - [Pip](https://pip.pypa.io/en/stable/installing/ "Pip") which can be used for other dependencies, and at a later date spasms itself.
 - [PostgreSQL](https://www.postgresql.org/docs/9.3/tutorial-install.html "PostgreSQL") to be able create the database used in the spasms tool in creation of twitter users and posts as well as storage of what was created. It is recommended that during the creation of the postgres user it does not require a password to switch to the postgres user, or require a password to connect to a database.
 - [Django](https://docs.djangoproject.com/en/3.0/topics/install/ "Django") to run the webui used for input into the tool.
+- [Psycopg2](https://pypi.org/project/psycopg2/ "Psycopg2") is required for the code to access the database.
 
 Once these have been installed correctly there are just a few things to finish setting up to use the tool.
 
