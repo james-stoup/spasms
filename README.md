@@ -6,10 +6,10 @@ Hello and welcome to spasms! Spasms is a tool that can be used create a multitud
 
 We recommend having the following on your system.
 
-- [PyEnv] (https://github.com/pyenv/pyenv-installer "PyEnv") to manage different versions of Python. Python 3.7+ is recommended.
-- [Pip] (https://pip.pypa.io/en/stable/installing/ "Pip") which can be used for other dependencies, and at a later date spasms itself.
-- [PostgreSQL] (https://www.postgresql.org/docs/9.3/tutorial-install.html "PostgreSQL") to be able create the database used in the spasms tool in creation of twitter users and posts as well as storage of what was created. It is recommended that during the creation of the postgres user it does not require a password to switch to the postgres user, or require a password to connect to a database.
-- [Django] (https://docs.djangoproject.com/en/3.0/topics/install/ "Django") to run the webui used for input into the tool.
+- [PyEnv](https://github.com/pyenv/pyenv-installer "PyEnv") to manage different versions of Python. Python 3.7+ is recommended.
+- [Pip](https://pip.pypa.io/en/stable/installing/ "Pip") which can be used for other dependencies, and at a later date spasms itself.
+- [PostgreSQL](https://www.postgresql.org/docs/9.3/tutorial-install.html "PostgreSQL") to be able create the database used in the spasms tool in creation of twitter users and posts as well as storage of what was created. It is recommended that during the creation of the postgres user it does not require a password to switch to the postgres user, or require a password to connect to a database.
+- [Django](https://docs.djangoproject.com/en/3.0/topics/install/ "Django") to run the webui used for input into the tool.
 
 Once these have been installed correctly there are just a few things to finish setting up to use the tool.
 
