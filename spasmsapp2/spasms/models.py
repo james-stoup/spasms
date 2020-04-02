@@ -43,6 +43,9 @@ class Exercise(models.Model):
 	def __str__(self):
 		return self.name
 
+	def get_absolute_url(self):
+		return "view_exercise/%s" % self.name
+
 class TweetRun(models.Model):	
     def __str__(self):
         return self.label

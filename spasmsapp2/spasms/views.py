@@ -3,15 +3,16 @@ import sys
 
 sys.path.append(os.path.abspath(os.path.join("..", "src")))
 
-from django.shortcuts import render,redirect, reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render,redirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from datetime import datetime
 from .forms import InputModelForm,ExerciseForm,TweetRunForm, ExportJsonForm
 from spasmsMain import spasms_main, create_twitter_users, create_tweets
 from exportJson import exportTweetsDjango
 from django.contrib import messages
-from .models import Exercise, Tweet
+from .models import Exercise, Tweet,TweetRun
 from django.views import generic
+import pdb
 
 def spasms_index(request):
     return render(request, "spasms_index.html")
@@ -69,6 +70,15 @@ def exercise_list(request):
 	#pdb.set_trace()
 	return render(request,'exercise_list.html',{'objectlist': Exercise_list})
 	
+def runs_list(request,id_exercise):
+	try:
+		tweetRuns = TweetRun.objects.filter(exercise_id=id_exercise)
+	except TweetRun.DoesNotExist:
+		raise Http404('Book does not exist')
+	print(tweetRuns)
+
+	return render(request,'runs_list.html',{'runs_list':tweetRuns})
+
 def get_exercise_form(request):
     if request.method == "POST":
         form = ExerciseForm(request.POST)
