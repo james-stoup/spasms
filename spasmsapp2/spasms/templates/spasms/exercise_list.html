@@ -10,7 +10,8 @@
  	<div class='collapse' id ="collapse_{{element.id}}">
  		Number of Users: {{element.num_users}} <br/>
  		Percent female: {{element.percent_female}} <br/>
- 		Description: {{element.description}} 
+ 		Description: {{element.description}} <br/>
+		<a href = "{{element.get_absolute_url}}">RUNS</a>
  	</div>
  </li>
 {% endfor %}
