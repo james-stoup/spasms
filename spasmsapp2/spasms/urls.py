@@ -11,5 +11,6 @@ urlpatterns = [
     path("run", views.get_run_form, name="get_run_form"),
     path("view_exercise",views.ExerciseListView.as_view(),name='get_exercise_list'),
     path("export_json",views.export_json, name="export_json"),
-    path("view_exercise/<str:id_exercise>",views.runs_list,name="get_runs_list")
+    path("view_exercise/<str:id_exercise>",views.runs_list,name="get_runs_list"),
+    path("display_json",views.display_json, name="display_json")
 ]

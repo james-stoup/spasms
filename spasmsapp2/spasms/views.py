@@ -20,6 +20,18 @@ def spasms_index(request):
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index")
 
+def display_json(request):
+    if request.method == "POST":
+        form = ExportJsonForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+        file_name = str(data['run']).replace(' ','_') + ".json"
+        return render(request, "display_json.html", {"form": form, "file_name": file_name})
+    else:
+        form = ExportJsonForm()
+        return render(request, "display_json.html", {"form": form})
+    
+
 def thanks(request):
     return render(request, "thanks.html", {"messages": request.session['messages']})
 
@@ -33,12 +45,14 @@ def export_json(request):
         if form.is_valid():
             data = form.cleaned_data
             file_name = str(data['run']).replace(' ','_') + ".json"
-            exportTweetsDjango(str(data['run']),file_name)
+            outputFileLoc = os.path.join("../spasmsapp2/spasms/static", file_name)
+            exportTweetsDjango(str(data['run']),outputFileLoc)
             request.session['messages'] = ['Tweets succesfully exported to %s!'%file_name]
             return HttpResponseRedirect("/thanks")
     else:
         form = ExportJsonForm()
     return render(request, "json_form.html", {"form": form})
+
 def get_run_form(request):
     if request.method == "POST":
         form = TweetRunForm(request.POST)
