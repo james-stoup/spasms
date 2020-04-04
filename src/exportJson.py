@@ -79,4 +79,4 @@ def exportTweetsDjango(label, fileName):
             }
         )
     outputFile = open(fileName, "w")
-    json.dump(twitterData, outputFile)
+    json.dump(twitterData, outputFile, indent=4)

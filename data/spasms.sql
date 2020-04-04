@@ -568,7 +568,8 @@ CREATE TABLE public.spasms_tweet (
     text character varying(280) NOT NULL,
     creation_time timestamp with time zone NOT NULL,
     author_id integer NOT NULL,
-    hashtags_id integer NOT NULL
+    hashtags_id integer,
+    run_id integer NOT NULL
 );
 
 
@@ -650,7 +651,12 @@ CREATE TABLE public.spasms_twitteruser (
     country character varying(250) NOT NULL,
     province character varying(250) NOT NULL,
     language character varying(250) NOT NULL,
-    exercise_id integer NOT NULL
+    exercise_id integer NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    description character varying(250) NOT NULL,
+    favourites integer NOT NULL,
+    followers integer NOT NULL,
+    statuses integer NOT NULL
 );
 
 
@@ -2144,6 +2150,16 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 25	spasms	0005_auto_20200302_1635	2020-03-02 11:39:21.224759-05
 26	spasms	0006_auto_20200302_1639	2020-03-02 11:39:21.250727-05
 27	spasms	0007_auto_20200310_1707	2020-03-10 13:07:45.185028-04
+28	spasms	0008_auto_20200310_1722	2020-03-10 13:23:16.50868-04
+29	spasms	0009_auto_20200310_1852	2020-03-10 14:54:22.845301-04
+30	spasms	0002_auto_20200319_1846	2020-03-19 14:46:57.461637-04
+31	spasms	0003_auto_20200319_1846	2020-03-19 14:46:57.513844-04
+32	spasms	0004_auto_20200319_1850	2020-03-19 14:50:34.827183-04
+33	spasms	0005_auto_20200319_1850	2020-03-19 14:50:58.503452-04
+34	spasms	0006_auto_20200319_1851	2020-03-19 14:51:24.981926-04
+35	spasms	0007_auto_20200319_1852	2020-03-19 14:52:57.98779-04
+36	spasms	0008_auto_20200319_1853	2020-03-19 14:53:26.447823-04
+37	spasms	0002_auto_20200319_1903	2020-03-19 15:03:39.011776-04
 \.
 
 
@@ -2153,6 +2169,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 tpwepy6tfdrodhtf316o58fc2z5wuhs1	NGYxYTBiMDk4NjRjNGFiN2M4ZmQxYjIxMmQzZmY4OTFlZDM1M2U1MTp7Im1lc3NhZ2VzIjpbIkV4ZXJjaXNlIHN1Y2Nlc2Z1bGx5IGNyZWF0ZWQhIl19	2020-03-24 12:49:31.202384-04
+8pru4vxhwj129bkma5vl1daiba9cazan	NGYxYTBiMDk4NjRjNGFiN2M4ZmQxYjIxMmQzZmY4OTFlZDM1M2U1MTp7Im1lc3NhZ2VzIjpbIkV4ZXJjaXNlIHN1Y2Nlc2Z1bGx5IGNyZWF0ZWQhIl19	2020-04-02 15:05:39.193454-04
 \.
 
 
@@ -22745,6 +22762,7 @@ COPY public.spasms_exercise (id, name, description, logo, num_users, percent_fem
 41	group5	this is an exercise called group5		10	50
 42	group3	this is an exercise		10	50
 43	gruop3	this is another exercise		10	50
+44	testEX	Testing runs		20	50
 \.
 
 
@@ -22772,7 +22790,17 @@ COPY public.spasms_inputmodel (id, group_name, topic_name, num_users, percent_fe
 -- Data for Name: spasms_tweet; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.spasms_tweet (id, text, creation_time, author_id, hashtags_id) FROM stdin;
+COPY public.spasms_tweet (id, text, creation_time, author_id, hashtags_id, run_id) FROM stdin;
+11	We need to achieve Obama	2020-03-19 14:55:49-04	83124460	\N	13
+12	I think far disregarding Obama is bad	2020-03-29 08:41:19-04	96317633	\N	13
+13	be Obama	2020-03-30 08:51:50-04	21803661	\N	13
+14	I think Obama is very willing	2020-04-02 07:37:29-04	77825816	\N	13
+15	Who thinks Obama is doing a private job	2020-03-26 02:37:12-04	96317633	\N	13
+16	Obama is such a well place	2020-03-23 02:05:07-04	6813895	\N	13
+17	I think Obama is very pretty	2020-03-27 07:11:02-04	23273124	\N	13
+18	Obama is constantly making a mistake	2020-03-20 23:19:38-04	27716407	\N	13
+19	Who thinks Obama is doing a secret job	2020-03-22 02:36:11-04	64280109	\N	13
+20	Obama is acting quite	2020-03-21 05:51:39-04	83053318	\N	13
 \.
 
 
@@ -22781,6 +22809,19 @@ COPY public.spasms_tweet (id, text, creation_time, author_id, hashtags_id) FROM 
 --
 
 COPY public.spasms_tweetrun (id, label, created_on, exercise_id, end_date, num_posts, sentiment, start_date, topic_noun) FROM stdin;
+1	testRun1	2020-03-19 15:04:42.367262-04	group4	2020-03-21	10	pos	2020-03-19	Obama
+2	testRun2	2020-03-19 15:06:29.628437-04	testEX	2020-03-20	10	pos	2020-03-19	Obama
+3	Run3	2020-03-19 15:10:36.642473-04	testEX	2020-03-26	15	pos	2020-03-19	Tokyo
+4	run4	2020-03-19 15:13:15.310213-04	testEX	2020-03-26	20	pos	2020-03-19	Richmond
+5	run100	2020-03-19 15:16:40.317224-04	testEX	2020-04-02	20	pos	2020-03-19	Ohio
+6	run101	2020-03-19 15:19:36.05542-04	testEX	2020-04-02	20	pos	2020-03-19	Ohio
+7	run102	2020-03-19 15:20:25.093489-04	testEX	2020-04-02	20	pos	2020-03-19	Ohio
+8	run7	2020-03-19 15:21:18.785019-04	testEX	2020-03-25	25	pos	2020-03-19	Virginia
+9	test78	2020-03-19 15:23:51.817825-04	testEX	2020-03-26	5	pos	2020-03-19	Florida
+10	test79	2020-03-19 15:27:27.846124-04	testEX	2020-03-26	5	pos	2020-03-19	Florida
+11	test798	2020-03-19 15:30:09.805763-04	testEX	2020-04-02	20	pos	2020-03-19	Texas
+12	run68	2020-03-19 15:34:54.748884-04	testEX	2020-04-02	10	pos	2020-03-19	Obama
+13	run688	2020-03-19 15:35:45.302978-04	testEX	2020-04-02	10	pos	2020-03-19	Obama
 \.
 
 
@@ -22788,7 +22829,27 @@ COPY public.spasms_tweetrun (id, label, created_on, exercise_id, end_date, num_p
 -- Data for Name: spasms_twitteruser; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.spasms_twitteruser (id, screen_name, first_name, last_name, gender, age, country, province, language, exercise_id) FROM stdin;
+COPY public.spasms_twitteruser (id, screen_name, first_name, last_name, gender, age, country, province, language, exercise_id, created_at, description, favourites, followers, statuses) FROM stdin;
+20759496	Sjustice	Sarah	justice	f	59	United States	Royal Palm Beach	eng	44	2020-03-19 12:00:00-04	of my shirt and was staring at Jeeves again. I discuss	2515	599	5551
+64267149	avenging_salesman18	Elena	odell	f	69	United States	Jeffersontown	eng	44	2020-03-19 12:00:00-04	fancy their immediate objective was Grant's Tomb." "I suppose you're said	5842	5903	259
+7604534	Gcraft	Gabriella	craft	f	69	United States	Fruit Cove	eng	44	2020-03-19 12:00:00-04	gulp and Mrs. Bobbie's scream and all that sort of chappie	5943	1840	3602
+27716407	Alamb	Ava	lamb	f	67	United States	Darien	eng	44	2020-03-19 12:00:00-04	in the course of the state applicable to this persecution "That'll	7965	5482	9786
+64280109	Pmccullough	Piper	mccullough	f	23	United States	Amherst	eng	44	2020-03-19 12:00:00-04	that he was waving a letter than it is posted the	8062	3761	4701
+58280676	Acollins	Amelia	collins	f	65	United States	Upper Alton	eng	44	2020-03-19 12:00:00-04	some time. But I didn't. I forgot them. And it to	7052	7970	7587
+6813895	Esmiley	Eleanor	smiley	f	33	United States	Fairfield	eng	44	2020-03-19 12:00:00-04	kiss the nearest he ever gets to London at about a.m.--artists	3069	5596	7179
+88121565	Lbrantley	Lily	brantley	f	54	United States	Amherst Center	eng	44	2020-03-19 12:00:00-04	only a few more of your fellow-humans happy in this but	5490	9774	2625
+60262839	yellow_sword81	Mia	duncan	f	50	United States	Ballenger Creek	eng	44	2020-03-19 12:00:00-04	old Bicky and his uncle. It was this way. It to	9858	6334	5128
+83623260	Ebates	Eleanor	bates	f	52	United States	Appleton	eng	44	2020-03-19 12:00:00-04	answer it. "Yes, sir. Eighty-seven gentlemen from Birdsburg, sir." I down	9525	9009	1230
+21803661	Isantana	Issac	santana	m	18	United States	Rock Island	eng	44	2020-03-19 12:00:00-04	One night thieves steal a splendid Romney; the next the blighter	1413	7434	3512
+77825816	Jfinley	Jace	finley	m	40	United States	Foothill Farms	eng	44	2020-03-19 12:00:00-04	be allowed to make her acquaintance. Shortly after this that Motty	6005	2455	9826
+23273124	Earellano	Eli	arellano	m	60	United States	Barberton	eng	44	2020-03-19 12:00:00-04	if it hadn't been slept in. I explained the idea. a	2803	5506	9599
+83053318	Spennington	Santiago	pennington	m	79	United States	Kenmore	eng	44	2020-03-19 12:00:00-04	of his only friend. "Y-yes," he stammered; "I--I thought something about	2803	2543	6563
+83124460	Aterrell	Andrew	terrell	m	43	United States	Battle Creek	eng	44	2020-03-19 12:00:00-04	objection is, don't you wish to continue the gay revels the	6358	1770	4488
+12781122	Arobinson	Austin	robinson	m	18	United States	Eustis	eng	44	2020-03-19 12:00:00-04	the Project Gutenberg Literary Archive Foundation, how to subscribe to email	6651	8835	4444
+41317482	strident_cat68	Leonardo	camacho	m	22	United States	Riverdale	eng	44	2020-03-19 12:00:00-04	pouring out his troubles to me to her. "Well, baby?" said,	6718	3376	2425
+57888116	green_knight86	Jayden	meadows	m	34	United States	South River	eng	44	2020-03-19 12:00:00-04	arranged the whole thing reminded me of Jimmy Mundy, the chappie.	3729	1208	1646
+78838701	black_angel30	Elijah	gutierrez	m	26	United States	Noblesville	eng	44	2020-03-19 12:00:00-04	bit. Full of bones." He began to talk to I love	9109	7389	1211
+96317633	dancing_shield65	Asher	compton	m	60	United States	Pleasant Grove	eng	44	2020-03-19 12:00:00-04	where he did it in the middle of nearly every to	7055	9024	1659
 \.
 
 
@@ -60265,14 +60326,14 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 15, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 27, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 37, true);
 
 
 --
 -- Name: spasms_exercise_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.spasms_exercise_id_seq', 43, true);
+SELECT pg_catalog.setval('public.spasms_exercise_id_seq', 44, true);
 
 
 --
@@ -60293,14 +60354,14 @@ SELECT pg_catalog.setval('public.spasms_inputmodel_id_seq', 5, true);
 -- Name: spasms_tweet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.spasms_tweet_id_seq', 1, false);
+SELECT pg_catalog.setval('public.spasms_tweet_id_seq', 20, true);
 
 
 --
 -- Name: spasms_tweetrun_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.spasms_tweetrun_id_seq', 1, false);
+SELECT pg_catalog.setval('public.spasms_tweetrun_id_seq', 13, true);
 
 
 --
@@ -60519,6 +60580,14 @@ ALTER TABLE ONLY public.spasms_tweet
 
 
 --
+-- Name: spasms_tweetrun spasms_tweetrun_label_2c137a1b_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_tweetrun
+    ADD CONSTRAINT spasms_tweetrun_label_2c137a1b_uniq UNIQUE (label);
+
+
+--
 -- Name: spasms_tweetrun spasms_tweetrun_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -60702,10 +60771,24 @@ CREATE INDEX spasms_tweet_hashtags_id_9d47ed8d ON public.spasms_tweet USING btre
 
 
 --
+-- Name: spasms_tweet_run_id_ac581342; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX spasms_tweet_run_id_ac581342 ON public.spasms_tweet USING btree (run_id);
+
+
+--
 -- Name: spasms_tweetrun_exercise_id_8413d470; Type: INDEX; Schema: public; Owner: postgres
 --
 
 CREATE INDEX spasms_tweetrun_exercise_id_8413d470 ON public.spasms_tweetrun USING btree (exercise_id);
+
+
+--
+-- Name: spasms_tweetrun_label_2c137a1b_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX spasms_tweetrun_label_2c137a1b_like ON public.spasms_tweetrun USING btree (label varchar_pattern_ops);
 
 
 --
@@ -60817,6 +60900,14 @@ ALTER TABLE ONLY public.spasms_tweet
 
 ALTER TABLE ONLY public.spasms_tweet
     ADD CONSTRAINT spasms_tweet_hashtags_id_9d47ed8d_fk_spasms_hashtag_id FOREIGN KEY (hashtags_id) REFERENCES public.spasms_hashtag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_tweet spasms_tweet_run_id_ac581342_fk_spasms_tweetrun_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_tweet
+    ADD CONSTRAINT spasms_tweet_run_id_ac581342_fk_spasms_tweetrun_id FOREIGN KEY (run_id) REFERENCES public.spasms_tweetrun(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --

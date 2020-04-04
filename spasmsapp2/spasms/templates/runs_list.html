@@ -1,0 +1,17 @@
+{% extends "base.html"  %}
+{%block page_content %}
+
+<ul class='list-group'>
+{% for element in runs_list %}
+ <li class='list-group-item'>
+ 	Name: {{ element.label }} <br/>
+ 	Created On: {{element.created_on}} <br/>
+ 	Exercise ID: {{element.exercise_id}} <br/>
+ 	Num posts: {{element.num_posts}} 
+ </li>
+
+{% endfor %}
+</ul>
+
+{% endblock %}
+~                       

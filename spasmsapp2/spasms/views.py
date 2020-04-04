@@ -3,21 +3,34 @@ import sys
 
 sys.path.append(os.path.abspath(os.path.join("..", "src")))
 
-from django.shortcuts import render,redirect, reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render,redirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from datetime import datetime
 from .forms import InputModelForm,ExerciseForm,TweetRunForm, ExportJsonForm
 from spasmsMain import spasms_main, create_twitter_users, create_tweets
 from exportJson import exportTweetsDjango
 from django.contrib import messages
-from .models import Exercise, Tweet
+from .models import Exercise, Tweet,TweetRun
 from django.views import generic
+import pdb
 
 def spasms_index(request):
     return render(request, "spasms_index.html")
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index")
+
+def display_json(request):
+    if request.method == "POST":
+        form = ExportJsonForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+        file_name = str(data['run']).replace(' ','_') + ".json"
+        return render(request, "display_json.html", {"form": form, "file_name": file_name})
+    else:
+        form = ExportJsonForm()
+        return render(request, "display_json.html", {"form": form})
+    
 
 def thanks(request):
     return render(request, "thanks.html", {"messages": request.session['messages']})
@@ -32,12 +45,14 @@ def export_json(request):
         if form.is_valid():
             data = form.cleaned_data
             file_name = str(data['run']).replace(' ','_') + ".json"
-            exportTweetsDjango(str(data['run']),file_name)
+            outputFileLoc = os.path.join("../spasmsapp2/spasms/static", file_name)
+            exportTweetsDjango(str(data['run']),outputFileLoc)
             request.session['messages'] = ['Tweets succesfully exported to %s!'%file_name]
             return HttpResponseRedirect("/thanks")
     else:
         form = ExportJsonForm()
     return render(request, "json_form.html", {"form": form})
+
 def get_run_form(request):
     if request.method == "POST":
         form = TweetRunForm(request.POST)
@@ -69,6 +84,15 @@ def exercise_list(request):
 	#pdb.set_trace()
 	return render(request,'exercise_list.html',{'objectlist': Exercise_list})
 	
+def runs_list(request,id_exercise):
+	try:
+		tweetRuns = TweetRun.objects.filter(exercise_id=id_exercise)
+	except TweetRun.DoesNotExist:
+		raise Http404('Book does not exist')
+	print(tweetRuns)
+
+	return render(request,'runs_list.html',{'runs_list':tweetRuns})
+
 def get_exercise_form(request):
     if request.method == "POST":
         form = ExerciseForm(request.POST)
