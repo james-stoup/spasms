@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='tweet',
             name='hashtags',
-            field=models.ForeignKey(default=0, on_delete=django.db.models.deletion.CASCADE, to='spasms.HashTag'),
+            field=models.ForeignKey(null=True,on_delete=django.db.models.deletion.CASCADE, to='spasms.HashTag'),
             preserve_default=False,
         ),
         migrations.AlterField(
