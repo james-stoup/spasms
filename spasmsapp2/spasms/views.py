@@ -53,6 +53,15 @@ def export_json(request):
         form = ExportJsonForm()
     return render(request, "json_form.html", {"form": form})
 
+def export_json_direct(request,id_exercise,id_run):
+
+	file_name = str(id_run).replace(' ','_') + ".json"
+	outputFileLoc = os.path.join("../spasmsapp2/spasms/static",file_name)
+	exportTweetsDjango(id_run,outputFileLoc)
+	request.session['messages'] = ['Tweets succesfully exported to %s!'%file_name]
+	return HttpResponseRedirect("/thanks")
+
+
 def get_run_form(request):
     if request.method == "POST":
         form = TweetRunForm(request.POST)
@@ -91,7 +100,7 @@ def runs_list(request,id_exercise):
 		raise Http404('Book does not exist')
 	print(tweetRuns)
 
-	return render(request,'runs_list.html',{'runs_list':tweetRuns})
+	return render(request,'runs_list.html',{'runs_list':tweetRuns,'id_exercise':id_exercise})
 
 def get_exercise_form(request):
     if request.method == "POST":
