@@ -6,6 +6,9 @@
     <div {% if message.tags %} class="{{ message.tags }}"{% endif %} class = 'alert alert-success' role='alert'>{{ message }}</div>
     {% endfor %}
 {% endif %}
+{% if exercise_name %}
+	<div><a href="run" class="btn btn-info" role="button">Create run</a></div>
+{% endif %}
 <a href="home" class="btn btn-info" role="button">Back to home page</a>
 
 {% endblock %}
