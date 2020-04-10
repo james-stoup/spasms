@@ -15,6 +15,11 @@ from django.views import generic
 import pdb
 
 def spasms_index(request):
+    if "exercise_name" in request.session:
+        del request.session["exercise_name"]
+    if 'messages' in request.session:
+        del request.session['messages']
+    request.session.modified = True
     return render(request, "spasms_index.html")
 
 def index(request):
@@ -33,7 +38,12 @@ def display_json(request):
     
 
 def thanks(request):
-    return render(request, "thanks.html", {"messages": request.session['messages']})
+    if 'exercise_name' in request.session:
+        print(request.session["exercise_name"])
+        return render(request, "thanks.html", {"messages": request.session['messages'], "exercise_name": request.session["exercise_name"]})
+    if 'messages' in request.session:
+        return render(request, "thanks.html", {"messages": request.session['messages']})
+    return render(request, "thanks.html")
 
 class ExerciseListView(generic.ListView):
 	model = Exercise
@@ -63,7 +73,9 @@ def export_json_direct(request,id_exercise,id_run):
 
 
 def get_run_form(request):
-    if request.method == "POST":
+    if "exercise_name" in request.session:
+        form = TweetRunForm(initial={"exercise": Exercise.objects.filter(name=request.session["exercise_name"]).first})
+    elif request.method == "POST":
         form = TweetRunForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
@@ -120,6 +132,7 @@ def get_exercise_form(request):
             )
             #redirect to new URL
             request.session['messages'] = ['Exercise succesfully created!']
+            request.session['exercise_name'] = data['name']
             return HttpResponseRedirect("/thanks")
     # if a GET (or any other method) we'll create a blank form
     else:
