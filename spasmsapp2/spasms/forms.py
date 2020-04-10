@@ -1,37 +1,57 @@
 from django import forms
-from .models import InputModel,Exercise,TweetRun, Tweet
+from .models import InputModel, Exercise, TweetRun, Tweet
 from django.forms import ModelForm
 
+
 class DateInput(forms.DateInput):
-    input_type = 'date'
+    input_type = "date"
+
 
 class ExportJsonForm(ModelForm):
-	class Meta:
-		model = Tweet
-		fields = ['run']
+    class Meta:
+        model = Tweet
+        fields = ["run"]
+
 
 class InputModelForm(ModelForm):
-	class Meta:
-		model = InputModel
-		fields = ['group_name', 'topic_name', 'num_users', 'percent_female', 'twitter_or_facebook', 'num_posts', 'sentiment','start_date','end_date', 'topic_noun', 'json_output']
-		widgets = {
-			'start_date': DateInput(),
-			'end_date': DateInput()
-		}
+    class Meta:
+        model = InputModel
+        fields = [
+            "group_name",
+            "topic_name",
+            "num_users",
+            "percent_female",
+            "twitter_or_facebook",
+            "num_posts",
+            "sentiment",
+            "start_date",
+            "end_date",
+            "topic_noun",
+            "json_output",
+        ]
+        widgets = {"start_date": DateInput(), "end_date": DateInput()}
+
 
 class ExerciseForm(ModelForm):
-	class Meta:
-		model = Exercise
-		fields = ['name','description','num_users','percent_female']
+    class Meta:
+        model = Exercise
+        fields = ["name", "description", "num_users", "percent_female"]
+
 
 class TweetRunForm(ModelForm):
-	class Meta:
-		model = TweetRun
-		fields = ['label','num_posts','sentiment','topic_noun','start_date','end_date', 'exercise']
-		widgets = {
-			'start_date': DateInput(),
-			'end_date': DateInput()
-		}
+    class Meta:
+        model = TweetRun
+        fields = [
+            "label",
+            "num_posts",
+            "sentiment",
+            "topic_noun",
+            "start_date",
+            "end_date",
+            "exercise",
+        ]
+        widgets = {"start_date": DateInput(), "end_date": DateInput()}
+
 
 # class NameForm(forms.Form):
 # 	group_name = forms.CharField(label='Group name', max_length=100)
