@@ -22,6 +22,12 @@ def spasms_index(request):
     request.session.modified = True
     return render(request, "spasms_index.html")
 
+def help_you(request):
+	return render(request,"spasms_help.html")
+
+def contact_us(request):
+	return render(request,"spasms_contact_us.html")
+
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index")
 
