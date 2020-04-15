@@ -1,5 +1,5 @@
 from django import forms
-from .models import InputModel, Exercise, TweetRun, Tweet
+from .models import Exercise, Group, TweetRun, Tweet
 from django.forms import ModelForm
 
 
@@ -13,28 +13,9 @@ class ExportJsonForm(ModelForm):
         fields = ["run"]
 
 
-class InputModelForm(ModelForm):
+class GroupForm(ModelForm):
     class Meta:
-        model = InputModel
-        fields = [
-            "group_name",
-            "topic_name",
-            "num_users",
-            "percent_female",
-            "twitter_or_facebook",
-            "num_posts",
-            "sentiment",
-            "start_date",
-            "end_date",
-            "topic_noun",
-            "json_output",
-        ]
-        widgets = {"start_date": DateInput(), "end_date": DateInput()}
-
-
-class ExerciseForm(ModelForm):
-    class Meta:
-        model = Exercise
+        model = Group
         fields = ["name", "description", "num_users", "percent_female"]
 
 
@@ -48,7 +29,7 @@ class TweetRunForm(ModelForm):
             "topic_noun",
             "start_date",
             "end_date",
-            "exercise",
+            "group",
         ]
         widgets = {"start_date": DateInput(), "end_date": DateInput()}
 
