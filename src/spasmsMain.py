@@ -165,12 +165,12 @@ def create_tweets(
     topicNoun,
     startDate,
     endDate,
-    exercise,
+    group,
 ):
     conn = connect_to_db("spasms")
     curr = conn.cursor()
 
-    genTweet.genTweet(curr, runName, exercise, topicNoun, sentiment, numPosts, startDate, endDate)
+    genTweet.genTweet(curr, runName, group, topicNoun, sentiment, numPosts, startDate, endDate)
 
     conn.commit()
     conn.close()
