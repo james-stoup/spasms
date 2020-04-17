@@ -25,7 +25,12 @@ def spasms_index(request):
         del request.session["messages"]
     request.session.modified = True
     '''
-    return render(request, "spasms_index.html")
+    try:
+        exerciseList = Exercise.objects.all()
+    except Exercise.DoesNotExist:
+        raise Http404("Exercises not found.")
+
+    return render(request, "spasms_index.html",{"exercise_list": exerciseList})
 
 def help_you(request):
 	return render(request,"spasms_help.html")
@@ -155,6 +160,10 @@ def groups_list(request, id_exercise):
     return render(
         request, "groups_list.html", {"runs_list": tweetRuns, "id_exercise": id_exercise}
     )
+
+def get_group_form_from_list(request, id_exercise):
+    request.session["exercise_name"] = id_exercise
+    return get_group_form(request)
 
 def runs_list(request, id_exercise):
     try:

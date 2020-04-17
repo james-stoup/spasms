@@ -15,7 +15,7 @@ class Exercise(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return "view_exercise/%s" % self.name
+        return "group/%s" % self.name
 
 class Group(models.Model):
     name = models.CharField(max_length=250,unique=True)
