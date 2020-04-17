@@ -18,6 +18,7 @@ urlpatterns = [
     path("view_groups/run/<str:group_name>", views.get_run_form_from_group, name="get_run_form_from_group"),
     path("view_groups/view_runs/run/<str:group_name>", views.get_run_form_from_group, name= "get_run_form_from_group"),
     path("view_exercise", views.ExerciseListView.as_view(), name="get_exercise_list"),
+    path("<int:id>/delete/", views.ExerciseDelete.as_view(), name="exercise_confirm_delete"),
     path("export_json", views.export_json, name="export_json"),
     path("view_exercise/<str:id_exercise>", views.runs_list, name="get_runs_list"),
     path("group/<str:id_exercise>", views.get_group_form_from_list, name="get_group_form_from_list"),

@@ -13,6 +13,9 @@ from exportJson import exportTweetsDjango
 from django.contrib import messages
 from .models import Exercise, Group, Tweet, TweetRun, TwitterUser
 from django.views import generic
+from django.urls import reverse
+from django.shortcuts import get_object_or_404
+from django.views.generic.edit import DeleteView
 import pdb
 
 
@@ -71,6 +74,15 @@ def thanks(request):
         data['exercise_name'] = request.session['exercise_name']
     return render(request, "thanks.html", data)
 
+class ExerciseDelete(DeleteView):
+    template_name = 'spasms/exercise_confirm_delete.html'
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(Exercise, id=id_)
+
+    def get_success_url(self):
+        return reverse("spasms_index")
 
 class ExerciseListView(generic.ListView):
     model = Exercise
