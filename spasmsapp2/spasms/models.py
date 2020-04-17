@@ -17,6 +17,9 @@ class Exercise(models.Model):
     def get_absolute_url(self):
         return "group/%s" % self.name
 
+    def get_groups_url(self):
+        return "view_groups/%s"%self.id
+
 class Group(models.Model):
     name = models.CharField(max_length=250,unique=True)
     description = models.TextField()
@@ -24,10 +27,19 @@ class Group(models.Model):
     percent_female = models.PositiveIntegerField(
         default=50, validators=[MaxValueValidator(100)]
     )
-    exercise = models.ForeignKey("Exercise",on_delete=models.CASCADE,to_field="name")
+    exercise = models.ForeignKey("Exercise",on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return "run/%s"%self.name
+
+    def get_runs_url(self):
+        return "view_runs/%s"%self.id
+
+    def get_users_url(self):
+        return "view_users/%s"%self.id
 
 
 class TweetRun(models.Model):
@@ -46,8 +58,10 @@ class TweetRun(models.Model):
     )
     start_date = models.DateField(default=datetime.now())
     end_date = models.DateField(default=datetime.now())
-    group = models.ForeignKey("Group", on_delete=models.CASCADE, to_field="name")
+    group = models.ForeignKey("Group", on_delete=models.CASCADE)
 
+    def get_absolute_url(self):
+        return "display_json/%s"%self.label
 
 # each exercise is made up of users
 class TwitterUser(models.Model):

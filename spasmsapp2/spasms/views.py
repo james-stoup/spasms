@@ -11,25 +11,17 @@ from .forms import GroupForm, TweetRunForm, ExportJsonForm, ExerciseForm
 from spasmsMain import spasms_main, create_twitter_users, create_tweets
 from exportJson import exportTweetsDjango
 from django.contrib import messages
-from .models import Exercise, Group, Tweet, TweetRun
+from .models import Exercise, Group, Tweet, TweetRun, TwitterUser
 from django.views import generic
 import pdb
 
 
 def spasms_index(request):
     request.session.flush()
-    '''
-    if "exercise_name" in request.session:
-        del request.session["exercise_name"]
-    if "messages" in request.session:
-        del request.session["messages"]
-    request.session.modified = True
-    '''
     try:
         exerciseList = Exercise.objects.all()
     except Exercise.DoesNotExist:
         raise Http404("Exercises not found.")
-
     return render(request, "spasms_index.html",{"exercise_list": exerciseList})
 
 def help_you(request):
@@ -57,11 +49,15 @@ def display_json(request):
             )
         file_name = request.session['run_label'].replace(" ", "_") + ".json"
         variables = {"form": form, "file_name": file_name}
+        del request.session["run_label"]
     else:
         form = ExportJsonForm()
         variables = {"form": form}
     return render(request, "display_json.html", variables)
 
+def display_json_from_run(request,run_label):
+    request.session["run_label"] = run_label
+    return display_json(request)
 
 def thanks(request):
     data = {}
@@ -139,10 +135,14 @@ def get_run_form(request):
                 ).first
             }
         )
+        del request.session["group_name"]
     else:
         form = TweetRunForm()
     return render(request, "run_form.html", {"form": form})
 
+def get_run_form_from_group(request, group_name):
+    request.session["group_name"] = group_name
+    return get_run_form(request)
 
 def exercise_list(request):
     Exercise_list = Exercise.objects.all()
@@ -151,30 +151,41 @@ def exercise_list(request):
     return render(request, "exercise_list.html", {"objectlist": Exercise_list})
 
 def groups_list(request, id_exercise):
+    print("exercise id = "+id_exercise)
     try:
+        exercise = Exercise.objects.filter(id=id_exercise).first
         groups = Group.objects.filter(exercise_id=id_exercise)
     except Group.DoesNotExist:
         raise Http404("Exercise does not exist")
+    print("groups list: ")
     print(groups)
 
     return render(
-        request, "groups_list.html", {"runs_list": tweetRuns, "id_exercise": id_exercise}
+        request, "groups_page.html", {"groups_list": groups, "exercise":exercise}
     )
 
 def get_group_form_from_list(request, id_exercise):
     request.session["exercise_name"] = id_exercise
     return get_group_form(request)
 
-def runs_list(request, id_exercise):
+def runs_list(request, id_group):
     try:
-        tweetRuns = TweetRun.objects.filter(exercise_id=id_exercise)
+        group = Group.objects.filter(id=id_group).first
+        tweetRuns = TweetRun.objects.filter(group_id=id_group)
     except TweetRun.DoesNotExist:
-        raise Http404("Book does not exist")
-    print(tweetRuns)
+        raise Http404("Gruop does not exist")
 
     return render(
-        request, "runs_list.html", {"runs_list": tweetRuns, "id_exercise": id_exercise}
+        request, "runs_page.html", {"runs_list": tweetRuns, "group":group}
     )
+
+def users_list(request, id_group):
+    try:
+        group = Group.objects.filter(id=id_group).first
+        users = TwitterUser.objects.filter(group_id=id_group)
+    except TweetRun.DoesNotExist:
+        raise Http404("Gruop does not exist")
+    return render(request,"users_page.html",{"users_list": users, "group": group})
 
 def get_exercise_form(request):
     if request.method == "POST":
@@ -217,6 +228,7 @@ def get_group_form(request):
                 ).first
                 }
             )
+        del request.session["exercise_name"]
     else:
         form = GroupForm()
     return render(request, "group_form.html", {"form": form})

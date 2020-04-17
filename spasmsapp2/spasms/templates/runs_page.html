@@ -1,0 +1,26 @@
+{% extends "base.html"  %}
+{%block page_content %}
+
+<h3><strong>Runs for {{group.name}}</strong></h3>
+<p class="lead"><a href="{{group.get_absolute_url}}" class="btn btn-primary" role="btn">Create new run</a></p>
+<ul class='list-group'>
+{% for run in runs_list %}
+<li class='list-group-item'>
+	<a data-toggle="collapse" data-target="#collapse_{{run.id}}" href="#collapse_{{run.id}}">
+		<span style="color:black">{{ run.label }}</span>
+		<a href="{{run.get_absolute_url}}" class="btn btn-primary" role="btn">View json data</a>
+ 	</a>
+ 	<div class='collapse' id ="collapse_{{run.id}}">
+ 		Created On: {{run.created_on}} <br/>
+ 		Num tweets: {{run.num_posts}} <br/>
+ 		Sentiment: {{run.sentiment}} <br/>
+ 		Noun: {{run.topic_noun}} <br/>
+ 		Start date: {{run.start_date}} <br/>
+ 		End date: {{run.end_date}} <br/> 
+ 	</div>
+ </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
+~                       

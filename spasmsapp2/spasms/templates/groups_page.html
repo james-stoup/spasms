@@ -1,0 +1,25 @@
+{% extends "base.html"  %}
+{%block page_content %}
+
+<h3><strong>{{exercise.name}}</strong></h3>
+<p class="lead">Description: {{exercise.description}} </p>
+<ul>
+{% for group in groups_list %}
+ <li class='list-group-item'>
+ 	<a data-toggle="collapse" data-target="#collapse_{{group.id}}" href="#collapse_{{group.id}}">
+ 		<span style="color:black">{{ group.name }}</span>
+ 		<a href="{{group.get_absolute_url}}" class="btn btn-primary" role="btn">Create run</a>
+ 		<a class ="btn btn-danger" role="btn">Delete</a>
+ 	</a>
+ 	<div class='collapse' id ="collapse_{{group.id}}">
+ 		Description: {{group.description}} <br/>
+ 		# of users: {{group.num_users}} <br/>
+ 		Percent female: {{group.percent_female}} <br/>
+ 		<a href="{{group.get_runs_url}}">View runs</a> <br/>
+ 		<a href="{{group.get_users_url}}">View users</a>
+ 	</div>
+ </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

@@ -6,13 +6,9 @@
 	<p>Welcome to Spasms, the Twitter generator</p>
 	<br/>
 	<a href="exercise" class="btn btn-info" role="button">Create new exercise</a>
-	<a href="run" class="btn btn-info" role="button">Create new run</a>
-	<a href="view_exercise" class="btn btn-info" role="button">View exercises</a> <br/> <br/>
-	<a href="export_json" class="btn btn-info" role="button">Export data</a>
-	<a href="display_json" class="btn btn-info" role="button"> View Json Data</a>
 	</center>
 </div>
-
+<br/>
 <ul class='list-group'>
 {% for element in exercise_list %}
  <li class='list-group-item'>
@@ -23,6 +19,7 @@
  	</a>
  	<div class='collapse' id ="collapse_{{element.id}}">
  		Description: {{element.description}} <br/>
+ 		<a href="{{element.get_groups_url}}">View more info</a>
  	</div>
  </li>
 
