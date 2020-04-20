@@ -75,11 +75,19 @@ def thanks(request):
     return render(request, "thanks.html", data)
 
 class ExerciseDelete(DeleteView):
-    template_name = 'spasms/exercise_confirm_delete.html'
 
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Exercise, id=id_)
+
+    def get_success_url(self):
+        return reverse("spasms_index")
+
+class GroupDelete(DeleteView):
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(Group, id=id_)
 
     def get_success_url(self):
         return reverse("spasms_index")

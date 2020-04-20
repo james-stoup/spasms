@@ -9,7 +9,7 @@
  	<a data-toggle="collapse" data-target="#collapse_{{group.id}}" href="#collapse_{{group.id}}">
  		<span style="color:black">{{ group.name }}</span>
  		<a href="{{group.get_absolute_url}}" class="btn btn-primary" role="btn">Create run</a>
- 		<a class ="btn btn-danger" role="btn">Delete</a>
+ 		<a href="{{group.pk}}/delete_group" class ="btn btn-danger" role="btn">Delete</a>
  	</a>
  	<div class='collapse' id ="collapse_{{group.id}}">
  		Description: {{group.description}} <br/>

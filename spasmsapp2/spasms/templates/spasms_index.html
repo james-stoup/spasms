@@ -9,13 +9,14 @@
 	</center>
 </div>
 <br/>
+<h3>Created Exercises</h3>
 <ul class='list-group'>
 {% for element in exercise_list %}
  <li class='list-group-item'>
  	<a data-toggle="collapse" data-target="#collapse_{{element.id}}" href="#collapse_{{element.id}}">
  		<span style="color:black">{{ element.name }}</span>
  		<a href="{{element.get_absolute_url}}" class="btn btn-primary" role="btn">Create group</a>
- 		<a href="{{element.pk}}/delete" class ="btn btn-danger" role="btn">Delete</a>
+ 		<a href="{{element.pk}}/delete_exercise" class ="btn btn-danger" role="btn">Delete</a>
  	</a>
  	<div class='collapse' id ="collapse_{{element.id}}">
  		Primary Key:{{element.pk}}<br>

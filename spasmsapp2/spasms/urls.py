@@ -5,7 +5,6 @@ from . import views
 
 urlpatterns = [
     path("", views.spasms_index, name="spasms_index"),
-    path("index", views.spasms_index, name="spasms_index"),
     path("help",views.help_you,name="spasms_help"),
     path("contact",views.contact_us,name="spasms_contact_us"), 
     path("exercise", views.get_exercise_form, name='get_exercise_form'),
@@ -18,7 +17,8 @@ urlpatterns = [
     path("view_groups/run/<str:group_name>", views.get_run_form_from_group, name="get_run_form_from_group"),
     path("view_groups/view_runs/run/<str:group_name>", views.get_run_form_from_group, name= "get_run_form_from_group"),
     path("view_exercise", views.ExerciseListView.as_view(), name="get_exercise_list"),
-    path("<int:id>/delete/", views.ExerciseDelete.as_view(), name="exercise_confirm_delete"),
+    path("<int:id>/delete_exercise/", views.ExerciseDelete.as_view(), name="exercise_confirm_delete"),
+    path("view_groups/<int:id>/delete_group/", views.GroupDelete.as_view(), name="group_confirm_delete"),
     path("export_json", views.export_json, name="export_json"),
     path("view_exercise/<str:id_exercise>", views.runs_list, name="get_runs_list"),
     path("group/<str:id_exercise>", views.get_group_form_from_list, name="get_group_form_from_list"),
