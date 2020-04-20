@@ -16,13 +16,15 @@ from django.views import generic
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.views.generic.edit import DeleteView
+from django.db.models import Count
 import pdb
 
 
 def spasms_index(request):
     request.session.flush()
     try:
-        exerciseList = Exercise.objects.all()
+        #exerciseList = Exercise.objects.all()
+        exerciseList = Exercise.objects.annotate(num_groups=Count('group'))
     except Exercise.DoesNotExist:
         raise Http404("Exercises not found.")
     return render(request, "spasms_index.html",{"exercise_list": exerciseList})
@@ -174,7 +176,7 @@ def groups_list(request, id_exercise):
     print("exercise id = "+id_exercise)
     try:
         exercise = Exercise.objects.filter(id=id_exercise).first
-        groups = Group.objects.filter(exercise_id=id_exercise)
+        groups = Group.objects.filter(exercise_id=id_exercise).annotate(num_runs=Count('tweetrun'))
     except Group.DoesNotExist:
         raise Http404("Exercise does not exist")
     print("groups list: ")
