@@ -57,7 +57,11 @@ cd spasmsapp2
 python manage.py runserver
 ```
 
-In the terminal will be a server address you can copy and paste into your broweser of choice, or you can right click the address and click open link. This section will be updated with a more comprehensive usage guide with pictures as the tool reaches a more final state.
+In the terminal will be a server address you can copy and paste into your broweser of choice, or you can right click the address and click open link.
+
+This will open your browser where you will be greeted with the homepage.
+
+![Homepage Image](/resources/homepage.png)
 
 
 ## The Team
