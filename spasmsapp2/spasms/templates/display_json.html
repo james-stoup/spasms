@@ -14,6 +14,7 @@
 {% if file_name %}
 <p>{{ file_name }}</p>
 {% with file_name as file %}
+<a href="{% static file %}" download> Download file </a>
 <object data="{% static file %}" width="600px" height="800px">This run has not been exported to a json file yet!</object>
 {% endwith %}
 {% endif %}
