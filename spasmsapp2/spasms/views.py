@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from datetime import datetime
 from .forms import GroupForm, TweetRunForm, ExportJsonForm, ExerciseForm
-from spasmsMain import spasms_main, create_twitter_users, create_tweets
+from spasmsMain import create_twitter_users, create_tweets
 from exportJson import exportTweetsDjango
 from django.contrib import messages
 from .models import Exercise, Group, Tweet, TweetRun, TwitterUser
@@ -23,7 +23,6 @@ import pdb
 def spasms_index(request):
     request.session.flush()
     try:
-        #exerciseList = Exercise.objects.all()
         exerciseList = Exercise.objects.annotate(num_groups=Count('group'))
     except Exercise.DoesNotExist:
         raise Http404("Exercises not found.")
@@ -34,10 +33,6 @@ def help_you(request):
 
 def contact_us(request):
 	return render(request,"spasms_contact_us.html")
-
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index")
-
 
 def display_json(request):
     if request.method == "POST":
@@ -77,20 +72,16 @@ def thanks(request):
     return render(request, "thanks.html", data)
 
 class ExerciseDelete(DeleteView):
-
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Exercise, id=id_)
-
     def get_success_url(self):
         return reverse("spasms_index")
 
 class GroupDelete(DeleteView):
-
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Group, id=id_)
-
     def get_success_url(self):
         return reverse("spasms_index")
 
@@ -116,13 +107,11 @@ def export_json(request):
 
 
 def export_json_direct(request, id_exercise, id_run):
-
     file_name = str(id_run).replace(" ", "_") + ".json"
     outputFileLoc = os.path.join("../spasmsapp2/spasms/static", file_name)
     exportTweetsDjango(id_run, outputFileLoc)
     request.session["messages"] = ["Tweets succesfully exported to %s!" % file_name]
     return HttpResponseRedirect("/thanks")
-
 
 def get_run_form(request):
     if request.method == "POST":
