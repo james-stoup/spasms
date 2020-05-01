@@ -107,7 +107,7 @@ When you have a run created you can view the json data. The run you either just 
 
 The method desribed above for creation of exercise, groups, and runs is the main flow, but there is more to the site then that. Once you've gotten at least one exercise created you can navigate to the homepage and see it in the list of created exercises. From here you can click on the name of the exercise to expand it's entry in the list like so...
 
-![Homepage expanded Image](/resources/homepage_exp	anded.png)
+![Homepage expanded Image](/resources/homepage_expanded.png)
 
 You can create a group, which we went throught earlier, delete the exercise and all groups and runs that stem from it, or you can view more info. Click view more info will bring you to a page that lists the groups created for that exercise that can also be expanded by click on them.
 
