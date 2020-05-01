@@ -103,6 +103,30 @@ When you have a run created you can view the json data. The run you either just 
 
 ![View json Image](/resources/view_json.png)
 
+### Alternate Navigation
+
+The method desribed above for creation of exercise, groups, and runs is the main flow, but there is more to the site then that. Once you've gotten at least one exercise created you can navigate to the homepage and see it in the list of created exercises. From here you can click on the name of the exercise to expand it's entry in the list like so...
+
+![Homepage expanded Image](/resources/homepage_exp	anded.png)
+
+You can create a group, which we went throught earlier, delete the exercise and all groups and runs that stem from it, or you can view more info. Click view more info will bring you to a page that lists the groups created for that exercise that can also be expanded by click on them.
+
+![Groups list Image](/resources/groups_list.png)
+
+When expanded you can view the info about the created group, there a buttons to create a run or delete the groups and runs related to it, and you can click on view runs or view users.
+
+Viewing Users will take you to the list of users created for that group. Each entry can be expanded to view the info created for that twitter user.
+
+![User list Image](/resources/user_list.png)
+
+Viewing the runs will take you to a list of runs associated with that group which can be expanded to view information about that run.
+
+![Run list Image](/resources/run_list.png)
+
+From here can you go back to the homepage.
+
+That just about covers everything about using this tool. We hope it was helpful and if there are any mistakes or fixes needed just let us know!
+
 ## The Team
 
 - Sharon Jose
