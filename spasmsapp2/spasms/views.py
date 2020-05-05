@@ -7,27 +7,32 @@ sys.path.append(os.path.abspath(os.path.join("..", "src")))
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from datetime import datetime
-from .forms import InputModelForm, ExerciseForm, TweetRunForm, ExportJsonForm
-from spasmsMain import spasms_main, create_twitter_users, create_tweets
+from .forms import GroupForm, TweetRunForm, ExportJsonForm, ExerciseForm
+from spasmsMain import create_twitter_users, create_tweets
 from exportJson import exportTweetsDjango
 from django.contrib import messages
-from .models import Exercise, Tweet, TweetRun
+from .models import Exercise, Group, Tweet, TweetRun, TwitterUser
 from django.views import generic
+from django.urls import reverse
+from django.shortcuts import get_object_or_404
+from django.views.generic.edit import DeleteView
+from django.db.models import Count
 import pdb
 
 
 def spasms_index(request):
-    if "exercise_name" in request.session:
-        del request.session["exercise_name"]
-    if "messages" in request.session:
-        del request.session["messages"]
-    request.session.modified = True
-    return render(request, "spasms_index.html")
+    request.session.flush()
+    try:
+        exerciseList = Exercise.objects.annotate(num_groups=Count('group'))
+    except Exercise.DoesNotExist:
+        raise Http404("Exercises not found.")
+    return render(request, "spasms_index.html",{"exercise_list": exerciseList})
 
+def help_you(request):
+	return render(request,"spasms_help.html")
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index")
-
+def contact_us(request):
+	return render(request,"spasms_contact_us.html")
 
 def display_json(request):
     if request.method == "POST":
@@ -35,34 +40,54 @@ def display_json(request):
         if form.is_valid():
             data = form.cleaned_data
         file_name = str(data["run"]).replace(" ", "_") + ".json"
-        return render(
-            request, "display_json.html", {"form": form, "file_name": file_name}
-        )
+        variables = {"form": form, "file_name": file_name}
+    elif "run_label" in request.session:
+        form = ExportJsonForm(
+                initial = {
+                    'run': TweetRun.objects.filter(label=request.session['run_label']).first
+                }
+            )
+        file_name = request.session['run_label'].replace(" ", "_") + ".json"
+        variables = {"form": form, "file_name": file_name}
+        del request.session["run_label"]
     else:
         form = ExportJsonForm()
-        return render(request, "display_json.html", {"form": form})
+        variables = {"form": form}
+    return render(request, "display_json.html", variables)
 
+def display_json_from_run(request,run_label):
+    request.session["run_label"] = run_label
+    return display_json(request)
 
 def thanks(request):
-    if "exercise_name" in request.session:
-        print(request.session["exercise_name"])
-        return render(
-            request,
-            "thanks.html",
-            {
-                "messages": request.session["messages"],
-                "exercise_name": request.session["exercise_name"],
-            },
-        )
+    data = {}
     if "messages" in request.session:
-        return render(request, "thanks.html", {"messages": request.session["messages"]})
-    return render(request, "thanks.html")
+        data['messages'] = request.session['messages']
+    if "run_label" in request.session:
+        data["run_label"] = request.session["run_label"]
+    elif "group_name" in request.session:
+        data['group_name'] = request.session['group_name']
+    elif "exercise_name" in request.session:
+        data['exercise_name'] = request.session['exercise_name']
+    return render(request, "thanks.html", data)
 
+class ExerciseDelete(DeleteView):
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(Exercise, id=id_)
+    def get_success_url(self):
+        return reverse("spasms_index")
+
+class GroupDelete(DeleteView):
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(Group, id=id_)
+    def get_success_url(self):
+        return reverse("spasms_index")
 
 class ExerciseListView(generic.ListView):
     model = Exercise
     context_object_name = "myExerciseList"
-
 
 def export_json(request):
     if request.method == "POST":
@@ -82,29 +107,18 @@ def export_json(request):
 
 
 def export_json_direct(request, id_exercise, id_run):
-
     file_name = str(id_run).replace(" ", "_") + ".json"
     outputFileLoc = os.path.join("../spasmsapp2/spasms/static", file_name)
     exportTweetsDjango(id_run, outputFileLoc)
     request.session["messages"] = ["Tweets succesfully exported to %s!" % file_name]
     return HttpResponseRedirect("/thanks")
 
-
 def get_run_form(request):
-    if "exercise_name" in request.session:
-        form = TweetRunForm(
-            initial={
-                "exercise": Exercise.objects.filter(
-                    name=request.session["exercise_name"]
-                ).first
-            }
-        )
-    elif request.method == "POST":
+    if request.method == "POST":
         form = TweetRunForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             print(data)
-            print(data["exercise"])
             form.save()
             create_tweets(
                 data["label"],
@@ -113,16 +127,33 @@ def get_run_form(request):
                 data["topic_noun"],
                 str(data["start_date"]),
                 str(data["end_date"]),
-                data["exercise"],
+                str(data["group"]),
             )
+            #export to json
+            file_name = str(data["label"]).replace(" ", "_") + ".json"
+            outputFileLoc = os.path.join("../spasmsapp2/spasms/static", file_name)
+            exportTweetsDjango(str(data["label"]), outputFileLoc)
             # redirect to new url
-            request.session["messages"] = ["Run succesfully created!"]
+            request.session["messages"] = ["Run %s succesfully created and exported to %s!"%(data["label"],file_name)]
+            request.session["run_label"] = data["label"]
             return HttpResponseRedirect("/thanks")
             # if a GET (or any other method) we'll create a blank form
+    elif "group_name" in request.session:
+        form = TweetRunForm(
+            initial={
+                "group": Group.objects.filter(
+                    name=request.session["group_name"]
+                ).first
+            }
+        )
+        del request.session["group_name"]
     else:
         form = TweetRunForm()
     return render(request, "run_form.html", {"form": form})
 
+def get_run_form_from_group(request, group_name):
+    request.session["group_name"] = group_name
+    return get_run_form(request)
 
 def exercise_list(request):
     Exercise_list = Exercise.objects.all()
@@ -130,22 +161,62 @@ def exercise_list(request):
     # pdb.set_trace()
     return render(request, "exercise_list.html", {"objectlist": Exercise_list})
 
-
-def runs_list(request, id_exercise):
+def groups_list(request, id_exercise):
+    print("exercise id = "+id_exercise)
     try:
-        tweetRuns = TweetRun.objects.filter(exercise_id=id_exercise)
-    except TweetRun.DoesNotExist:
-        raise Http404("Book does not exist")
-    print(tweetRuns)
+        exercise = Exercise.objects.filter(id=id_exercise).first
+        groups = Group.objects.filter(exercise_id=id_exercise).annotate(num_runs=Count('tweetrun'))
+    except Group.DoesNotExist:
+        raise Http404("Exercise does not exist")
+    print("groups list: ")
+    print(groups)
 
     return render(
-        request, "runs_list.html", {"runs_list": tweetRuns, "id_exercise": id_exercise}
+        request, "groups_page.html", {"groups_list": groups, "exercise":exercise}
     )
 
+def get_group_form_from_list(request, id_exercise):
+    request.session["exercise_name"] = id_exercise
+    return get_group_form(request)
+
+def runs_list(request, id_group):
+    try:
+        group = Group.objects.filter(id=id_group).first
+        tweetRuns = TweetRun.objects.filter(group_id=id_group)
+    except TweetRun.DoesNotExist:
+        raise Http404("Gruop does not exist")
+
+    return render(
+        request, "runs_page.html", {"runs_list": tweetRuns, "group":group}
+    )
+
+def users_list(request, id_group):
+    try:
+        group = Group.objects.filter(id=id_group).first
+        users = TwitterUser.objects.filter(group_id=id_group)
+    except TweetRun.DoesNotExist:
+        raise Http404("Gruop does not exist")
+    return render(request,"users_page.html",{"users_list": users, "group": group})
 
 def get_exercise_form(request):
     if request.method == "POST":
         form = ExerciseForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            form.save()
+            # redirect to new URL
+            request.session["messages"] = ["Exercise %s succesfully created!"%data['name']]
+            request.session["exercise_name"] = data["name"]
+            return HttpResponseRedirect("/thanks")
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = ExerciseForm()
+    return render(request, "exercise_form.html", {"form": form})
+
+
+def get_group_form(request):
+    if request.method == "POST":
+        form = GroupForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             print(data)
@@ -156,47 +227,19 @@ def get_exercise_form(request):
                 data["name"], data["num_users"], data["percent_female"], today, today
             )
             # redirect to new URL
-            request.session["messages"] = ["Exercise succesfully created!"]
-            request.session["exercise_name"] = data["name"]
+            request.session["messages"] = ["Group %s succesfully created!"%data['name']]
+            request.session["group_name"] = data["name"]
             return HttpResponseRedirect("/thanks")
     # if a GET (or any other method) we'll create a blank form
-    else:
-        form = ExerciseForm()
-    return render(request, "exercise_form.html", {"form": form})
-
-
-def get_name(request):
-    # if this is a POST request we need to process the form data
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = InputModelForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            data = form.cleaned_data
-            start_date = str(data["start_date"])
-            end_date = str(data["end_date"])
-            nameOfJsonFile = data["json_output"]
-            outputFileLoc = os.path.join("../../output", nameOfJsonFile)
-            absOutputFileLoc = os.path.abspath(outputFileLoc)
-            messages.success(request, absOutputFileLoc)
-            # print(data)
-            spasms_main(
-                data["group_name"],
-                data["topic_name"],
-                data["num_users"],
-                data["percent_female"],
-                data["twitter_or_facebook"],
-                data["num_posts"],
-                data["sentiment"],
-                data["topic_noun"],
-                start_date,
-                end_date,
-                data["json_output"],
+    elif "exercise_name" in request.session:
+        form = GroupForm(
+                initial={
+                "exercise": Exercise.objects.filter(
+                    name=request.session["exercise_name"]
+                ).first
+                }
             )
-            # redirect to new url
-            return HttpResponseRedirect("/thanks/")
-    # if a GET (or any other method) we'll create a blank form
+        del request.session["exercise_name"]
     else:
-        form = InputModelForm()
-    return render(request, "form_template.html", {"form": form})
+        form = GroupForm()
+    return render(request, "group_form.html", {"form": form})

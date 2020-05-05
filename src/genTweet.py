@@ -6,12 +6,12 @@ from sentenceGenerator import generateSentence
 import pdb
 
 
-def genTweet(cursor, runName, exercise, noun, sentiment, numOfTweets, startDate, endDate):
+def genTweet(cursor, runName, group, noun, sentiment, numOfTweets, startDate, endDate):
     cursor.execute("SELECT id FROM spasms_tweetrun WHERE label=%s", (runName,))
     tweetRunId = cursor.fetchone()[0]
-    cursor.execute("SELECT id FROM spasms_exercise WHERE name=%s", (str(exercise),))
-    exerciseId = cursor.fetchone()[0]
-    cursor.execute("SELECT * FROM spasms_twitteruser WHERE exercise_id=%s", (exerciseId,))
+    cursor.execute("SELECT id FROM spasms_group WHERE name=%s", (group,))
+    groupId = cursor.fetchone()[0]
+    cursor.execute("SELECT * FROM spasms_twitteruser WHERE group_id=%s", (groupId,))
     numUsers = cursor.rowcount
     users = cursor.fetchall()
 

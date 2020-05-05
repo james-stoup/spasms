@@ -155,11 +155,11 @@ def createTwitterUser(cur, groupName, gender_type, startDate, endDate):
     )
     '''
 
-    query = "SELECT id FROM spasms_exercise WHERE name='"+groupName+"'"
+    query = "SELECT id FROM spasms_group WHERE name='"+groupName+"'"
     print("group name = "+groupName)
     try:
         cur.execute(query)
-        exercise_id = cur.fetchone()[0]
+        group_id = cur.fetchone()[0]
     except Exception as e:
         print("Error while trying to execute SQL query: %s"%e)
         sys.exit(0)
@@ -174,7 +174,7 @@ def createTwitterUser(cur, groupName, gender_type, startDate, endDate):
         'United States',
         randomLocation,
         'eng',
-        exercise_id,
+        group_id,
         generateTime(start, end),
         description,
         favouritesCount,
@@ -205,7 +205,7 @@ def insertTwitterUsers(cur, groupName, numUsers, gender_type, startDate, endDate
 
         try:
             cur.execute(
-                "INSERT INTO spasms_twitteruser (id,screen_name,first_name,last_name,gender,age,country,province,language,exercise_id,created_at,description,favourites,followers,statuses) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                "INSERT INTO spasms_twitteruser (id,screen_name,first_name,last_name,gender,age,country,province,language,group_id,created_at,description,favourites,followers,statuses) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                 twitterUser,
             )
             '''

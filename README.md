@@ -6,11 +6,11 @@ Hello and welcome to spasms! Spasms is a tool that can be used create a multitud
 
 We recommend having the following on your system.
 
-- [PyEnv](https://github.com/pyenv/pyenv-installer "PyEnv") to manage different versions of Python. Python 3.7+ is recommended.
 - [Pip](https://pip.pypa.io/en/stable/installing/ "Pip") which can be used for other dependencies, and at a later date spasms itself.
+- [PyEnv](https://github.com/pyenv/pyenv-installer "PyEnv") to manage different versions of Python. Python 3.7+ is recommended. Can be installed using pip.
 - [PostgreSQL](https://www.postgresql.org/docs/9.3/tutorial-install.html "PostgreSQL") to be able create the database used in the spasms tool in creation of twitter users and posts as well as storage of what was created. It is recommended that during the creation of the postgres user it does not require a password to switch to the postgres user, or require a password to connect to a database.
-- [Django](https://docs.djangoproject.com/en/3.0/topics/install/ "Django") to run the webui used for input into the tool.
-- [Psycopg2](https://pypi.org/project/psycopg2/ "Psycopg2") is required for the code to access the database.
+- [Django](https://docs.djangoproject.com/en/3.0/topics/install/ "Django") to run the webui used for input into the tool. Can be installed using pip.
+- [Psycopg2](https://pypi.org/project/psycopg2/ "Psycopg2") is required for the code to access the database. Can be installed using pip.
 
 Once these have been installed correctly there are just a few things to finish setting up to use the tool.
 
@@ -57,8 +57,75 @@ cd spasmsapp2
 python manage.py runserver
 ```
 
-In the terminal will be a server address you can copy and paste into your broweser of choice, or you can right click the address and click open link. This section will be updated with a more comprehensive usage guide with pictures as the tool reaches a more final state.
+In the terminal will be a server address you can copy and paste into your broweser of choice, or you can right click the address and click open link.
 
+This will open your browser where you will be greeted with the homepage.
+
+![Homepage Image](/resources/homepage.png)
+
+What you will notice on the home page are three links in the navbar at the top. The welcome link takes you back to this page, and the help and contact links will take you to there respective pages. The most important things to notice for this usage guide are the "Create new exercise" button in the middle of the page and the list of previously created exercises. We'll come back to the list later in this guide so for now we'll click the button to create a new exercise.
+
+### Creating an Exercise
+
+When you've clicked the button to create a new exercise you'll be brought here.
+
+![Exercise Image](/resources/create_exercise.png)
+
+Here you will input of the name of the exercise as well as a description of the exercise. An exercise is a broad category, like an event, that will contain sub groups. For our example we will use the 2020 election as our exercise.
+
+![Exercise filled Image](/resources/create_exercise_filled.png)
+
+Once we've filled in what we need we can click submit which will take you to the thanks page.
+
+From here you can head back to the homepage or create a group. We will choose to create a group for this exercise. One thing to note about the thanks page is the create a group button will change to create a run when a group is created, and once a run is created the button will then change to view the json data.
+
+For the sake of not taking too many screenshots to fill this guide we will show creating groups and runs with the input filled in.
+
+### Creating a Group
+
+When creating a group you will be brought to a page that looks like this...
+
+![Group creation Image](/resources/create_group.png)
+
+This will create a group of 10 users that we've labeled as Republicans and half of the users will be female. One thing to note is that the exercise will be preselected for you, but can be changed if needed. Once we're ready we can click submit which will bring us to the thanks page where we can click the "create run" button.
+
+### Creating a Run
+
+When creating a run you will be brought to this page...
+
+![Run creation Image](/resources/create_run.png)
+
+For our group of Republicans will create a run of tweets that will be supportive of President Trump. We will create 10 tweets, the sentiment is postivive since they're supportive of Trump, and our noun is Trump because we want the tweets to talk about Trump. We can also specify the date range of the tweets created. Once again the group is preselected for us.
+
+### Viewing the json Data
+
+When you have a run created you can view the json data. The run you either just created, or clicked the "view json" button, will be preselected, but the run can be changed to another created run. It will have a scrollable window on the page where you can view all the formated data in that json file.
+
+![View json Image](/resources/view_json.png)
+
+### Alternate Navigation
+
+The method desribed above for creation of exercise, groups, and runs is the main flow, but there is more to the site then that. Once you've gotten at least one exercise created you can navigate to the homepage and see it in the list of created exercises. From here you can click on the name of the exercise to expand it's entry in the list like so...
+
+![Homepage expanded Image](/resources/homepage_expanded.png)
+
+You can create a group, which we went throught earlier, delete the exercise and all groups and runs that stem from it, or you can view more info. Click view more info will bring you to a page that lists the groups created for that exercise that can also be expanded by click on them.
+
+![Groups list Image](/resources/groups_list.png)
+
+When expanded you can view the info about the created group, there a buttons to create a run or delete the groups and runs related to it, and you can click on view runs or view users.
+
+Viewing Users will take you to the list of users created for that group. Each entry can be expanded to view the info created for that twitter user.
+
+![User list Image](/resources/user_list.png)
+
+Viewing the runs will take you to a list of runs associated with that group which can be expanded to view information about that run.
+
+![Run list Image](/resources/run_list.png)
+
+From here can you go back to the homepage.
+
+That just about covers everything about using this tool. We hope it was helpful and if there are any mistakes or fixes needed just let us know!
 
 ## The Team
 
