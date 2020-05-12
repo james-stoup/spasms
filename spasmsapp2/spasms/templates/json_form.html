@@ -1,0 +1,13 @@
+{% extends "base.html" %}                                                
+{% block page_content %} 
+
+<form action="/export_json" method="post">
+    {% csrf_token %}
+    <p> Select which run you would like to export to json <br/>
+    <table border="1">
+      {{ form }}
+    </table>
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

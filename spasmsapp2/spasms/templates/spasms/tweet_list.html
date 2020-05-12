@@ -1,0 +1,10 @@
+{% extends "base.html"  %}
+{%block page_content %}
+
+<ul>
+{% for element in myTweetList %}
+ <li>{{ element.text }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html"  %}
+{%block page_content %}
+
+<ul class='list-group'>
+{% for element in myExerciseList %}
+ <li class='list-group-item'>
+ 	<a data-toggle="collapse" data-target="#collapse_{{element.id}}" href="#collapse_{{element.id}}">
+ 		{{ element.name }}
+ 	</a>
+ 	<div class='collapse' id ="collapse_{{element.id}}">
+ 		Number of Users: {{element.num_users}} <br/>
+ 		Percent female: {{element.percent_female}} <br/>
+ 		Description: {{element.description}} <br/>
+		<a href = "{{element.get_absolute_url}}">RUNS</a>
+ 	</div>
+ </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

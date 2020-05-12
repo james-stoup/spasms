@@ -2,33 +2,25 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 12.2
+-- Dumped by pg_dump version 12.2
+
 SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
-SET search_path = public, pg_catalog;
+SET row_security = off;
 
 --
 -- Name: gender; Type: DOMAIN; Schema: public; Owner: postgres
 --
 
-CREATE DOMAIN gender AS character(1)
+CREATE DOMAIN public.gender AS character(1)
 	CONSTRAINT gender_check CHECK ((VALUE = ANY (ARRAY['m'::bpchar, 'f'::bpchar])));
 
 
@@ -38,7 +30,7 @@ ALTER DOMAIN public.gender OWNER TO postgres;
 -- Name: nametypes; Type: DOMAIN; Schema: public; Owner: postgres
 --
 
-CREATE DOMAIN nametypes AS character varying(10)
+CREATE DOMAIN public.nametypes AS character varying(10)
 	CONSTRAINT nametypes_check CHECK (((VALUE)::text = ANY (ARRAY[('first_m'::character varying)::text, ('first_f'::character varying)::text, ('last'::character varying)::text])));
 
 
@@ -48,7 +40,7 @@ ALTER DOMAIN public.nametypes OWNER TO postgres;
 -- Name: wordtypes; Type: DOMAIN; Schema: public; Owner: postgres
 --
 
-CREATE DOMAIN wordtypes AS character varying(15)
+CREATE DOMAIN public.wordtypes AS character varying(15)
 	CONSTRAINT wordtypes_check CHECK (((VALUE)::text = ANY (ARRAY[('adjective'::character varying)::text, ('adverb'::character varying)::text, ('verb'::character varying)::text])));
 
 
@@ -56,13 +48,13 @@ ALTER DOMAIN public.wordtypes OWNER TO postgres;
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
--- Name: auth_group; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE auth_group (
+CREATE TABLE public.auth_group (
     id integer NOT NULL,
     name character varying(150) NOT NULL
 );
@@ -74,7 +66,7 @@ ALTER TABLE public.auth_group OWNER TO postgres;
 -- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE auth_group_id_seq
+CREATE SEQUENCE public.auth_group_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -88,14 +80,14 @@ ALTER TABLE public.auth_group_id_seq OWNER TO postgres;
 -- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE auth_group_id_seq OWNED BY auth_group.id;
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
 
 
 --
--- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE auth_group_permissions (
+CREATE TABLE public.auth_group_permissions (
     id integer NOT NULL,
     group_id integer NOT NULL,
     permission_id integer NOT NULL
@@ -108,7 +100,7 @@ ALTER TABLE public.auth_group_permissions OWNER TO postgres;
 -- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE auth_group_permissions_id_seq
+CREATE SEQUENCE public.auth_group_permissions_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -122,14 +114,14 @@ ALTER TABLE public.auth_group_permissions_id_seq OWNER TO postgres;
 -- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE auth_group_permissions_id_seq OWNED BY auth_group_permissions.id;
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
 
 
 --
--- Name: auth_permission; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE auth_permission (
+CREATE TABLE public.auth_permission (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
     content_type_id integer NOT NULL,
@@ -143,7 +135,7 @@ ALTER TABLE public.auth_permission OWNER TO postgres;
 -- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE auth_permission_id_seq
+CREATE SEQUENCE public.auth_permission_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -157,14 +149,14 @@ ALTER TABLE public.auth_permission_id_seq OWNER TO postgres;
 -- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE auth_permission_id_seq OWNED BY auth_permission.id;
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
 
 
 --
--- Name: auth_user; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE auth_user (
+CREATE TABLE public.auth_user (
     id integer NOT NULL,
     password character varying(128) NOT NULL,
     last_login timestamp with time zone,
@@ -182,10 +174,10 @@ CREATE TABLE auth_user (
 ALTER TABLE public.auth_user OWNER TO postgres;
 
 --
--- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE auth_user_groups (
+CREATE TABLE public.auth_user_groups (
     id integer NOT NULL,
     user_id integer NOT NULL,
     group_id integer NOT NULL
@@ -198,7 +190,7 @@ ALTER TABLE public.auth_user_groups OWNER TO postgres;
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE auth_user_groups_id_seq
+CREATE SEQUENCE public.auth_user_groups_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -212,14 +204,14 @@ ALTER TABLE public.auth_user_groups_id_seq OWNER TO postgres;
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE auth_user_groups_id_seq OWNED BY auth_user_groups.id;
+ALTER SEQUENCE public.auth_user_groups_id_seq OWNED BY public.auth_user_groups.id;
 
 
 --
 -- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE auth_user_id_seq
+CREATE SEQUENCE public.auth_user_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -233,14 +225,14 @@ ALTER TABLE public.auth_user_id_seq OWNER TO postgres;
 -- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE auth_user_id_seq OWNED BY auth_user.id;
+ALTER SEQUENCE public.auth_user_id_seq OWNED BY public.auth_user.id;
 
 
 --
--- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE auth_user_user_permissions (
+CREATE TABLE public.auth_user_user_permissions (
     id integer NOT NULL,
     user_id integer NOT NULL,
     permission_id integer NOT NULL
@@ -253,7 +245,7 @@ ALTER TABLE public.auth_user_user_permissions OWNER TO postgres;
 -- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE auth_user_user_permissions_id_seq
+CREATE SEQUENCE public.auth_user_user_permissions_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -267,27 +259,27 @@ ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO postgres;
 -- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE auth_user_user_permissions_id_seq OWNED BY auth_user_user_permissions.id;
+ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_user_user_permissions.id;
 
 
 --
--- Name: common_words; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: common_words; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE common_words (
+CREATE TABLE public.common_words (
     word character varying(100) NOT NULL,
     sentiment numeric(8,6) NOT NULL,
-    type wordtypes NOT NULL
+    type public.wordtypes NOT NULL
 );
 
 
 ALTER TABLE public.common_words OWNER TO postgres;
 
 --
--- Name: django_admin_log; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE django_admin_log (
+CREATE TABLE public.django_admin_log (
     id integer NOT NULL,
     action_time timestamp with time zone NOT NULL,
     object_id text,
@@ -306,7 +298,7 @@ ALTER TABLE public.django_admin_log OWNER TO postgres;
 -- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE django_admin_log_id_seq
+CREATE SEQUENCE public.django_admin_log_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -320,14 +312,14 @@ ALTER TABLE public.django_admin_log_id_seq OWNER TO postgres;
 -- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE django_admin_log_id_seq OWNED BY django_admin_log.id;
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
 
 
 --
--- Name: django_content_type; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE django_content_type (
+CREATE TABLE public.django_content_type (
     id integer NOT NULL,
     app_label character varying(100) NOT NULL,
     model character varying(100) NOT NULL
@@ -340,7 +332,7 @@ ALTER TABLE public.django_content_type OWNER TO postgres;
 -- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE django_content_type_id_seq
+CREATE SEQUENCE public.django_content_type_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -354,14 +346,14 @@ ALTER TABLE public.django_content_type_id_seq OWNER TO postgres;
 -- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE django_content_type_id_seq OWNED BY django_content_type.id;
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
 
 
 --
--- Name: django_migrations; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE django_migrations (
+CREATE TABLE public.django_migrations (
     id integer NOT NULL,
     app character varying(255) NOT NULL,
     name character varying(255) NOT NULL,
@@ -375,7 +367,7 @@ ALTER TABLE public.django_migrations OWNER TO postgres;
 -- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE django_migrations_id_seq
+CREATE SEQUENCE public.django_migrations_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -389,14 +381,14 @@ ALTER TABLE public.django_migrations_id_seq OWNER TO postgres;
 -- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE django_migrations_id_seq OWNED BY django_migrations.id;
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
 
 
 --
--- Name: django_session; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: django_session; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE django_session (
+CREATE TABLE public.django_session (
     session_key character varying(40) NOT NULL,
     session_data text NOT NULL,
     expire_date timestamp with time zone NOT NULL
@@ -406,10 +398,10 @@ CREATE TABLE django_session (
 ALTER TABLE public.django_session OWNER TO postgres;
 
 --
--- Name: locations; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: locations; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE locations (
+CREATE TABLE public.locations (
     id numeric(9,0) NOT NULL,
     city character varying(500) NOT NULL,
     state character varying(500),
@@ -420,12 +412,12 @@ CREATE TABLE locations (
 ALTER TABLE public.locations OWNER TO postgres;
 
 --
--- Name: names; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: names; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE names (
+CREATE TABLE public.names (
     name character varying(200) NOT NULL,
-    name_type nametypes NOT NULL,
+    name_type public.nametypes NOT NULL,
     region character varying(250) NOT NULL
 );
 
@@ -433,10 +425,10 @@ CREATE TABLE names (
 ALTER TABLE public.names OWNER TO postgres;
 
 --
--- Name: sentence_frags; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: sentence_frags; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE sentence_frags (
+CREATE TABLE public.sentence_frags (
     id numeric(6,0),
     fragment character varying(500)
 );
@@ -445,160 +437,379 @@ CREATE TABLE sentence_frags (
 ALTER TABLE public.sentence_frags OWNER TO postgres;
 
 --
--- Name: twitter_posts; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: spasms_exercise; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE twitter_posts (
-    user_id numeric(10,0) NOT NULL,
-    id numeric(19,0) NOT NULL,
-    id_str character(19) NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    text character varying(240),
-    hashtags character varying(100),
-    urls character varying(100),
-    user_mention character varying(15),
-    symbols character varying(500),
-    topic character varying(300) NOT NULL,
-    language character varying(100)
+CREATE TABLE public.spasms_exercise (
+    id integer NOT NULL,
+    name character varying(250) NOT NULL,
+    description text NOT NULL,
+    logo character varying(100) NOT NULL
 );
 
 
-ALTER TABLE public.twitter_posts OWNER TO postgres;
+ALTER TABLE public.spasms_exercise OWNER TO postgres;
 
 --
--- Name: twitter_users; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: spasms_exercise_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE twitter_users (
-    id numeric(9,0) NOT NULL,
-    id_str character(9) NOT NULL,
-    screen_name character varying(100) NOT NULL,
-    location character varying(50),
-    created_at timestamp without time zone NOT NULL,
-    followers numeric(9,0) NOT NULL,
-    favourites numeric(9,0) NOT NULL,
-    statuses numeric(9,0) NOT NULL,
-    description character varying(160),
-    gender gender NOT NULL,
-    group_name character varying(250),
-    language character varying(50),
-    name character varying(50)
+CREATE SEQUENCE public.spasms_exercise_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.spasms_exercise_id_seq OWNER TO postgres;
+
+--
+-- Name: spasms_exercise_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.spasms_exercise_id_seq OWNED BY public.spasms_exercise.id;
+
+
+--
+-- Name: spasms_group; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.spasms_group (
+    id integer NOT NULL,
+    name character varying(250) NOT NULL,
+    description text NOT NULL,
+    num_users integer NOT NULL,
+    percent_female integer NOT NULL,
+    exercise_id integer NOT NULL,
+    CONSTRAINT spasms_group_num_users_check CHECK ((num_users >= 0)),
+    CONSTRAINT spasms_group_percent_female_check CHECK ((percent_female >= 0))
 );
 
 
-ALTER TABLE public.twitter_users OWNER TO postgres;
+ALTER TABLE public.spasms_group OWNER TO postgres;
 
 --
--- Name: words; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: spasms_group_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE words (
+CREATE SEQUENCE public.spasms_group_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.spasms_group_id_seq OWNER TO postgres;
+
+--
+-- Name: spasms_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.spasms_group_id_seq OWNED BY public.spasms_group.id;
+
+
+--
+-- Name: spasms_hashtag; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.spasms_hashtag (
+    id integer NOT NULL,
+    creation_time timestamp with time zone NOT NULL,
+    tag character varying(100) NOT NULL,
+    author_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.spasms_hashtag OWNER TO postgres;
+
+--
+-- Name: spasms_hashtag_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.spasms_hashtag_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.spasms_hashtag_id_seq OWNER TO postgres;
+
+--
+-- Name: spasms_hashtag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.spasms_hashtag_id_seq OWNED BY public.spasms_hashtag.id;
+
+
+--
+-- Name: spasms_tweet; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.spasms_tweet (
+    id integer NOT NULL,
+    text character varying(280) NOT NULL,
+    creation_time timestamp with time zone NOT NULL,
+    author_id integer NOT NULL,
+    hashtags_id integer,
+    run_id integer NOT NULL
+);
+
+
+ALTER TABLE public.spasms_tweet OWNER TO postgres;
+
+--
+-- Name: spasms_tweet_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.spasms_tweet_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.spasms_tweet_id_seq OWNER TO postgres;
+
+--
+-- Name: spasms_tweet_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.spasms_tweet_id_seq OWNED BY public.spasms_tweet.id;
+
+
+--
+-- Name: spasms_tweetrun; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.spasms_tweetrun (
+    id integer NOT NULL,
+    label character varying(250) NOT NULL,
+    created_on timestamp with time zone NOT NULL,
+    end_date date NOT NULL,
+    num_posts integer NOT NULL,
+    sentiment character varying(100) NOT NULL,
+    start_date date NOT NULL,
+    topic_noun character varying(100) NOT NULL,
+    group_id integer NOT NULL,
+    CONSTRAINT spasms_tweetrun_num_posts_check CHECK ((num_posts >= 0))
+);
+
+
+ALTER TABLE public.spasms_tweetrun OWNER TO postgres;
+
+--
+-- Name: spasms_tweetrun_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.spasms_tweetrun_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.spasms_tweetrun_id_seq OWNER TO postgres;
+
+--
+-- Name: spasms_tweetrun_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.spasms_tweetrun_id_seq OWNED BY public.spasms_tweetrun.id;
+
+
+--
+-- Name: spasms_twitteruser; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.spasms_twitteruser (
+    id integer NOT NULL,
+    screen_name character varying(250) NOT NULL,
+    first_name character varying(250) NOT NULL,
+    last_name character varying(250) NOT NULL,
+    gender character varying(250) NOT NULL,
+    age integer NOT NULL,
+    country character varying(250) NOT NULL,
+    province character varying(250) NOT NULL,
+    language character varying(250) NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    description character varying(250) NOT NULL,
+    favourites integer NOT NULL,
+    followers integer NOT NULL,
+    statuses integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.spasms_twitteruser OWNER TO postgres;
+
+--
+-- Name: spasms_twitteruser_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.spasms_twitteruser_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.spasms_twitteruser_id_seq OWNER TO postgres;
+
+--
+-- Name: spasms_twitteruser_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.spasms_twitteruser_id_seq OWNED BY public.spasms_twitteruser.id;
+
+
+--
+-- Name: words; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.words (
     word character varying(100) NOT NULL,
     sentiment numeric(8,6) NOT NULL,
-    type wordtypes NOT NULL
+    type public.wordtypes NOT NULL
 );
 
 
 ALTER TABLE public.words OWNER TO postgres;
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_group ALTER COLUMN id SET DEFAULT nextval('auth_group_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('auth_group_permissions_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_permission ALTER COLUMN id SET DEFAULT nextval('auth_permission_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY auth_user ALTER COLUMN id SET DEFAULT nextval('auth_user_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_user_groups ALTER COLUMN id SET DEFAULT nextval('auth_user_groups_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('auth_user_user_permissions_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY django_admin_log ALTER COLUMN id SET DEFAULT nextval('django_admin_log_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY django_content_type ALTER COLUMN id SET DEFAULT nextval('django_content_type_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_user ALTER COLUMN id SET DEFAULT nextval('public.auth_user_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY django_migrations ALTER COLUMN id SET DEFAULT nextval('django_migrations_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_user_groups ALTER COLUMN id SET DEFAULT nextval('public.auth_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: spasms_exercise id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_exercise ALTER COLUMN id SET DEFAULT nextval('public.spasms_exercise_id_seq'::regclass);
+
+
+--
+-- Name: spasms_group id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_group ALTER COLUMN id SET DEFAULT nextval('public.spasms_group_id_seq'::regclass);
+
+
+--
+-- Name: spasms_hashtag id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_hashtag ALTER COLUMN id SET DEFAULT nextval('public.spasms_hashtag_id_seq'::regclass);
+
+
+--
+-- Name: spasms_tweet id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_tweet ALTER COLUMN id SET DEFAULT nextval('public.spasms_tweet_id_seq'::regclass);
+
+
+--
+-- Name: spasms_tweetrun id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_tweetrun ALTER COLUMN id SET DEFAULT nextval('public.spasms_tweetrun_id_seq'::regclass);
+
+
+--
+-- Name: spasms_twitteruser id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_twitteruser ALTER COLUMN id SET DEFAULT nextval('public.spasms_twitteruser_id_seq'::regclass);
 
 
 --
 -- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY auth_group (id, name) FROM stdin;
+COPY public.auth_group (id, name) FROM stdin;
 \.
-
-
---
--- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('auth_group_id_seq', 1, false);
 
 
 --
 -- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
 \.
-
-
---
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('auth_group_permissions_id_seq', 1, false);
 
 
 --
 -- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 1	Can add log entry	1	add_logentry
 2	Can change log entry	1	change_logentry
 3	Can delete log entry	1	delete_logentry
@@ -627,21 +838,50 @@ COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
 26	Can change user_ input	7	change_user_input
 27	Can delete user_ input	7	delete_user_input
 28	Can view user_ input	7	view_user_input
+29	Can add group name	8	add_groupname
+30	Can change group name	8	change_groupname
+31	Can delete group name	8	delete_groupname
+32	Can view group name	8	view_groupname
+33	Can add topic name	9	add_topicname
+34	Can change topic name	9	change_topicname
+35	Can delete topic name	9	delete_topicname
+36	Can view topic name	9	view_topicname
+37	Can add input model	10	add_inputmodel
+38	Can change input model	10	change_inputmodel
+39	Can delete input model	10	delete_inputmodel
+40	Can view input model	10	view_inputmodel
+41	Can add exercise	11	add_exercise
+42	Can change exercise	11	change_exercise
+43	Can delete exercise	11	delete_exercise
+44	Can view exercise	11	view_exercise
+45	Can add hash tag	12	add_hashtag
+46	Can change hash tag	12	change_hashtag
+47	Can delete hash tag	12	delete_hashtag
+48	Can view hash tag	12	view_hashtag
+49	Can add twitter user	13	add_twitteruser
+50	Can change twitter user	13	change_twitteruser
+51	Can delete twitter user	13	delete_twitteruser
+52	Can view twitter user	13	view_twitteruser
+53	Can add tweet run	14	add_tweetrun
+54	Can change tweet run	14	change_tweetrun
+55	Can delete tweet run	14	delete_tweetrun
+56	Can view tweet run	14	view_tweetrun
+57	Can add tweet	15	add_tweet
+58	Can change tweet	15	change_tweet
+59	Can delete tweet	15	delete_tweet
+60	Can view tweet	15	view_tweet
+61	Can add group	16	add_group
+62	Can change group	16	change_group
+63	Can delete group	16	delete_group
+64	Can view group	16	view_group
 \.
-
-
---
--- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('auth_permission_id_seq', 28, true);
 
 
 --
 -- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
 \.
 
 
@@ -649,44 +889,23 @@ COPY auth_user (id, password, last_login, is_superuser, username, first_name, la
 -- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY auth_user_groups (id, user_id, group_id) FROM stdin;
+COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
 \.
-
-
---
--- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('auth_user_groups_id_seq', 1, false);
-
-
---
--- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('auth_user_id_seq', 1, false);
 
 
 --
 -- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 \.
-
-
---
--- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('auth_user_user_permissions_id_seq', 1, false);
 
 
 --
 -- Data for Name: common_words; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY common_words (word, sentiment, type) FROM stdin;
+COPY public.common_words (word, sentiment, type) FROM stdin;
 different	0.225040	adjective
 used	0.134290	adjective
 important	0.446210	adjective
@@ -1821,22 +2040,15 @@ write	0.000000	verb
 -- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
 \.
-
-
---
--- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('django_admin_log_id_seq', 1, false);
 
 
 --
 -- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY django_content_type (id, app_label, model) FROM stdin;
+COPY public.django_content_type (id, app_label, model) FROM stdin;
 1	admin	logentry
 2	auth	permission
 3	auth	group
@@ -1844,21 +2056,23 @@ COPY django_content_type (id, app_label, model) FROM stdin;
 5	contenttypes	contenttype
 6	sessions	session
 7	spasms	user_input
+8	spasms	groupname
+9	spasms	topicname
+10	spasms	inputmodel
+11	spasms	exercise
+12	spasms	hashtag
+13	spasms	twitteruser
+14	spasms	tweetrun
+15	spasms	tweet
+16	spasms	group
 \.
-
-
---
--- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('django_content_type_id_seq', 7, true);
 
 
 --
 -- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY django_migrations (id, app, name, applied) FROM stdin;
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
 1	contenttypes	0001_initial	2020-02-07 11:39:57.008959-05
 2	auth	0001_initial	2020-02-07 11:39:57.076271-05
 3	admin	0001_initial	2020-02-07 11:39:57.135794-05
@@ -1876,22 +2090,44 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 15	auth	0010_alter_group_name_max_length	2020-02-07 11:39:57.363699-05
 16	auth	0011_update_proxy_permissions	2020-02-07 11:39:57.391196-05
 17	sessions	0001_initial	2020-02-07 11:39:57.399403-05
-18	spasms	0001_initial	2020-02-07 13:42:27.909503-05
+19	spasms	0001_initial_manual	2020-02-19 11:18:42.014799-05
+20	spasms	0002_auto_20200221_1644	2020-02-21 11:44:41.514068-05
+21	spasms	0001_initial	2020-02-21 13:27:18.222109-05
+22	spasms	0002_auto_20200221_1813	2020-02-21 13:33:02.460095-05
+23	spasms	0003_auto_20200225_0203	2020-02-26 10:43:05.343517-05
+24	spasms	0004_auto_20200226_2206	2020-02-28 12:43:09.552153-05
+25	spasms	0005_auto_20200302_1635	2020-03-02 11:39:21.224759-05
+26	spasms	0006_auto_20200302_1639	2020-03-02 11:39:21.250727-05
+27	spasms	0007_auto_20200310_1707	2020-03-10 13:07:45.185028-04
+28	spasms	0008_auto_20200310_1722	2020-03-10 13:23:16.50868-04
+29	spasms	0009_auto_20200310_1852	2020-03-10 14:54:22.845301-04
+30	spasms	0002_auto_20200319_1846	2020-03-19 14:46:57.461637-04
+31	spasms	0003_auto_20200319_1846	2020-03-19 14:46:57.513844-04
+32	spasms	0004_auto_20200319_1850	2020-03-19 14:50:34.827183-04
+33	spasms	0005_auto_20200319_1850	2020-03-19 14:50:58.503452-04
+34	spasms	0006_auto_20200319_1851	2020-03-19 14:51:24.981926-04
+35	spasms	0007_auto_20200319_1852	2020-03-19 14:52:57.98779-04
+36	spasms	0008_auto_20200319_1853	2020-03-19 14:53:26.447823-04
+37	spasms	0002_auto_20200319_1903	2020-03-19 15:03:39.011776-04
+38	spasms	0002_auto_20200319_1950	2020-04-06 11:18:48.802418-04
+39	spasms	0003_auto_20200319_2000	2020-04-06 11:20:24.771723-04
+40	spasms	0004_auto_20200319_2001	2020-04-06 11:20:24.873516-04
+41	spasms	0005_merge_20200406_1518	2020-04-06 11:20:24.878013-04
+42	spasms	0006_auto_20200415_1516	2020-04-15 11:37:05.717832-04
+43	spasms	0007_auto_20200415_1536	2020-04-15 11:37:05.816973-04
+44	spasms	0008_auto_20200417_1638	2020-04-17 12:42:24.681889-04
+45	spasms	0009_auto_20200417_1642	2020-04-17 12:42:24.856251-04
 \.
-
-
---
--- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('django_migrations_id_seq', 18, true);
 
 
 --
 -- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY django_session (session_key, session_data, expire_date) FROM stdin;
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+tpwepy6tfdrodhtf316o58fc2z5wuhs1	NGYxYTBiMDk4NjRjNGFiN2M4ZmQxYjIxMmQzZmY4OTFlZDM1M2U1MTp7Im1lc3NhZ2VzIjpbIkV4ZXJjaXNlIHN1Y2Nlc2Z1bGx5IGNyZWF0ZWQhIl19	2020-03-24 12:49:31.202384-04
+8pru4vxhwj129bkma5vl1daiba9cazan	NGYxYTBiMDk4NjRjNGFiN2M4ZmQxYjIxMmQzZmY4OTFlZDM1M2U1MTp7Im1lc3NhZ2VzIjpbIkV4ZXJjaXNlIHN1Y2Nlc2Z1bGx5IGNyZWF0ZWQhIl19	2020-04-02 15:05:39.193454-04
+8zxfpyzs5j7zb9j2fvywi2bzxqnqqikf	YTFjNWU2MWI3ZWE3ODU2MzEwZGVmZjVkYzJhYzk3YmNmOTU4OTE3NTp7Impzb25fZXhwb3J0ZWQiOiJDb3JvbmF2aXJ1c18yIn0=	2020-04-29 11:43:05.982265-04
 \.
 
 
@@ -1899,7 +2135,7 @@ COPY django_session (session_key, session_data, expire_date) FROM stdin;
 -- Data for Name: locations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY locations (id, city, state, country) FROM stdin;
+COPY public.locations (id, city, state, country) FROM stdin;
 1	name	subcountry	country
 2	les Escaldes	Escaldes-Engordany	Andorra
 3	Andorra la Vella	Andorra la Vella	Andorra
@@ -20764,7 +21000,7 @@ COPY locations (id, city, state, country) FROM stdin;
 -- Data for Name: names; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY names (name, name_type, region) FROM stdin;
+COPY public.names (name, name_type, region) FROM stdin;
 Liam	first_m	us
 Noah	first_m	us
 William	first_m	us
@@ -22440,7 +22676,7 @@ bob	first_m	cheese
 -- Data for Name: sentence_frags; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY sentence_frags (id, fragment) FROM stdin;
+COPY public.sentence_frags (id, fragment) FROM stdin;
 1	I think <noun> is very <adjective>
 3	I am so <adjective> to see <noun> 
 2	<noun> is really making me <adjective>
@@ -22474,106 +22710,50 @@ COPY sentence_frags (id, fragment) FROM stdin;
 
 
 --
--- Data for Name: twitter_posts; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: spasms_exercise; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY twitter_posts (user_id, id, id_str, created_at, text, hashtags, urls, user_mention, symbols, topic, language) FROM stdin;
-76452239	949048869	0000000000949048869	2018-11-21 02:20:17	bamboozle Trump	\N	\N	\N	\N	topic 1	en
-76452239	481129942	0000000000481129942	2010-11-03 17:56:32	Trump is profanely attributable	\N	\N	\N	\N	topic 1	en
-24034032	12878169	0000000000012878169	2013-09-02 07:11:28	I think Trump is quaintly blarney us	\N	\N	\N	\N	topic 1	en
-71188182	444224746	0000000000444224746	2006-06-20 15:58:49	Trump is doing sumptuously	\N	\N	\N	\N	topic 1	en
-24034032	885950719	0000000000885950719	2008-04-22 05:56:15	I think Trump is very loverly	\N	\N	\N	\N	topic 1	en
-71188182	583539371	0000000000583539371	2015-06-26 03:23:27	I really effeminize Trump! It really makes would-be to think about it	\N	\N	\N	\N	topic 1	en
-34970862	534257710	0000000000534257710	2016-06-28 15:35:57	What egocentric stuff is going on in Trump right now	\N	\N	\N	\N	topic 1	en
-24034032	293509843	0000000000293509843	2016-12-31 14:59:42	I think Trump is being so trustworthy right now	\N	\N	\N	\N	topic 1	en
-31082721	299848379	0000000000299848379	2015-02-05 07:18:16	I really bank Trump! It really makes amniotic to think about it	\N	\N	\N	\N	topic 1	en
-1736262	959687089	0000000000959687089	2014-05-29 16:31:46	We need to close Trump	\N	\N	\N	\N	topic 1	en
-31082721	831565656	0000000000831565656	2017-01-23 12:16:23	I think Trump is being so wittgensteinian right now	\N	\N	\N	\N	topic 1	en
-31082721	720105096	0000000000720105096	2016-12-22 09:02:15	Trump is such a punishingly place	\N	\N	\N	\N	topic 1	en
-1736262	485685075	0000000000485685075	2014-08-27 00:09:02	We need to victual Trump	\N	\N	\N	\N	topic 1	en
-71188182	337693210	0000000000337693210	2017-09-27 15:37:05	Somebody better bear_on Trump or things could get ugly	\N	\N	\N	\N	topic 1	en
-31082721	777359951	0000000000777359951	2013-02-13 14:49:32	Who thinks Trump is doing a covetous job	\N	\N	\N	\N	topic 1	en
-35186957	137235578	0000000000137235578	2002-10-21 15:47:00	Somebody better weep cats or things could get ugly	\N	\N	\N	\N	topic 2	en
-10353096	879801247	0000000000879801247	2019-08-26 17:09:22	cats is such a roughly place	\N	\N	\N	\N	topic 2	en
-35186957	310130666	0000000000310130666	2004-02-26 17:03:24	cats just said the separate thing	\N	\N	\N	\N	topic 2	en
-9757330	995522169	0000000000995522169	2018-12-21 08:29:29	I think generally disregarding cats is bad	\N	\N	\N	\N	topic 2	en
-9757330	125319158	0000000000125319158	2019-02-19 01:04:35	What a heavy decision from cats	\N	\N	\N	\N	topic 2	en
-43194919	483049046	0000000000483049046	2019-08-19 20:00:06	cats carefully a decision there	\N	\N	\N	\N	topic 2	en
-9757330	407315025	0000000000407315025	2017-01-21 19:13:01	slip cats	\N	\N	\N	\N	topic 2	en
-43194919	318819452	0000000000318819452	2019-10-10 04:43:21	We should really fail cats more	\N	\N	\N	\N	topic 2	en
-82581247	424213856	0000000000424213856	2017-08-22 09:02:05	cats is doing virtually	\N	\N	\N	\N	topic 2	en
-35186957	977678877	0000000000977678877	2016-01-23 19:32:13	I think cats is very angry	\N	\N	\N	\N	topic 2	en
-3225610	404517956	0000000000404517956	2018-08-24 12:53:27	Somebody better prefer Obama or things could get ugly	\N	\N	\N	\N	topic 3	en
-3732178	413272153	0000000000413272153	2017-08-31 02:41:39	I feel stock for Obama	\N	\N	\N	\N	topic 3	en
-61662072	218542437	0000000000218542437	2009-06-09 06:11:41	Obama just replace my day	\N	\N	\N	\N	topic 3	en
-26105103	952356392	0000000000952356392	2016-06-26 22:01:00	overcome Obama	\N	\N	\N	\N	topic 3	en
-61662072	2906208	0000000000002906208	2009-07-18 20:13:43	How can Obama be so safe	\N	\N	\N	\N	topic 3	en
-3225610	243157277	0000000000243157277	2016-08-30 13:57:52	Obama is really making me potential	\N	\N	\N	\N	topic 3	en
-2628458	541184898	0000000000541184898	2019-02-28 05:41:19	Obama is doing always	\N	\N	\N	\N	topic 3	en
-3225610	208413851	0000000000208413851	2019-01-25 14:11:42	I think Obama is being so upper right now	\N	\N	\N	\N	topic 3	en
-3732178	855945131	0000000000855945131	2015-06-01 04:57:37	Obama is doing greatly	\N	\N	\N	\N	topic 3	en
-32954887	959014938	0000000000959014938	2018-07-03 23:34:55	Obama is such a however person	\N	\N	\N	\N	topic 3	en
-67777134	414505073	0000000000414505073	2019-05-29 14:34:32	How can Obama be so visible	\N	\N	\N	\N	topic 3	en
-3225610	704494000	0000000000704494000	2007-09-20 21:45:05	I think greatly disregarding Obama is bad	\N	\N	\N	\N	topic 3	en
-95122374	943366178	0000000000943366178	2018-01-31 19:54:57	Obama just celebrate my day	\N	\N	\N	\N	topic 3	en
-95122374	568311275	0000000000568311275	2015-09-29 09:53:56	I catch Obama	\N	\N	\N	\N	topic 3	en
-3225610	763606686	0000000000763606686	2012-09-29 07:05:56	Somebody better extend Obama or things could get ugly	\N	\N	\N	\N	topic 3	en
-52945039	242973927	0000000000242973927	2018-03-27 11:30:31	Obama is acting real	\N	\N	\N	\N	topic 3	en
-81909392	835117839	0000000000835117839	2019-05-22 00:01:16	Obama is easy making a mistake	\N	\N	\N	\N	topic 3	en
-96215749	946161703	0000000000946161703	2017-07-21 09:07:49	Obama is about secure	\N	\N	\N	\N	topic 3	en
-32954887	197343917	0000000000197343917	2016-05-18 03:24:25	I think pretty disregarding Obama is bad	\N	\N	\N	\N	topic 3	en
-32954887	210923238	0000000000210923238	2019-09-16 02:11:02	Obama just said the natural thing	\N	\N	\N	\N	topic 3	en
-95122374	5236193	0000000000005236193	2014-09-11 13:16:03	We need to learn Obama	\N	\N	\N	\N	topic 3	en
-69709739	509894110	0000000000509894110	2018-04-12 22:28:10	We should really deserve Obama more	\N	\N	\N	\N	topic 3	en
-69709739	250427365	0000000000250427365	2016-06-01 01:05:06	Obama just examine my day	\N	\N	\N	\N	topic 3	en
-61662072	677540939	0000000000677540939	2001-04-09 16:22:11	Obama on a decision there	\N	\N	\N	\N	topic 3	en
-69709739	397278318	0000000000397278318	2016-03-15 01:28:00	Obama is fast	\N	\N	\N	\N	topic 3	en
-69709739	560354682	0000000000560354682	2016-01-01 15:23:58	How can Obama add that	\N	\N	\N	\N	topic 3	en
-3732178	333473270	0000000000333473270	2017-12-16 07:48:25	I feel impressive for Obama	\N	\N	\N	\N	topic 3	en
-26105103	954679943	0000000000954679943	2016-12-17 03:11:16	I feel personal for Obama	\N	\N	\N	\N	topic 3	en
-32954887	259062785	0000000000259062785	2019-10-26 02:38:41	Obama is bright making a mistake	\N	\N	\N	\N	topic 3	en
+COPY public.spasms_exercise (id, name, description, logo) FROM stdin;
 \.
 
 
 --
--- Data for Name: twitter_users; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: spasms_group; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY twitter_users (id, id_str, screen_name, location, created_at, followers, favourites, statuses, description, gender, group_name, language, name) FROM stdin;
-1	000000001	user1	Fairfax	2018-10-25 12:00:00	50	100	25	I am a student	f	group1	\N	\N
-7484156	7484156  	apage	batavia	2010-07-07 12:49:48	874	1997	6161	stuff	m	---	eng	aubrey page
-12929102	12929102 	Mchung	Lynn	2012-11-29 05:57:30	1519	3279	7043	Stella Vanderley broke off in the club, and I saw what he was a Napoleon. "Eighty-seven, Jeeves. At how much my nephew Francis?" "Absolutely." "It be	m	----	eng	Mason Chung
-4575037	4575037  	Ehiggins	Burlington	2011-08-28 23:13:14	790	2980	5014	rot, but I won't stand for being expected to see him? Whom shall I say?" "He would not know my own case, after a little It	m	----	eng	Elizabeth Higgins
-94668699	94668699 	Ograves	Bostonia	2000-07-06 07:38:37	5069	8789	8931	of his own hands. All right so far, what? But mark the sequel. Temperamental Clarence, being a silly ass, he was her only nephew, his was	m	----	eng	Owen Graves
-82415971	82415971 	Jrainey	Glenview	2019-03-27 09:37:07	3553	6587	6068	he said, "I've got it up for the fact that she pulled herself together and made out to answer it. "Yes, sir. I had a deal."	m	----	eng	Jacob Rainey
-31082721	31082721 	weaving_knight29	Maplewood	2000-11-08 21:25:07	4954	502	4298	you to summon me, sir." "Is she alone?" "Her ladyship accompanied	f	group 1	\N	Quinn Ash
-1736262	1736262  	Kquinones	Quincy	2009-10-03 20:09:03	2643	8158	6834	that he would ever come out here. What on earth you	f	group 1	\N	Kennedy Quinones
-96945411	96945411 	Smckinney	Murrieta	2014-04-12 13:18:00	4791	3243	1804	names every month. A little buttered toast with the grey but	f	group 1	\N	Scarlett Mckinney
-24034032	24034032 	Icastro	Palm Springs	2007-12-10 07:23:37	8809	7642	3878	compelled me to have chucked all the marvels of the Gutenberg-tm	f	group 1	\N	Isabella Castro
-8089993	8089993  	Borr	Sanford	2008-03-19 08:27:55	4714	1161	6966	to us all to pieces again. And he apparently was to	f	group 1	\N	Brielle Orr
-76452239	76452239 	orange_dog33	Alamogordo	2010-09-24 20:06:51	2694	6246	6541	of those dark, shrewd faces. His eye gleams with the tie	m	group 1	\N	Greyson Sizemore
-15025681	15025681 	Scapps	Belton	2017-05-31 20:23:43	3846	9256	841	Champion Chump, stood there, saying nothing. Well I sidled towards steps.	m	group 1	\N	Sawyer Capps
-34970862	34970862 	somnombulating_salesman10	Hammond	2015-04-04 03:59:44	9104	6763	7276	there's undoubtedly a sort of way, as if I go first,	m	group 1	\N	Nathan Franks
-62671802	62671802 	bhopper	Palm Bay	2007-08-15 05:47:01	5508	7747	2310	her--my being there. At this moment there was a hospital When	m	group 1	\N	bob Hopper
-71188182	71188182 	sexy_pony31	Herriman	2002-03-25 16:48:48	9869	6143	495	gaze, and I started in straightway. He seemed to suit old	m	group 1	\N	Jason Taylor
-35186957	35186957 	Edudley	Ashland	2001-07-24 17:51:38	8223	9775	1861	time I met Bicky for the bell. Jeeves came in the	f	group 2	\N	Eliana Dudley
-82581247	82581247 	avenging_dog69	Chandler	2013-08-18 12:13:56	7725	8214	1757	be possible for him, with all the while Freddie, the Champion	m	group 2	\N	Jayden Workman
-43194919	43194919 	green_snake83	Grapevine	2015-06-14 19:06:40	4810	9788	3169	bucked just then there was a long stay in the of	m	group 2	\N	John Dickens
-10353096	10353096 	Aobrien	Wadsworth	2019-02-27 04:28:45	9819	3218	7347	rotter again of a stranger, but you can't get to "I	m	group 2	\N	Adrian Obrien
-9757330	9757330  	weaving_cat37	Cleveland	2016-09-12 07:11:13	2640	7615	2644	altogether, sir." "What's his trouble now?" "The scheme which I found	m	group 2	\N	Xavier Melendez
-3225610	3225610  	Mmclean	Bridgeview	2007-05-29 23:32:26	8775	8633	3349	evening in New York. I suppose he is, though I've worked	f	group 3	\N	Madeline Mclean
-52945039	52945039 	sexy_snake13	Prospect Heights	2015-05-11 18:14:15	9873	726	5629	and without a hitch. I had set in. I explained situation.	m	group 3	\N	Hunter Reid
-96215749	96215749 	Ihooper	Eagle River	2010-07-30 11:47:27	9938	6608	9348	that now it will be all sorts of stunts and the	m	group 3	\N	Issac Hooper
-95122374	95122374 	lucky_sword42	Wilson	2009-08-26 21:33:57	7475	806	4398	came round. It was what American chappies would call again sir."	m	group 3	\N	Mateo Marks
-69709739	69709739 	orange_cat18	Pinole	2015-10-19 05:22:13	902	6454	2221	Well, I hadn't. "Mr. Pepper." "Yes?" "Was he--has he been--was very	m	group 3	\N	Adrian Flowers
-67777134	67777134 	avenging_salesman8	Pittsfield	2015-11-02 14:37:32	8046	3168	7858	do? I can't even write good letters." "Muriel's talents," said with	m	group 3	\N	Nicholas Castle
-93990327	93990327 	Ikline	Overland	2000-11-17 18:42:21	3547	3896	3198	I have brought home to him when she isn't looking, sneak	m	group 3	\N	Issac Kline
-32954887	32954887 	Bgillespie	Rancho Cordova	2015-11-29 05:28:53	893	9389	3159	lordship had gone to bed, and it wasn't till fairly that	m	group 3	\N	Benjamin Gillespie
-3732178	3732178  	Bsneed	Hazel Park	2014-08-22 10:53:15	5970	586	3122	obliged to you. Where's the kid? We must work! My that	m	group 3	\N	Benjamin Sneed
-61662072	61662072 	dancing_salesman3	Brunswick	2000-12-24 02:14:17	3595	237	104	distributing this work in its original "Plain Vanilla ASCII" or over	m	group 3	\N	Aaron Dyer
-26105103	26105103 	Jnielsen	Wellesley	2015-09-22 18:57:14	4723	3190	8999	chickens. After a bit thick, isn't it?" "The situation is one	m	group 3	\N	Jackson Nielsen
-2628458	2628458  	strident_snake21	Utica	2018-07-29 04:47:47	7626	3505	6194	we left England. He informed me that there is no to	m	group 3	\N	Connor Wang
-81909392	81909392 	Bfinch	Columbus	2013-09-15 08:58:18	6257	7824	5673	you a kind-hearted man." "But, I say, when I sat suddenly.	m	group 3	\N	Benjamin Finch
+COPY public.spasms_group (id, name, description, num_users, percent_female, exercise_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: spasms_hashtag; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.spasms_hashtag (id, creation_time, tag, author_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: spasms_tweet; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.spasms_tweet (id, text, creation_time, author_id, hashtags_id, run_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: spasms_tweetrun; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.spasms_tweetrun (id, label, created_on, end_date, num_posts, sentiment, start_date, topic_noun, group_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: spasms_twitteruser; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.spasms_twitteruser (id, screen_name, first_name, last_name, gender, age, country, province, language, created_at, description, favourites, followers, statuses, group_id) FROM stdin;
 \.
 
 
@@ -22581,7 +22761,7 @@ COPY twitter_users (id, id_str, screen_name, location, created_at, followers, fa
 -- Data for Name: words; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY words (word, sentiment, type) FROM stdin;
+COPY public.words (word, sentiment, type) FROM stdin;
 aah	0.000000	verb
 ab_initio	0.000000	adverb
 abacinate	0.000000	verb
@@ -59815,400 +59995,653 @@ zymotic	-0.088470	adjective
 
 
 --
--- Name: auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_group
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 64, true);
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 1, false);
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 16, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 45, true);
+
+
+--
+-- Name: spasms_exercise_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.spasms_exercise_id_seq', 52, true);
+
+
+--
+-- Name: spasms_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.spasms_group_id_seq', 10, true);
+
+
+--
+-- Name: spasms_hashtag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.spasms_hashtag_id_seq', 1, false);
+
+
+--
+-- Name: spasms_tweet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.spasms_tweet_id_seq', 138, true);
+
+
+--
+-- Name: spasms_tweetrun_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.spasms_tweetrun_id_seq', 56, true);
+
+
+--
+-- Name: spasms_twitteruser_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.spasms_twitteruser_id_seq', 1, false);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group
     ADD CONSTRAINT auth_group_name_key UNIQUE (name);
 
 
 --
--- Name: auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_group_permissions
+ALTER TABLE ONLY public.auth_group_permissions
     ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
 
 
 --
--- Name: auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_group_permissions
+ALTER TABLE ONLY public.auth_group_permissions
     ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
 
 
 --
--- Name: auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_group
+ALTER TABLE ONLY public.auth_group
     ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
 
 
 --
--- Name: auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_permission
+ALTER TABLE ONLY public.auth_permission
     ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
 
 
 --
--- Name: auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_permission
+ALTER TABLE ONLY public.auth_permission
     ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
 
 
 --
--- Name: auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_user_groups
+ALTER TABLE ONLY public.auth_user_groups
     ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
 
 
 --
--- Name: auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_user_groups
+ALTER TABLE ONLY public.auth_user_groups
     ADD CONSTRAINT auth_user_groups_user_id_group_id_94350c0c_uniq UNIQUE (user_id, group_id);
 
 
 --
--- Name: auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_user
+ALTER TABLE ONLY public.auth_user
     ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
 
 
 --
--- Name: auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_user_user_permissions
+ALTER TABLE ONLY public.auth_user_user_permissions
     ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
 
 
 --
--- Name: auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_user_user_permissions
+ALTER TABLE ONLY public.auth_user_user_permissions
     ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_14a6b632_uniq UNIQUE (user_id, permission_id);
 
 
 --
--- Name: auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_user
+ALTER TABLE ONLY public.auth_user
     ADD CONSTRAINT auth_user_username_key UNIQUE (username);
 
 
 --
--- Name: common_words_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: common_words common_words_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY common_words
+ALTER TABLE ONLY public.common_words
     ADD CONSTRAINT common_words_pkey PRIMARY KEY (word, type);
 
 
 --
--- Name: django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY django_admin_log
+ALTER TABLE ONLY public.django_admin_log
     ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
 
 
 --
--- Name: django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY django_content_type
+ALTER TABLE ONLY public.django_content_type
     ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
 
 
 --
--- Name: django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY django_content_type
+ALTER TABLE ONLY public.django_content_type
     ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
 
 
 --
--- Name: django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY django_migrations
+ALTER TABLE ONLY public.django_migrations
     ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
 
 
 --
--- Name: django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY django_session
+ALTER TABLE ONLY public.django_session
     ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
 
 
 --
--- Name: locations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY locations
+ALTER TABLE ONLY public.locations
     ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
 
 
 --
--- Name: names_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: names names_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY names
+ALTER TABLE ONLY public.names
     ADD CONSTRAINT names_pkey PRIMARY KEY (name, region);
 
 
 --
--- Name: twitter_posts_id_str_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: spasms_exercise spasms_exercise_name_0c1b2760_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY twitter_posts
-    ADD CONSTRAINT twitter_posts_id_str_key UNIQUE (id_str);
-
-
---
--- Name: twitter_posts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY twitter_posts
-    ADD CONSTRAINT twitter_posts_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.spasms_exercise
+    ADD CONSTRAINT spasms_exercise_name_0c1b2760_uniq UNIQUE (name);
 
 
 --
--- Name: twitter_users_id_str_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: spasms_exercise spasms_exercise_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY twitter_users
-    ADD CONSTRAINT twitter_users_id_str_key UNIQUE (id_str);
-
-
---
--- Name: twitter_users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY twitter_users
-    ADD CONSTRAINT twitter_users_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.spasms_exercise
+    ADD CONSTRAINT spasms_exercise_pkey PRIMARY KEY (id);
 
 
 --
--- Name: twitter_users_screen_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: spasms_group spasms_group_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY twitter_users
-    ADD CONSTRAINT twitter_users_screen_name_key UNIQUE (screen_name);
+ALTER TABLE ONLY public.spasms_group
+    ADD CONSTRAINT spasms_group_name_key UNIQUE (name);
 
 
 --
--- Name: words_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: spasms_group spasms_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY words
+ALTER TABLE ONLY public.spasms_group
+    ADD CONSTRAINT spasms_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: spasms_hashtag spasms_hashtag_author_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_hashtag
+    ADD CONSTRAINT spasms_hashtag_author_id_key UNIQUE (author_id);
+
+
+--
+-- Name: spasms_hashtag spasms_hashtag_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_hashtag
+    ADD CONSTRAINT spasms_hashtag_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: spasms_tweet spasms_tweet_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_tweet
+    ADD CONSTRAINT spasms_tweet_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: spasms_tweetrun spasms_tweetrun_label_2c137a1b_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_tweetrun
+    ADD CONSTRAINT spasms_tweetrun_label_2c137a1b_uniq UNIQUE (label);
+
+
+--
+-- Name: spasms_tweetrun spasms_tweetrun_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_tweetrun
+    ADD CONSTRAINT spasms_tweetrun_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: spasms_twitteruser spasms_twitteruser_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_twitteruser
+    ADD CONSTRAINT spasms_twitteruser_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: words words_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.words
     ADD CONSTRAINT words_pkey PRIMARY KEY (word, type);
 
 
 --
--- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX auth_group_name_a6ea08ec_like ON auth_group USING btree (name varchar_pattern_ops);
-
-
---
--- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON auth_group_permissions USING btree (group_id);
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
 
 
 --
--- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON auth_group_permissions USING btree (permission_id);
-
-
---
--- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX auth_permission_content_type_id_2f476e4b ON auth_permission USING btree (content_type_id);
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
 
 
 --
--- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX auth_user_groups_group_id_97559544 ON auth_user_groups USING btree (group_id);
-
-
---
--- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX auth_user_groups_user_id_6a12ed8b ON auth_user_groups USING btree (user_id);
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
 
 
 --
--- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON auth_user_user_permissions USING btree (permission_id);
-
-
---
--- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON auth_user_user_permissions USING btree (user_id);
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
 
 
 --
--- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX auth_user_username_6821ab7c_like ON auth_user USING btree (username varchar_pattern_ops);
-
-
---
--- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON django_admin_log USING btree (content_type_id);
+CREATE INDEX auth_user_groups_group_id_97559544 ON public.auth_user_groups USING btree (group_id);
 
 
 --
--- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX django_admin_log_user_id_c564eba6 ON django_admin_log USING btree (user_id);
-
-
---
--- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX django_session_expire_date_a5c62663 ON django_session USING btree (expire_date);
+CREATE INDEX auth_user_groups_user_id_6a12ed8b ON public.auth_user_groups USING btree (user_id);
 
 
 --
--- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX django_session_session_key_c0390e0f_like ON django_session USING btree (session_key varchar_pattern_ops);
-
-
---
--- Name: auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY auth_group_permissions
-    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON public.auth_user_user_permissions USING btree (permission_id);
 
 
 --
--- Name: auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_group_permissions
-    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY auth_permission
-    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_user_permissions USING btree (user_id);
 
 
 --
--- Name: auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_user_groups
-    ADD CONSTRAINT auth_user_groups_group_id_97559544_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY auth_user_groups
-    ADD CONSTRAINT auth_user_groups_user_id_6a12ed8b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (username varchar_pattern_ops);
 
 
 --
--- Name: auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY auth_user_user_permissions
-    ADD CONSTRAINT auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY auth_user_user_permissions
-    ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
 
 
 --
--- Name: django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY django_admin_log
-    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY django_admin_log
-    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
 
 
 --
--- Name: twitter_posts_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY twitter_posts
-    ADD CONSTRAINT twitter_posts_user_id_fkey FOREIGN KEY (user_id) REFERENCES twitter_users(id);
-
-
---
--- Name: twitter_posts_user_mention_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY twitter_posts
-    ADD CONSTRAINT twitter_posts_user_mention_fkey FOREIGN KEY (user_mention) REFERENCES twitter_users(screen_name);
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: postgres
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: postgres
 --
 
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: spasms_exercise_name_0c1b2760_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX spasms_exercise_name_0c1b2760_like ON public.spasms_exercise USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: spasms_group_exercise_id_20196276; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX spasms_group_exercise_id_20196276 ON public.spasms_group USING btree (exercise_id);
+
+
+--
+-- Name: spasms_group_name_005631c5_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX spasms_group_name_005631c5_like ON public.spasms_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: spasms_hashtag_group_id_cb754474; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX spasms_hashtag_group_id_cb754474 ON public.spasms_hashtag USING btree (group_id);
+
+
+--
+-- Name: spasms_tweet_author_id_a9e7a345; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX spasms_tweet_author_id_a9e7a345 ON public.spasms_tweet USING btree (author_id);
+
+
+--
+-- Name: spasms_tweet_hashtags_id_9d47ed8d; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX spasms_tweet_hashtags_id_9d47ed8d ON public.spasms_tweet USING btree (hashtags_id);
+
+
+--
+-- Name: spasms_tweet_run_id_ac581342; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX spasms_tweet_run_id_ac581342 ON public.spasms_tweet USING btree (run_id);
+
+
+--
+-- Name: spasms_tweetrun_group_id_5ce8948a; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX spasms_tweetrun_group_id_5ce8948a ON public.spasms_tweetrun USING btree (group_id);
+
+
+--
+-- Name: spasms_tweetrun_label_2c137a1b_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX spasms_tweetrun_label_2c137a1b_like ON public.spasms_tweetrun USING btree (label varchar_pattern_ops);
+
+
+--
+-- Name: spasms_twitteruser_group_id_9151a896; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX spasms_twitteruser_group_id_9151a896 ON public.spasms_twitteruser USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_97559544_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_6a12ed8b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_group spasms_group_exercise_id_20196276_fk_spasms_exercise_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_group
+    ADD CONSTRAINT spasms_group_exercise_id_20196276_fk_spasms_exercise_id FOREIGN KEY (exercise_id) REFERENCES public.spasms_exercise(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_hashtag spasms_hashtag_author_id_60bf8e4b_fk_spasms_twitteruser_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_hashtag
+    ADD CONSTRAINT spasms_hashtag_author_id_60bf8e4b_fk_spasms_twitteruser_id FOREIGN KEY (author_id) REFERENCES public.spasms_twitteruser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_hashtag spasms_hashtag_group_id_cb754474_fk_spasms_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_hashtag
+    ADD CONSTRAINT spasms_hashtag_group_id_cb754474_fk_spasms_group_id FOREIGN KEY (group_id) REFERENCES public.spasms_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_tweet spasms_tweet_author_id_a9e7a345_fk_spasms_twitteruser_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_tweet
+    ADD CONSTRAINT spasms_tweet_author_id_a9e7a345_fk_spasms_twitteruser_id FOREIGN KEY (author_id) REFERENCES public.spasms_twitteruser(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_tweet spasms_tweet_hashtags_id_9d47ed8d_fk_spasms_hashtag_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_tweet
+    ADD CONSTRAINT spasms_tweet_hashtags_id_9d47ed8d_fk_spasms_hashtag_id FOREIGN KEY (hashtags_id) REFERENCES public.spasms_hashtag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_tweet spasms_tweet_run_id_ac581342_fk_spasms_tweetrun_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_tweet
+    ADD CONSTRAINT spasms_tweet_run_id_ac581342_fk_spasms_tweetrun_id FOREIGN KEY (run_id) REFERENCES public.spasms_tweetrun(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_tweetrun spasms_tweetrun_group_id_5ce8948a_fk_spasms_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_tweetrun
+    ADD CONSTRAINT spasms_tweetrun_group_id_5ce8948a_fk_spasms_group_id FOREIGN KEY (group_id) REFERENCES public.spasms_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: spasms_twitteruser spasms_twitteruser_group_id_9151a896_fk_spasms_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.spasms_twitteruser
+    ADD CONSTRAINT spasms_twitteruser_group_id_9151a896_fk_spasms_group_id FOREIGN KEY (group_id) REFERENCES public.spasms_group(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --

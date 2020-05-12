@@ -1,0 +1,22 @@
+{% extends "base.html" %}                                                                               
+{% block page_content %}  
+
+{% load static %}
+
+<form action="/display_json" method="post">
+    {% csrf_token %}
+    <p> Select which run you would like to view <br/>
+    <table border="1">
+      {{ form }}
+    </table>
+    <input type="submit" value="Submit">
+</form>
+{% if file_name %}
+<p>{{ file_name }}</p>
+{% with file_name as file %}
+<a href="{% static file %}" download> Download file </a>
+<object data="{% static file %}" width="600px" height="800px">This run has not been exported to a json file yet!</object>
+{% endwith %}
+{% endif %}
+
+{% endblock %}

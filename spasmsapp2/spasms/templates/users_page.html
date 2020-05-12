@@ -1,0 +1,26 @@
+{% extends "base.html"  %}
+{%block page_content %}
+
+<h3><strong>Users for {{group.name}}</strong></h3>
+<ul class='list-group'>
+{% for user in users_list %}
+ <li class='list-group-item'>
+ 	<a data-toggle="collapse" data-target="#collapse_{{user.id}}" href="#collapse_{{user.id}}">
+		<span style="color:black">{{ user.first_name }} {{ user.last_name}} </span>
+ 	</a>
+ 	<div class='collapse' id ="collapse_{{user.id}}">
+ 		Screen name: {{user.screen_name}} <br/>
+ 		Age: {{user.age}} <br/>
+ 		Gender: {{user.gender}} <br/>
+ 		Location: {{user.province}}, {{user.country}} <br/>
+ 		Description: {{user.description}} <br/>
+ 		Favorites: {{user.favourites}} <br/>
+ 		Followers: {{user.followers}} <br/>
+ 		Statuses: {{user.statuses}} <br/>
+ 		Created On: {{user.created_at}}
+ 	</div>
+ </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
